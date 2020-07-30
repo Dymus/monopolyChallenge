@@ -5,8 +5,8 @@ public class DrawableCard extends Card {
 	private String command;
 	private DrawableType type;
 	
-	public DrawableCard(int id, String name) {
-		super(id, name);
+	public DrawableCard(String name) {
+		super(name);
 	}
 	
 	public String getText() {

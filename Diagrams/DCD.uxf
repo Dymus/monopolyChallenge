@@ -4,16 +4,17 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>160</x>
+      <x>120</x>
       <y>540</y>
       <w>140</w>
-      <h>80</h>
+      <h>120</h>
     </coordinates>
     <panel_attributes>Player
 --
 - name: String
 - money: int
 - playing: boolean
+- position: int
 
 </panel_attributes>
     <additional_attributes/>
@@ -21,7 +22,7 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>770</x>
+      <x>730</x>
       <y>250</y>
       <w>160</w>
       <h>160</h>
@@ -38,7 +39,7 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>410</x>
+      <x>370</x>
       <y>690</y>
       <w>160</w>
       <h>160</h>
@@ -54,7 +55,7 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>600</x>
+      <x>560</x>
       <y>690</y>
       <w>100</w>
       <h>160</h>
@@ -69,7 +70,7 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>410</x>
+      <x>370</x>
       <y>890</y>
       <w>160</w>
       <h>180</h>
@@ -90,7 +91,7 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>480</x>
+      <x>440</x>
       <y>600</y>
       <w>180</w>
       <h>110</h>
@@ -101,7 +102,7 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>640</x>
+      <x>600</x>
       <y>600</y>
       <w>80</w>
       <h>110</h>
@@ -112,7 +113,7 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1240</x>
+      <x>1200</x>
       <y>330</y>
       <w>150</w>
       <h>160</h>
@@ -125,7 +126,7 @@
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>60</x>
+      <x>20</x>
       <y>490</y>
       <w>100</w>
       <h>50</h>
@@ -138,7 +139,7 @@ bg=yellow</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>470</x>
+      <x>430</x>
       <y>110</y>
       <w>190</w>
       <h>100</h>
@@ -153,7 +154,7 @@ bg=yellow</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>650</x>
+      <x>610</x>
       <y>110</y>
       <w>140</w>
       <h>180</h>
@@ -167,7 +168,7 @@ holds &gt;</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>720</x>
+      <x>710</x>
       <y>690</y>
       <w>140</w>
       <h>160</h>
@@ -182,7 +183,7 @@ holds &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>470</x>
+      <x>430</x>
       <y>840</y>
       <w>30</w>
       <h>70</h>
@@ -193,18 +194,18 @@ holds &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>740</x>
+      <x>700</x>
       <y>600</y>
-      <w>70</w>
+      <w>100</w>
       <h>110</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;50.0;90.0</additional_attributes>
+    <additional_attributes>10.0;10.0;80.0;90.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>290</x>
+      <x>250</x>
       <y>540</y>
       <w>140</w>
       <h>190</h>
@@ -218,7 +219,7 @@ owns &gt;</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>580</x>
+      <x>540</x>
       <y>860</y>
       <w>140</w>
       <h>50</h>
@@ -231,34 +232,41 @@ bg=gray</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>730</x>
+      <x>690</x>
       <y>860</y>
-      <w>130</w>
-      <h>80</h>
+      <w>180</w>
+      <h>170</h>
     </coordinates>
     <panel_attributes>&gt; GO
 &gt; JAIL
 &gt; GO TO JAIL
 &gt; FREE PARKING
+&gt; COMMUNITY CHEST 1
+&gt; COMMUNITY CHEST 2
+&gt; COMMUNITY CHEST 3 
+&gt; CHANCE PINK
+&gt; CHANCE BLUE
+&gt; CHANCE ORANGE
+
 bg=green</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>950</x>
+      <x>910</x>
       <y>620</y>
-      <w>160</w>
+      <w>210</w>
       <h>30</h>
     </coordinates>
-    <panel_attributes>ID starting from 41
+    <panel_attributes>ID must start from 41
 bg=black</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>300</x>
+      <x>260</x>
       <y>100</y>
       <w>150</w>
       <h>60</h>
@@ -272,7 +280,7 @@ bg=pink</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>250</x>
+      <x>210</x>
       <y>740</y>
       <w>150</w>
       <h>60</h>
@@ -285,7 +293,7 @@ bg=red</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>920</x>
+      <x>880</x>
       <y>100</y>
       <w>190</w>
       <h>190</h>
@@ -299,7 +307,7 @@ m2=1
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1090</x>
+      <x>1050</x>
       <y>100</y>
       <w>250</w>
       <h>160</h>
@@ -315,7 +323,7 @@ m2=1
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>970</x>
+      <x>930</x>
       <y>450</y>
       <w>150</w>
       <h>160</h>
@@ -330,7 +338,7 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>860</x>
+      <x>820</x>
       <y>400</y>
       <w>190</w>
       <h>70</h>
@@ -341,26 +349,26 @@ m2=1
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>620</x>
+      <x>580</x>
       <y>450</y>
       <w>150</w>
       <h>160</h>
     </coordinates>
     <panel_attributes>StaticCard
 --
-</panel_attributes>
+- boardPosition: int</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>950</x>
+      <x>910</x>
       <y>290</y>
       <w>180</w>
       <h>50</h>
     </coordinates>
-    <panel_attributes>ID also acts as position 
-on the board
+    <panel_attributes>//ID also acts as position 
+//on the board
 fg=black
 bg=orange</panel_attributes>
     <additional_attributes/>
@@ -368,7 +376,7 @@ bg=orange</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>120</x>
+      <x>80</x>
       <y>940</y>
       <w>280</w>
       <h>30</h>
@@ -380,7 +388,7 @@ bg=yellow</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>680</x>
+      <x>640</x>
       <y>400</y>
       <w>150</w>
       <h>70</h>
@@ -391,7 +399,7 @@ bg=yellow</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>220</x>
+      <x>180</x>
       <y>0</y>
       <w>1030</w>
       <h>560</h>
@@ -405,7 +413,7 @@ m2=1
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>950</x>
+      <x>910</x>
       <y>650</y>
       <w>260</w>
       <h>30</h>

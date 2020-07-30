@@ -14,9 +14,9 @@ public class City extends Property {
 	private int houseCost;
 	private int hotelCost;
 	
-	public City(int id, String name, int buyCost, boolean owned, int rent, int with1House, int with2Houses, int with3Houses, int with4Houses,
+	public City(String name, int boardPosition, int buyCost, boolean owned, int rent, int with1House, int with2Houses, int with3Houses, int with4Houses,
 			int withHotel, int mortgageValue, int houseCost, int hotelCost) {
-		super(id, name, buyCost, owned);
+		super(name, boardPosition, buyCost, owned);
 		this.rent = rent;
 		this.with1House = with1House;
 		this.with2Houses = with2Houses;

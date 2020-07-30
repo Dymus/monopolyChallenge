@@ -5,9 +5,10 @@
 package model;
 
 public class Player {
-	String name;
-	int money;
-	boolean playing;
+	private String name;
+	private int money;
+	private boolean playing;
+	private int position;
 	
 	public Player(String name, int money, boolean playing) {
 		this.name = name;
@@ -37,5 +38,13 @@ public class Player {
 	
 	public void setPlaying(boolean playing) {
 		this.playing = playing;
+	}
+
+	public int getPosition() {
+		return position;
+	}
+
+	public void setPosition(int position) {
+		this.position = position;
 	}
 }

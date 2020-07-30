@@ -8,8 +8,8 @@ public class Property extends StaticCard {
 	private int buyCost;
 	private boolean owned;
 	
-	public Property(int id, String name, int buyCost, boolean owned) {
-		super(id, name);
+	public Property(String name, int boardPosition, int buyCost, boolean owned) {
+		super(name, boardPosition);
 		this.buyCost = buyCost;
 		this.owned = owned;
 	}

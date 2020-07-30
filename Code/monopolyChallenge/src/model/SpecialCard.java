@@ -9,8 +9,8 @@ package model;
 public class SpecialCard extends StaticCard {
 	private String command;
 	
-	public SpecialCard(int id, String name, String command) {
-		super(id, name);
+	public SpecialCard(String name, int boardPosition, String command) {
+		super(name, boardPosition);
 		this.command = command;
 	}
 	

@@ -1,15 +1,12 @@
-/**
- * ID also acts as position 
- * on the board
- */
 package model;
 
 public abstract class Card {
+	private static int idCounter = 1;
 	private int id;
 	private String name;
 	
-	public Card(int id, String name) {
-		this.id = id;
+	public Card(String name) {
+		this.id = idCounter++;
 		this.name = name;
 	}
 	

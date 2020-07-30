@@ -7,8 +7,8 @@ package model;
 public class Tax extends StaticCard {
 	private int value;
 	
-	public Tax(int id, String name, int value) {
-		super(id, name);
+	public Tax(String name, int boardPosition, int value) {
+		super(name,boardPosition);
 		this.value = value;
 	}
 	

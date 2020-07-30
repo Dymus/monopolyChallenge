@@ -11,6 +11,11 @@ public class ColorGroup {
 	private String name;
 	private ArrayList<Card> cards;
 	
+	public ColorGroup(String name) {
+		this.name = name;
+		cards = new ArrayList<Card>();
+	}
+	
 	public ColorGroup(String name, ArrayList<Card> cards) {
 		this.name = name;
 		this.cards = cards;
