@@ -3,11 +3,9 @@ package model;
 public abstract class Card {
 	private static int idCounter = 1;
 	private int id;
-	private String name;
 	
-	public Card(String name) {
+	public Card() {
 		this.id = idCounter++;
-		this.name = name;
 	}
 	
 	public int getId() {
@@ -16,13 +14,5 @@ public abstract class Card {
 	
 	public void setId(int id) {
 		this.id = id;
-	}
-	
-	public String getName() {
-		return name;
-	}
-	
-	public void setName(String name) {
-		this.name = name;
 	}
 }

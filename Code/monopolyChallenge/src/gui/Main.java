@@ -8,20 +8,22 @@ import model.Tax;
 
 public class Main {
 	public static void main(String[] args) {
-		System.out.print("Hello World!");
+		System.out.println("Hello World!");
+		init();
+		System.out.println("Succesfully configured the board.");
 	}
 	
-	private void init() {
-		ColorGroup brown = new ColorGroup("Brown");
-		ColorGroup lightBlue = new ColorGroup("Light Blue");
-		ColorGroup pink = new ColorGroup("Pink");
-		ColorGroup orange = new ColorGroup("Orange");
-		ColorGroup red = new ColorGroup("Red");
-		ColorGroup yellow = new ColorGroup("Yellow");
-		ColorGroup green = new ColorGroup("Green");
-		ColorGroup darkBlue = new ColorGroup("Dark Blue");
-		ColorGroup stations = new ColorGroup("Stations");
-		ColorGroup utilities = new ColorGroup("Utilities");		
+	private static void init() {
+		ColorGroup<City> brown = new ColorGroup("Brown");
+		ColorGroup<City> lightBlue = new ColorGroup("Light Blue");
+		ColorGroup<City> pink = new ColorGroup("Pink");
+		ColorGroup<City> orange = new ColorGroup("Orange");
+		ColorGroup<City> red = new ColorGroup("Red");
+		ColorGroup<City> yellow = new ColorGroup("Yellow");
+		ColorGroup<City> green = new ColorGroup("Green");
+		ColorGroup<City> darkBlue = new ColorGroup("Dark Blue");
+		ColorGroup<Property> stations = new ColorGroup("Stations");
+		ColorGroup<Property> utilities = new ColorGroup("Utilities");		
 
 		SpecialCard cid1 = new SpecialCard("Go".toUpperCase(), 1, "Collect salary");
 		
@@ -80,5 +82,17 @@ public class Main {
 		Tax cid39 = new Tax("Luxury Tax".toUpperCase(), 39, 100);
 		City cid40 = new City("Boardwalk".toUpperCase(), 40, 400, false, 50, 200, 600, 1400, 1700, 2000, 200, 200, 200);
 		
+		
+		// Adding to groups
+		brown.add(cid2, cid4);
+		lightBlue.add(cid7,cid9,cid10);
+		pink.add(cid12, cid14, cid15);
+		orange.add(cid17, cid19, cid20);
+		red.add(cid22, cid24, cid25);
+		yellow.add(cid27, cid28, cid30);
+		green.add(cid32, cid33, cid35);
+		darkBlue.add(cid38, cid40);
+		stations.add(cid6, cid16, cid26, cid36);
+		utilities.add(cid13, cid29);
 	}
 }
