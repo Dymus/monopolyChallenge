@@ -2,6 +2,9 @@ package gui;
 
 import model.City;
 import model.ColorGroup;
+import model.DrawableCard;
+import model.DrawableType;
+import model.Player;
 import model.Property;
 import model.SpecialCard;
 import model.Tax;
@@ -94,5 +97,33 @@ public class Main {
 		darkBlue.add(cid38, cid40);
 		stations.add(cid6, cid16, cid26, cid36);
 		utilities.add(cid13, cid29);
+		
+		// Community chest cards
+		DrawableCard cid41 = new DrawableCard("Advance to Go (Collect $200)", "Collect 200", DrawableType.COMMUNITY_CHEST);
+		DrawableCard cid42 = new DrawableCard("Bank error in your favor—Collect $200", "Collect 200", DrawableType.COMMUNITY_CHEST);
+		DrawableCard cid43 = new DrawableCard("Doctor's fee—Pay $50", "Pay 50", DrawableType.COMMUNITY_CHEST);
+		DrawableCard cid44 = new DrawableCard("From sale of stock you get $50", "Get 50", DrawableType.COMMUNITY_CHEST);
+		DrawableCard cid45 = new DrawableCard("Get Out of Jail Free", "Jail Free", DrawableType.COMMUNITY_CHEST);
+		DrawableCard cid46 = new DrawableCard("Go to Jail–Go directly to jail–Do not pass Go–Do not collect $200", "Jail Go", DrawableType.COMMUNITY_CHEST);
+		DrawableCard cid47 = new DrawableCard("Grand Opera Night—Collect $50 from every player for opening night seats", "Get 50 All", DrawableType.COMMUNITY_CHEST);
+		DrawableCard cid48 = new DrawableCard("Holiday Fund matures—Receive $100", "Receive 100", DrawableType.COMMUNITY_CHEST);
+		DrawableCard cid49 = new DrawableCard("Income tax refund–Collect $20", "Collect 20", DrawableType.COMMUNITY_CHEST);
+		DrawableCard cid50 = new DrawableCard("It is your birthday—Collect $10", "Collect 10", DrawableType.COMMUNITY_CHEST);
+		DrawableCard cid51 = new DrawableCard("Life insurance matures–Collect $100", "Collect 100", DrawableType.COMMUNITY_CHEST);
+		DrawableCard cid52 = new DrawableCard("Pay hospital fees of $100", "Pay 100", DrawableType.COMMUNITY_CHEST);
+		DrawableCard cid53 = new DrawableCard("Pay school fees of $150", "Pay 150", DrawableType.COMMUNITY_CHEST);
+		DrawableCard cid54 = new DrawableCard("Receive $25 consultancy fee", "Receive 25", DrawableType.COMMUNITY_CHEST);
+		DrawableCard cid55 = new DrawableCard("You are assessed for street repairs–$40 per house–$115 per hotel", "Pay 40 Per House, Pay 115 Per Hotel", DrawableType.COMMUNITY_CHEST);
+		DrawableCard cid56 = new DrawableCard("You have won second prize in a beauty contest–Collect $10", "Collect 10", DrawableType.COMMUNITY_CHEST);
+		DrawableCard cid57 = new DrawableCard("You inherit $100", "Inherit 100", DrawableType.COMMUNITY_CHEST);
+		
+		// Chance cards
+		DrawableCard cid58 = new DrawableCard("Advance to Go (Collect $200)", "Go ID 1", DrawableType.CHANCE);
+		DrawableCard cid59 = new DrawableCard("Advance to Illinois Ave—If you pass Go, collect $200", "Go ID 25", DrawableType.CHANCE);
+//		DrawableCard cid60 = new DrawableCard("")
+		
+		
+		Player p1 = new Player("David", 1500, true, 1);
+		
 	}
 }

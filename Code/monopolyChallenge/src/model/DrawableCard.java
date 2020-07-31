@@ -5,9 +5,10 @@ public class DrawableCard extends Card {
 	private String command;
 	private DrawableType type;
 	
-	public DrawableCard(String text, String command) {
+	public DrawableCard(String text, String command, DrawableType type) {
 		this.text = text;
 		this.command = command;
+		this.type = type;
 	}
 	
 	public String getText() {

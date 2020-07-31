@@ -6,14 +6,15 @@ package model;
 
 public class Player {
 	private String name;
-	private int money;
+	private int money = 1500;
 	private boolean playing;
-	private int position;
+	private int position = 1;
 	
-	public Player(String name, int money, boolean playing) {
+	public Player(String name, int money, boolean playing, int position) {
 		this.name = name;
 		this.money = money;
 		this.playing = playing;
+		this.position = position;
 	}
 	
 	public String getName() {
