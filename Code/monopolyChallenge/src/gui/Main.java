@@ -1,5 +1,8 @@
 package gui;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+
 import model.City;
 import model.ColorGroup;
 import model.DrawableCard;
@@ -26,7 +29,9 @@ public class Main {
 		ColorGroup<City> green = new ColorGroup("Green");
 		ColorGroup<City> darkBlue = new ColorGroup("Dark Blue");
 		ColorGroup<Property> stations = new ColorGroup("Stations");
-		ColorGroup<Property> utilities = new ColorGroup("Utilities");		
+		ColorGroup<Property> utilities = new ColorGroup("Utilities");
+		Deque<DrawableCard> communityChestCards = new ArrayDeque<DrawableCard>();
+		Deque<DrawableCard> chanceCards = new ArrayDeque<DrawableCard>();
 
 		SpecialCard cid1 = new SpecialCard("Go".toUpperCase(), 1, "Collect salary");
 		
@@ -100,27 +105,76 @@ public class Main {
 		
 		// Community chest cards
 		DrawableCard cid41 = new DrawableCard("Advance to Go (Collect $200)", "Collect 200", DrawableType.COMMUNITY_CHEST);
-		DrawableCard cid42 = new DrawableCard("Bank error in your favor—Collect $200", "Collect 200", DrawableType.COMMUNITY_CHEST);
-		DrawableCard cid43 = new DrawableCard("Doctor's fee—Pay $50", "Pay 50", DrawableType.COMMUNITY_CHEST);
+		DrawableCard cid42 = new DrawableCard("Bank error in your favor - Collect $200", "Collect 200", DrawableType.COMMUNITY_CHEST);
+		DrawableCard cid43 = new DrawableCard("Doctor's fee - Pay $50", "Pay 50", DrawableType.COMMUNITY_CHEST);
 		DrawableCard cid44 = new DrawableCard("From sale of stock you get $50", "Get 50", DrawableType.COMMUNITY_CHEST);
-		DrawableCard cid45 = new DrawableCard("Get Out of Jail Free", "Jail Free", DrawableType.COMMUNITY_CHEST);
-		DrawableCard cid46 = new DrawableCard("Go to Jail–Go directly to jail–Do not pass Go–Do not collect $200", "Jail Go", DrawableType.COMMUNITY_CHEST);
-		DrawableCard cid47 = new DrawableCard("Grand Opera Night—Collect $50 from every player for opening night seats", "Get 50 All", DrawableType.COMMUNITY_CHEST);
-		DrawableCard cid48 = new DrawableCard("Holiday Fund matures—Receive $100", "Receive 100", DrawableType.COMMUNITY_CHEST);
-		DrawableCard cid49 = new DrawableCard("Income tax refund–Collect $20", "Collect 20", DrawableType.COMMUNITY_CHEST);
-		DrawableCard cid50 = new DrawableCard("It is your birthday—Collect $10", "Collect 10", DrawableType.COMMUNITY_CHEST);
-		DrawableCard cid51 = new DrawableCard("Life insurance matures–Collect $100", "Collect 100", DrawableType.COMMUNITY_CHEST);
+		DrawableCard cid45 = new DrawableCard("Get Out of Jail Free", "Keep Jail Free", DrawableType.COMMUNITY_CHEST);
+		DrawableCard cid46 = new DrawableCard("Go to Jail - Go directly to jail - Do not pass Go - Do not collect $200", "Go Jail", DrawableType.COMMUNITY_CHEST);
+		DrawableCard cid47 = new DrawableCard("Grand Opera Night - Collect $50 from every player for opening night seats", "Get 50 All", DrawableType.COMMUNITY_CHEST);
+		DrawableCard cid48 = new DrawableCard("Holiday Fund matures - Receive $100", "Receive 100", DrawableType.COMMUNITY_CHEST);
+		DrawableCard cid49 = new DrawableCard("Income tax refund - Collect $20", "Collect 20", DrawableType.COMMUNITY_CHEST);
+		DrawableCard cid50 = new DrawableCard("It is your birthday - Collect $10", "Collect 10", DrawableType.COMMUNITY_CHEST);
+		DrawableCard cid51 = new DrawableCard("Life insurance matures - Collect $100", "Collect 100", DrawableType.COMMUNITY_CHEST);
 		DrawableCard cid52 = new DrawableCard("Pay hospital fees of $100", "Pay 100", DrawableType.COMMUNITY_CHEST);
 		DrawableCard cid53 = new DrawableCard("Pay school fees of $150", "Pay 150", DrawableType.COMMUNITY_CHEST);
 		DrawableCard cid54 = new DrawableCard("Receive $25 consultancy fee", "Receive 25", DrawableType.COMMUNITY_CHEST);
-		DrawableCard cid55 = new DrawableCard("You are assessed for street repairs–$40 per house–$115 per hotel", "Pay 40 Per House, Pay 115 Per Hotel", DrawableType.COMMUNITY_CHEST);
-		DrawableCard cid56 = new DrawableCard("You have won second prize in a beauty contest–Collect $10", "Collect 10", DrawableType.COMMUNITY_CHEST);
+		DrawableCard cid55 = new DrawableCard("You are assessed for street repairs - $40 per house - $115 per hotel", "Pay 40 Per House, Pay 115 Per Hotel", DrawableType.COMMUNITY_CHEST);
+		DrawableCard cid56 = new DrawableCard("You have won second prize in a beauty contest - Collect $10", "Collect 10", DrawableType.COMMUNITY_CHEST);
 		DrawableCard cid57 = new DrawableCard("You inherit $100", "Inherit 100", DrawableType.COMMUNITY_CHEST);
 		
 		// Chance cards
 		DrawableCard cid58 = new DrawableCard("Advance to Go (Collect $200)", "Go ID 1", DrawableType.CHANCE);
-		DrawableCard cid59 = new DrawableCard("Advance to Illinois Ave—If you pass Go, collect $200", "Go ID 25", DrawableType.CHANCE);
-//		DrawableCard cid60 = new DrawableCard("")
+		DrawableCard cid59 = new DrawableCard("Advance to Illinois Ave - If you pass Go, collect $200", "Go ID 25", DrawableType.CHANCE);
+		DrawableCard cid60 = new DrawableCard("Advance to St. Charles Place â€“ If you pass Go, collect $200", "Go ID 12", DrawableType.CHANCE);
+		DrawableCard cid61 = new DrawableCard("Advance token to nearest Utility. If unowned, you may buy it from the Bank. If owned, throw dice and pay owner a total ten times the amount thrown.", "Go Closest Utility", DrawableType.CHANCE);
+		DrawableCard cid62 = new DrawableCard("Advance token to the nearest Railroad and pay owner twice the rental to which he/she is otherwise entitled. If Railroad is unowned, you may buy it from the Bank.", "Go Closest Railroad", DrawableType.CHANCE);
+		DrawableCard cid63 = new DrawableCard("Bank pays you dividend of $50", "Get 50", DrawableType.CHANCE);
+		DrawableCard cid64 = new DrawableCard("Get Out of Jail Free", "Keep Jail Free", DrawableType.CHANCE);
+		DrawableCard cid65 = new DrawableCard("Go Back 3 Spaces", "Go -3", DrawableType.CHANCE);
+		DrawableCard cid66 = new DrawableCard("Go to Jail â€“ Go directly to Jailâ€“Do not pass Go, do not collect $200", "Go Jail", DrawableType.CHANCE);
+		DrawableCard cid67 = new DrawableCard("Make general repairs on all your property â€“ For each house pay $25 â€“ For each hotel $100", "Pay 25 Per House, Pay 100 Per Hotel", DrawableType.CHANCE);
+		DrawableCard cid68 = new DrawableCard("Pay poor tax of $15", "Pay 15", DrawableType.CHANCE);
+		DrawableCard cid69 = new DrawableCard("Take a trip to Reading Railroad â€“ If you pass Go, collect $200", "Go ID 6", DrawableType.CHANCE);
+		DrawableCard cid70 = new DrawableCard("Take a walk on the Boardwalk â€“ Advance token to Boardwalk", "Go ID 40", DrawableType.CHANCE);
+		DrawableCard cid71 = new DrawableCard("You have been elected Chairman of the Board â€“ Pay each player $50", "Pay 50 All", DrawableType.CHANCE);
+		DrawableCard cid72 = new DrawableCard("Your building and loan matures â€” Collect $150", "Collect 150", DrawableType.CHANCE);
+		DrawableCard cid73 = new DrawableCard("You have won a crossword competition â€” Collect $100", "Collect 100", DrawableType.CHANCE);
+		
+		// Adding to decks
+		communityChestCards.add(cid41);
+		communityChestCards.add(cid42);
+		communityChestCards.add(cid43);
+		communityChestCards.add(cid44);
+		communityChestCards.add(cid45);
+		communityChestCards.add(cid46);
+		communityChestCards.add(cid47);
+		communityChestCards.add(cid48);
+		communityChestCards.add(cid49);
+		communityChestCards.add(cid50);
+		communityChestCards.add(cid51);
+		communityChestCards.add(cid52);
+		communityChestCards.add(cid53);
+		communityChestCards.add(cid54);
+		communityChestCards.add(cid55);
+		communityChestCards.add(cid56);
+		communityChestCards.add(cid57);
+		
+		chanceCards.add(cid58);
+		chanceCards.add(cid59);
+		chanceCards.add(cid60);
+		chanceCards.add(cid61);
+		chanceCards.add(cid62);
+		chanceCards.add(cid63);
+		chanceCards.add(cid64);
+		chanceCards.add(cid65);
+		chanceCards.add(cid66);
+		chanceCards.add(cid67);
+		chanceCards.add(cid68);
+		chanceCards.add(cid69);
+		chanceCards.add(cid70);
+		chanceCards.add(cid71);
+		chanceCards.add(cid72);
+		chanceCards.add(cid73);
 		
 		
 		Player p1 = new Player("David", 1500, true, 1);

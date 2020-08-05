@@ -9,12 +9,19 @@ public class Player {
 	private int money = 1500;
 	private boolean playing;
 	private int position = 1;
+	private int id;
+	private static int idCounter = 1;
+	
+	public Player() {
+		
+	}
 	
 	public Player(String name, int money, boolean playing, int position) {
 		this.name = name;
 		this.money = money;
 		this.playing = playing;
 		this.position = position;
+		this.setId(idCounter++);
 	}
 	
 	public String getName() {
@@ -47,5 +54,17 @@ public class Player {
 
 	public void setPosition(int position) {
 		this.position = position;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public static void resetCounter() {
+		idCounter = 1;
 	}
 }

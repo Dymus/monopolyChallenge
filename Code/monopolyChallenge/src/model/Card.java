@@ -15,4 +15,8 @@ public abstract class Card {
 	public void setId(int id) {
 		this.id = id;
 	}
+	
+	public static void resetCounter() {
+		idCounter = 1;
+	}
 }

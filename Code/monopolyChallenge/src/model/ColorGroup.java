@@ -53,10 +53,6 @@ public class ColorGroup<T> {
 		}
 	}
 	
-	// If it's just <T> then I can't use Card methods without casting!!!
-	// oh i know, jnust made a few methods that except different type or parameters
-	// one City and the other one would be Property
-	
 //	@Override
 //	public String toString() {
 //		for (T card : cards) {
