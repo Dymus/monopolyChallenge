@@ -3,6 +3,7 @@ package gui;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
+import model.BoardSystem;
 import model.City;
 import model.ColorGroup;
 import model.DrawableCard;
@@ -17,6 +18,22 @@ public class Main {
 		System.out.println("Hello World!");
 		init();
 		System.out.println("Succesfully configured the board.");
+		
+		// Test playing
+		Player p1 = new Player("David", 1500, true, 1);
+		Player p2 = new Player("Craig", 1500, true, 1);
+		Player p3 = new Player("Jake", 1500, true, 1);
+		Player p4 = new Player("Jonah", 1500, true, 1);
+		
+		// Adding 4 players
+		
+		BoardSystem.addNewPlayer(p1);
+		BoardSystem.addNewPlayer(p2);
+		BoardSystem.addNewPlayer(p3);
+		BoardSystem.addNewPlayer(p4);
+		
+		int position = BoardSystem.movePlayer(p1, BoardSystem.rollTheDice());
+		
 	}
 	
 	private static void init() {
@@ -89,20 +106,7 @@ public class Main {
 		City cid38 = new City("Park Place".toUpperCase(), 38, 350, false, 35, 175, 500, 1100, 1300, 1500, 175, 200, 200);
 		Tax cid39 = new Tax("Luxury Tax".toUpperCase(), 39, 100);
 		City cid40 = new City("Boardwalk".toUpperCase(), 40, 400, false, 50, 200, 600, 1400, 1700, 2000, 200, 200, 200);
-		
-		
-		// Adding to groups
-		brown.add(cid2, cid4);
-		lightBlue.add(cid7,cid9,cid10);
-		pink.add(cid12, cid14, cid15);
-		orange.add(cid17, cid19, cid20);
-		red.add(cid22, cid24, cid25);
-		yellow.add(cid27, cid28, cid30);
-		green.add(cid32, cid33, cid35);
-		darkBlue.add(cid38, cid40);
-		stations.add(cid6, cid16, cid26, cid36);
-		utilities.add(cid13, cid29);
-		
+
 		// Community chest cards
 		DrawableCard cid41 = new DrawableCard("Advance to Go (Collect $200)", "Collect 200", DrawableType.COMMUNITY_CHEST);
 		DrawableCard cid42 = new DrawableCard("Bank error in your favor - Collect $200", "Collect 200", DrawableType.COMMUNITY_CHEST);
@@ -140,44 +144,139 @@ public class Main {
 		DrawableCard cid72 = new DrawableCard("Your building and loan matures — Collect $150", "Collect 150", DrawableType.CHANCE);
 		DrawableCard cid73 = new DrawableCard("You have won a crossword competition — Collect $100", "Collect 100", DrawableType.CHANCE);
 		
-		// Adding to decks
-		communityChestCards.add(cid41);
-		communityChestCards.add(cid42);
-		communityChestCards.add(cid43);
-		communityChestCards.add(cid44);
-		communityChestCards.add(cid45);
-		communityChestCards.add(cid46);
-		communityChestCards.add(cid47);
-		communityChestCards.add(cid48);
-		communityChestCards.add(cid49);
-		communityChestCards.add(cid50);
-		communityChestCards.add(cid51);
-		communityChestCards.add(cid52);
-		communityChestCards.add(cid53);
-		communityChestCards.add(cid54);
-		communityChestCards.add(cid55);
-		communityChestCards.add(cid56);
-		communityChestCards.add(cid57);
-		
-		chanceCards.add(cid58);
-		chanceCards.add(cid59);
-		chanceCards.add(cid60);
-		chanceCards.add(cid61);
-		chanceCards.add(cid62);
-		chanceCards.add(cid63);
-		chanceCards.add(cid64);
-		chanceCards.add(cid65);
-		chanceCards.add(cid66);
-		chanceCards.add(cid67);
-		chanceCards.add(cid68);
-		chanceCards.add(cid69);
-		chanceCards.add(cid70);
-		chanceCards.add(cid71);
-		chanceCards.add(cid72);
-		chanceCards.add(cid73);
+
+		// LOCAL arrays, lists and what not below this comment, mainly for debugging and testing
+		// Adding to groups
+		brown.add(cid2, cid4);
+		lightBlue.add(cid7,cid9,cid10);
+		pink.add(cid12, cid14, cid15);
+		orange.add(cid17, cid19, cid20);
+		red.add(cid22, cid24, cid25);
+		yellow.add(cid27, cid28, cid30);
+		green.add(cid32, cid33, cid35);
+		darkBlue.add(cid38, cid40);
+		stations.add(cid6, cid16, cid26, cid36);
+		utilities.add(cid13, cid29);
 		
 		
-		Player p1 = new Player("David", 1500, true, 1);
+//		communityChestCards.add(cid41);
+//		communityChestCards.add(cid42);
+//		communityChestCards.add(cid43);
+//		communityChestCards.add(cid44);
+//		communityChestCards.add(cid45);
+//		communityChestCards.add(cid46);
+//		communityChestCards.add(cid47);
+//		communityChestCards.add(cid48);
+//		communityChestCards.add(cid49);
+//		communityChestCards.add(cid50);
+//		communityChestCards.add(cid51);
+//		communityChestCards.add(cid52);
+//		communityChestCards.add(cid53);
+//		communityChestCards.add(cid54);
+//		communityChestCards.add(cid55);
+//		communityChestCards.add(cid56);
+//		communityChestCards.add(cid57);
+//		
+//		chanceCards.add(cid58);
+//		chanceCards.add(cid59);
+//		chanceCards.add(cid60);
+//		chanceCards.add(cid61);
+//		chanceCards.add(cid62);
+//		chanceCards.add(cid63);
+//		chanceCards.add(cid64);
+//		chanceCards.add(cid65);
+//		chanceCards.add(cid66);
+//		chanceCards.add(cid67);
+//		chanceCards.add(cid68);
+//		chanceCards.add(cid69);
+//		chanceCards.add(cid70);
+//		chanceCards.add(cid71);
+//		chanceCards.add(cid72);
+//		chanceCards.add(cid73);
 		
+		
+		
+		
+		
+		// OFFICIAL BOARD SYSTEM
+		
+		// Adding 40 board cards
+		
+		BoardSystem.addCard(cid1);
+		BoardSystem.addCard(cid2);
+		BoardSystem.addCard(cid3);
+		BoardSystem.addCard(cid4);
+		BoardSystem.addCard(cid5);
+		BoardSystem.addCard(cid6);
+		BoardSystem.addCard(cid7);
+		BoardSystem.addCard(cid8);
+		BoardSystem.addCard(cid9);
+		BoardSystem.addCard(cid10);
+		BoardSystem.addCard(cid11);
+		BoardSystem.addCard(cid12);
+		BoardSystem.addCard(cid13);
+		BoardSystem.addCard(cid14);
+		BoardSystem.addCard(cid15);
+		BoardSystem.addCard(cid16);
+		BoardSystem.addCard(cid17);
+		BoardSystem.addCard(cid18);
+		BoardSystem.addCard(cid19);
+		BoardSystem.addCard(cid20);
+		BoardSystem.addCard(cid21);
+		BoardSystem.addCard(cid22);
+		BoardSystem.addCard(cid23);
+		BoardSystem.addCard(cid24);
+		BoardSystem.addCard(cid25);
+		BoardSystem.addCard(cid26);
+		BoardSystem.addCard(cid27);
+		BoardSystem.addCard(cid28);
+		BoardSystem.addCard(cid29);
+		BoardSystem.addCard(cid30);
+		BoardSystem.addCard(cid31);
+		BoardSystem.addCard(cid32);
+		BoardSystem.addCard(cid33);
+		BoardSystem.addCard(cid34);
+		BoardSystem.addCard(cid35);
+		BoardSystem.addCard(cid36);
+		BoardSystem.addCard(cid37);
+		BoardSystem.addCard(cid38);
+		BoardSystem.addCard(cid39);
+		BoardSystem.addCard(cid40);
+		
+		// Adding DrawableCards to decks
+		BoardSystem.addCommunityChestCard(cid41);
+		BoardSystem.addCommunityChestCard(cid42);
+		BoardSystem.addCommunityChestCard(cid43);
+		BoardSystem.addCommunityChestCard(cid44);
+		BoardSystem.addCommunityChestCard(cid45);
+		BoardSystem.addCommunityChestCard(cid46);
+		BoardSystem.addCommunityChestCard(cid47);
+		BoardSystem.addCommunityChestCard(cid48);
+		BoardSystem.addCommunityChestCard(cid49);
+		BoardSystem.addCommunityChestCard(cid50);
+		BoardSystem.addCommunityChestCard(cid51);
+		BoardSystem.addCommunityChestCard(cid52);
+		BoardSystem.addCommunityChestCard(cid53);
+		BoardSystem.addCommunityChestCard(cid54);
+		BoardSystem.addCommunityChestCard(cid55);
+		BoardSystem.addCommunityChestCard(cid56);
+		BoardSystem.addCommunityChestCard(cid57);
+		
+		BoardSystem.addChanceCard(cid58);
+		BoardSystem.addChanceCard(cid59);
+		BoardSystem.addChanceCard(cid60);
+		BoardSystem.addChanceCard(cid61);
+		BoardSystem.addChanceCard(cid62);
+		BoardSystem.addChanceCard(cid63);
+		BoardSystem.addChanceCard(cid64);
+		BoardSystem.addChanceCard(cid65);
+		BoardSystem.addChanceCard(cid66);
+		BoardSystem.addChanceCard(cid67);
+		BoardSystem.addChanceCard(cid68);
+		BoardSystem.addChanceCard(cid69);
+		BoardSystem.addChanceCard(cid70);
+		BoardSystem.addChanceCard(cid71);
+		BoardSystem.addChanceCard(cid72);
+		BoardSystem.addChanceCard(cid73);		
 	}
 }

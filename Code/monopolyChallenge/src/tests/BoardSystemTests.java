@@ -117,7 +117,7 @@ public class BoardSystemTests {
 			Player nextTurnPlayer = BoardSystem.getWhosTurn();
 			int nextTurnPlayerID = nextTurnPlayer.getId();
 			String nextTurnPlayerName = nextTurnPlayer.getName();
-			System.out.println("Now it's player " + nextTurnPlayerName + "'s (" + nextTurnPlayerID + ") turn.");
+			System.out.println("Now it's player " + nextTurnPlayerName + "'s (" + nextTurnPlayerID + ") turn.\n");
 			
 			// TODO make assertions that check for increasing numbers 
 			// until goes to the max player, then go to first one

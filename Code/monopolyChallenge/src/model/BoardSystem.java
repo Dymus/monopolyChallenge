@@ -11,8 +11,11 @@ public class BoardSystem {
 	private static ArrayList<Player> activePlayers = new ArrayList<Player>();
 	private static ArrayList<? super StaticCard> staticCards = new ArrayList<StaticCard>();
 	private static Deque<DrawableCard> chanceCards = new ArrayDeque<DrawableCard>();
+	private static Deque<DrawableCard> communityChestCards = new ArrayDeque<DrawableCard>();
 	private static Player whosTurn;
 	private static boolean firstTurn = true;
+	private static int turnCounter = 0;
+	
 	
 	public BoardSystem(int maxPlayers) {
 		this.maxPlayers = maxPlayers;
@@ -50,24 +53,48 @@ public class BoardSystem {
 	}
 	
 	public static void addCard(SpecialCard sc) {
-		StaticCard staticCard = (StaticCard) sc;
-		staticCards.add(staticCard);
+//		StaticCard staticCard = (StaticCard) sc;
+		staticCards.add(sc);
 	}
 	
-	public static void addChanceCard(DrawableCard card) {
-		chanceCards.add(card);
+	public static void addCard(Tax tx) {
+		staticCards.add(tx);
+	}
+	
+	public static void addCard(City ct) {
+		staticCards.add(ct);
+	}
+	
+	public static void addCard(Property pt) {
+		staticCards.add(pt);
 	}
 	
 	public static void setChanceCards(ArrayDeque<DrawableCard> newChanceCards) {
 		chanceCards = newChanceCards;
 	}
 	
-	public static void setStaticCards(ArrayList<StaticCard> newStaticCards) {
-		staticCards = newStaticCards;
+	public static void addChanceCard(DrawableCard card) {
+		chanceCards.add(card);
 	}
 	
 	public static DrawableCard drawChanceCard() {
 		return chanceCards.poll();
+	}
+	
+	public static void setCommunityChestCards(ArrayDeque<DrawableCard> newCommunityChestCards) {
+		communityChestCards = newCommunityChestCards;
+	}
+	
+	public static void addCommunityChestCard(DrawableCard card) {
+		communityChestCards.add(card);
+	}
+	
+	public static DrawableCard drawCommunityChestCard() {
+		return communityChestCards.poll();
+	}
+	
+	public static void setStaticCards(ArrayList<StaticCard> newStaticCards) {
+		staticCards = newStaticCards;
 	}
 	
 	public static Player getPlayerWithID(int id) {
@@ -131,6 +158,7 @@ public class BoardSystem {
 			if (nextIDTurn == 4) nextIDTurn = 1;	
 			
 			whosTurn = getPlayerWithID(nextIDTurn);
+			turnCounter++;
 		}
 	}
 	
