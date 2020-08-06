@@ -1,8 +1,12 @@
 package model;
 
-public abstract class StaticCard extends Card {
+public class StaticCard extends Card {
 	private String name;
 	private int boardPosition;
+	
+	public StaticCard() {
+		
+	}
 	
 	public StaticCard(String name, int boardPosition) {
 		this.name = name;

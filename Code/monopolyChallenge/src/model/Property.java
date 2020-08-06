@@ -6,7 +6,12 @@ package model;
 
 public class Property extends StaticCard {
 	private int buyCost;
-	private boolean owned;
+	private boolean owned = false;
+	private Player owner = (Player) null;
+	
+	public Property() {
+		
+	}
 	
 	public Property(String name, int boardPosition, int buyCost, boolean owned) {
 		super(name, boardPosition);
@@ -28,5 +33,13 @@ public class Property extends StaticCard {
 	
 	public void setOwned(boolean owned) {
 		this.owned = owned;
+	}
+
+	public Player getOwner() {
+		return owner;
+	}
+
+	public void setOwner(Player owner) {
+		this.owner = owner;
 	}
 }

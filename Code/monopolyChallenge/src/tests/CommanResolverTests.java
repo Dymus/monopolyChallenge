@@ -63,7 +63,7 @@ public class CommanResolverTests {
 		DrawableCard cid3 = new DrawableCard("You have been elected Chairman of the Board – Pay each player $50", "Pay 50 All", DrawableType.CHANCE);
 		BoardSystem.addChanceCard(cid3);
 		int boardPosition = BoardSystem.movePlayer(testPlayer1, 1);
-		SpecialCard card = BoardSystem.getCardWithID(boardPosition);
+		SpecialCard card = BoardSystem.getSpecialCardWithBoardPosition(boardPosition);
 		cr.executeCommand(testPlayer1, card.getCommand(), card.getId());
 		Player playerTwo = BoardSystem.getPlayerWithID(2);
 		assertEquals(playerTwo.getMoney(), 1550);

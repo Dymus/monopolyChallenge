@@ -93,6 +93,10 @@ public class BoardSystem {
 		return communityChestCards.poll();
 	}
 	
+	public static ArrayList<? super StaticCard> getStaticCards() {
+		return staticCards;
+	}
+	
 	public static void setStaticCards(ArrayList<StaticCard> newStaticCards) {
 		staticCards = newStaticCards;
 	}
@@ -116,20 +120,86 @@ public class BoardSystem {
 
 	}
 	
-	// TODO This is awful and the whole keeping of the Cards in the SystemBoard 
-	// needs a rewrite, this is temporary.
-	public static SpecialCard getCardWithID(int id) {
+
+	
+	public static Class getStaticCardClass(int boardPosition) {
+		Iterator<? super StaticCard> it = staticCards.iterator();
+		boolean found = false;
+		StaticCard sc = new StaticCard();
+		
+		while(it.hasNext() && !found) {
+			sc = (StaticCard) it.next();
+			if (sc.getBoardPosition() == boardPosition) {
+				found = true;
+			}
+		}
+		
+		if (found) {
+			return sc.getClass();
+		} else {
+			return (Class) null;
+		}
+	}
+	
+	public static Property getPropertyCardWithBoardPosition(int boardPosition) {
+		for (Object staticCard : staticCards) {
+			if (staticCard instanceof Property) {
+				Property pt = (Property) staticCard;
+				// DEBUG
+//				System.out.println(pt.getName() + ", " + pt.getBoardPosition() + ", " + pt.getBuyCost() + ", " + pt.isOwned());
+				// END-DEBUG
+				if (pt.getBoardPosition() == boardPosition) {
+					return pt;
+				}
+			}
+		}
+		return (Property) null;
+	}
+	
+	public static City getCityCardWithBoardPosition(int boardPosition) {
+		for (Object staticCard : staticCards) {
+			if (staticCard instanceof City) {
+				City ct = (City) staticCard;
+				// DEBUG
+//				System.out.println(ct.getName() + ", " + ct.getBoardPosition() + ", " + ct.getBuyCost() + ", " + ct.isOwned() + ", " + ct.getRent() + ", " + ct.getRentWith1House() + ", " + ct.getWith2Houses() + ", " + ct.getWith3Houses() + ", " + ct.getWith4Houses() + ", " + ct.getWithHotel() + ", " + ct.getMortgageValue() + ", " + ct.getHouseCost() + ", " + ct.getHotelCost());
+				// END-DEBUG
+				if (ct.getBoardPosition() == boardPosition) {
+					return ct;
+				}
+			}
+		}
+		return (City) null;
+	}
+	
+	public static Tax getTaxCardWithBoardPosition(int boardPosition) {
+		for (Object staticCard : staticCards) {
+			if (staticCard instanceof Tax) {
+				Tax tx = (Tax) staticCard;
+				// DEBUG
+//				System.out.println(tx.getName() + ", " + tx.getBoardPosition() + ", " + tx.getValue());
+				// END-DEBUG
+				if (tx.getBoardPosition() == boardPosition) {
+					return tx;
+				}
+			}
+		}
+		return (Tax) null;
+	}
+	
+	public static SpecialCard getSpecialCardWithBoardPosition(int boardPosition) {
 		for (Object staticCard : staticCards) {
 			if (staticCard instanceof SpecialCard) {
 				SpecialCard sc = (SpecialCard) staticCard;
-				if (sc.getBoardPosition() == id) {
+				// DEBUG
+//				System.out.println(sc.getName() + ", " + sc.getBoardPosition() + ", " + sc.getCommand());
+				// END-DEBUG
+				if (sc.getBoardPosition() == boardPosition) {
 					return sc;
 				}
 			}
 		}
 		return (SpecialCard) null;
 	}
-		
 
 	// shouldn't this take playerID instead of player?
 	public static int movePlayer(Player player, int places) {

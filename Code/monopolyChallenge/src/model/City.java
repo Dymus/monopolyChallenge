@@ -14,6 +14,10 @@ public class City extends Property {
 	private int houseCost;
 	private int hotelCost;
 	
+	public City() {
+		
+	}
+	
 	public City(String name, int boardPosition, int buyCost, boolean owned, int rent, int with1House, int with2Houses, int with3Houses, int with4Houses,
 			int withHotel, int mortgageValue, int houseCost, int hotelCost) {
 		super(name, boardPosition, buyCost, owned);
