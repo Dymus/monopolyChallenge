@@ -77,6 +77,7 @@ public class BoardSystem {
 		chanceCards.add(card);
 	}
 	
+	// Draw chance card
 	public static DrawableCard drawChanceCard() {
 		return chanceCards.poll();
 	}
@@ -89,6 +90,7 @@ public class BoardSystem {
 		communityChestCards.add(card);
 	}
 	
+	// Draw community chest card
 	public static DrawableCard drawCommunityChestCard() {
 		return communityChestCards.poll();
 	}
@@ -257,5 +259,48 @@ public class BoardSystem {
 		Player player = getPlayerWithID(playerID);
 		return player.getPosition();
 	}
+	
+	public static String getStaticCardName(int id) {
+		StaticCard card = (StaticCard) staticCards.get(id);
+		String name = card.getName();
+		
+		return name;
+	}
+	
+//	public static DrawableCard getChanceCard(int chanceCardID) {
+//		Iterator<DrawableCard> it = chanceCards.iterator();
+//		boolean found = false;
+//		DrawableCard dc = new DrawableCard();
+//		while (it.hasNext() && !found) {
+//			dc = it.next();
+//			if (dc.getId() == chanceCardID) {
+//				found = true;
+//			}
+//		}
+//		
+//		if (found) {
+//			return dc;
+//		} else {
+//			return (DrawableCard) null;
+//		}
+//	}
+//	
+//	public static DrawableCard getCommunityChestCard(int communityChestCardID) {
+//		Iterator<DrawableCard> it = communityChestCards.iterator();
+//		boolean found = false;
+//		DrawableCard dc = new DrawableCard();
+//		while (it.hasNext() && !found) {
+//			dc = it.next();
+//			if (dc.getId() == communityChestCardID) {
+//				found = true;
+//			}
+//		}
+//		
+//		if (found) {
+//			return dc;
+//		} else {
+//			return (DrawableCard) null;
+//		}
+//	}
 
 } 

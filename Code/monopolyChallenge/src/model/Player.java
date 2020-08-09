@@ -9,6 +9,7 @@ public class Player {
 	private int money = 1500;
 	private boolean playing;
 	private int position = 1;
+	private boolean bot;
 	private int id;
 	private static int idCounter = 1;
 	
@@ -16,11 +17,12 @@ public class Player {
 		
 	}
 	
-	public Player(String name, int money, boolean playing, int position) {
+	public Player(String name, int money, boolean playing, int position, boolean isBot) {
 		this.name = name;
 		this.money = money;
 		this.playing = playing;
 		this.position = position;
+		this.bot = isBot;
 		this.setId(idCounter++);
 	}
 	
@@ -62,6 +64,14 @@ public class Player {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+	
+	public boolean isBot() {
+		return bot;
+	}
+
+	public void setBot(boolean bot) {
+		this.bot = bot;
 	}
 	
 	public static void resetCounter() {

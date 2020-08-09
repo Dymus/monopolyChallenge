@@ -7,6 +7,7 @@ import java.util.Scanner;
 import model.BoardSystem;
 import model.City;
 import model.ColorGroup;
+import model.CommandResolver;
 import model.DrawableCard;
 import model.DrawableType;
 import model.Player;
@@ -15,10 +16,10 @@ import model.SpecialCard;
 import model.Tax;
 
 public class Main {
-	static Scanner sc = new Scanner(System.in);
+	private static Scanner sc = new Scanner(System.in);
+	private static CommandResolver cr = new CommandResolver();
 			
 	public static void main(String[] args) throws InterruptedException {
-		System.out.println("Hello World!");
 		init();
 		System.out.println("Succesfully configured the board. \n");
 		
@@ -26,10 +27,10 @@ public class Main {
 		System.out.println("Please let us know how we should call you below: ");
 		String name = sc.nextLine();
 		
-		Player p1 = new Player(name, 1500, true, 1); // used to be Craig :)
-		Player p2 = new Player("David", 1500, true, 1); 
-//		Player p3 = new Player("Jake", 1500, true, 1);
-//		Player p4 = new Player("Jonah", 1500, true, 1);
+		Player p1 = new Player(name, 1500, true, 1, false); // used to be Craig :)
+		Player p2 = new Player("David", 1500, true, 1, true); 
+//		Player p3 = new Player("Jake", 1500, true, 1, true);
+//		Player p4 = new Player("Jonah", 1500, true, 1, true);
 		
 		// Adding 4 players
 		
@@ -46,15 +47,15 @@ public class Main {
 		System.out.println("| STARTING THE GAME |");
 		BoardSystem.nextTurn();
 		Player whosTurn = BoardSystem.getWhosTurn();
-		if (whosTurn == p1) {
+		if (!whosTurn.isBot()) {
 			System.out.println("You're rolling the dice");
-			Thread.sleep(1000);
+//			Thread.sleep(1000);
 			Integer rolled = BoardSystem.rollTheDice();
 			System.out.println("You got " + rolled + " eyelets on the dice.");
-			Thread.sleep(1000);
+//			Thread.sleep(1000);
 			int position = BoardSystem.movePlayer(whosTurn, rolled);
 			System.out.println("You moved to position " + position + ".");
-			Thread.sleep(1000);
+//			Thread.sleep(1000);
 			Class staticCardClass = BoardSystem.getStaticCardClass(position);
 			// DEBUG
 //			System.out.println(staticCardClass.getSimpleName());
@@ -105,8 +106,9 @@ public class Main {
 				}
 				
 				break;
-			case "Special Card":
+			case "SpecialCard":
 				SpecialCard specialCard = BoardSystem.getSpecialCardWithBoardPosition(position);
+				cr.executeCommand(whosTurn, specialCard.getCommand(), specialCard.getId());
 				break;
 			}
 		} else {			

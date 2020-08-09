@@ -16,6 +16,7 @@
 - playing: boolean
 - position: int
 - id: int
+- bot: boolean
 _- idCounter: int_
 
 </panel_attributes>

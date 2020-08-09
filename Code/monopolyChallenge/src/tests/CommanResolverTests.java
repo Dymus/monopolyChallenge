@@ -30,9 +30,9 @@ public class CommanResolverTests {
 	
 	@BeforeEach
 	public void prepareTestEnv() {		
-		testPlayer1 = new Player("playerOne", 1500, true, 1);
-		testPlayer2 = new Player("playerTwo", 1500, true, 1);
-		testPlayer3 = new Player("playerThree", 1500, true, 1);
+		testPlayer1 = new Player("playerOne", 1500, true, 1, true);
+		testPlayer2 = new Player("playerTwo", 1500, true, 1, true);
+		testPlayer3 = new Player("playerThree", 1500, true, 1, true);
 		
 		BoardSystem.addNewPlayer(testPlayer1);
 		BoardSystem.addNewPlayer(testPlayer2);

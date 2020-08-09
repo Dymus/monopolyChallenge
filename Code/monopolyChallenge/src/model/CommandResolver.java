@@ -16,12 +16,15 @@ public class CommandResolver {
 //		// DEBUG 
 //		System.out.println("Printing first token : " + tokens[0]);
 		
-		
+		String token1;
+		String token2;
+		String token3;
 		// Should this be done with complete recursion? switching token after token?
 		switch(tokens[0]) {
 		case "COLLECT":
 		case "GET": 
 		case "RECEIVE":
+		case "INHERIT":
 			if (Character.isDigit(tokens[1].charAt(0))) {
 				Integer value = Integer.parseInt(tokens[1]);
 				receiveMoney(drawer, value);
@@ -36,17 +39,53 @@ public class CommandResolver {
 			}
 			break;
 		case "DRAW":
-			String token1 = tokens[1];
-//			// DEBUG
-//			System.out.println("Printing token1: (" + token1 + ")");
+			token1 = tokens[1];
 			
 			if (tokens[1].equals("CHANCE")) {
-//				// DEBUG
-//				System.out.println("Got here");
 				DrawableCard card = BoardSystem.drawChanceCard();
+
+				if (drawer.isBot()) {
+					System.out.println("Player " + BoardSystem.getWhosTurn().getName() + " drew the following chance card: " + card.getText());
+				} else {
+					System.out.println("You drew the following chance card: " + card.getText());
+				}
+				
 				executeCommand(drawer, card.getCommand(), card.getId());
-			} else if (tokens[1] == "COMMUNITY") {
-//				DrawableCard card = BoardSystem.drawChanceCard();
+			} else if (tokens[1].equals("COMMUNITY")) {
+				DrawableCard card = BoardSystem.drawCommunityChestCard();
+				
+				if (drawer.isBot()) {
+					System.out.println("Player " + BoardSystem.getWhosTurn().getName() + " drew the following community chest card: " + card.getText());
+				} else {
+					System.out.println("You drew the following community chest card: " + card.getText());
+				}
+		
+				executeCommand(drawer, card.getCommand(), card.getId());
+			}
+			break;
+		case "GO":
+			token1 = tokens[1];
+			if (tokens[1].equals("ID")) {
+				int desiredPosition = Integer.parseInt(tokens[2]);
+				int oldPosition = drawer.getPosition();
+				int placesToMove;
+				
+				// TODO debug
+				if (desiredPosition < oldPosition) {
+					placesToMove = BoardSystem.getStaticCards().size() % Math.abs(desiredPosition - oldPosition);
+				} else {
+					
+					placesToMove = desiredPosition - oldPosition;
+				}
+
+				int newPosition = BoardSystem.movePlayer(drawer, placesToMove);
+				String newPositionName = BoardSystem.getStaticCardName(newPosition);
+				
+				if (drawer.isBot()) {
+					System.out.println("Player " + BoardSystem.getWhosTurn().getName() + " moved to position: " + newPositionName);
+				} else {
+					System.out.println("You moved to position: " + newPositionName);
+				}
 			}
 			break;
 		default:
