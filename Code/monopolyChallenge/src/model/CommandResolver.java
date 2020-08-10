@@ -33,9 +33,15 @@ public class CommandResolver {
 		case "PAY":
 			if(Character.isDigit(tokens[1].charAt(0))) {
 				Integer value = Integer.parseInt(tokens[1]);
-				if (tokens[2].equals("ALL")) {
-					giveAllMoneyFromPlayer(drawer, value, drawableCardID);
+				if (2 < tokens.length) {
+					if (tokens[2].equals("ALL")) {
+						giveAllMoneyFromPlayer(drawer, value, drawableCardID);
+					}
+				} else {
+					drawer.setMoney(drawer.getMoney() - value);
 				}
+			} else {
+				// ERROR
 			}
 			break;
 		case "DRAW":
@@ -86,6 +92,14 @@ public class CommandResolver {
 				} else {
 					System.out.println("You moved to position: " + newPositionName);
 				}
+			} else if (tokens[1].equals("JAIL")) {
+				
+			}
+			break;
+		case "NO":
+			token1 = tokens[1];
+			if (tokens[1].equals("ACTION")) {
+				
 			}
 			break;
 		default:

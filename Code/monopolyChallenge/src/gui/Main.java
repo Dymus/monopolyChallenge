@@ -47,102 +47,144 @@ public class Main {
 		System.out.println("| STARTING THE GAME |");
 		BoardSystem.nextTurn();
 		Player whosTurn = BoardSystem.getWhosTurn();
-		if (!whosTurn.isBot()) {
-			System.out.println("You're rolling the dice");
-//			Thread.sleep(1000);
-			Integer rolled = BoardSystem.rollTheDice();
-			System.out.println("You got " + rolled + " eyelets on the dice.");
-//			Thread.sleep(1000);
-			int position = BoardSystem.movePlayer(whosTurn, rolled);
-			System.out.println("You moved to position " + position + ".");
-//			Thread.sleep(1000);
-			Class staticCardClass = BoardSystem.getStaticCardClass(position);
-			// DEBUG
-//			System.out.println(staticCardClass.getSimpleName());
-			
-			switch(staticCardClass.getSimpleName()) {
-			case "Property":
-				Property property = BoardSystem.getPropertyCardWithBoardPosition(position);
-				System.out.println("You're standing at " + property.getName() + ".");
-				if (!property.isOwned()) {
-					System.out.println("This utility/railroad is not owned by anyone. Would you wish to buy it for " + property.getBuyCost() + "? (Y\\N)");
-					String response = sc.nextLine().toUpperCase();
-					if (response.equals("Y")) {
+		System.out.println(whosTurn.getName() + " gets to throw dice first.");
+		
+		while (true) {
+			whosTurn = BoardSystem.getWhosTurn();
+			if (!whosTurn.isBot()) {
+				System.out.println("You're rolling the dice");
+//				Thread.sleep(1000);
+				Integer rolled = BoardSystem.rollTheDice();
+				System.out.println("You got " + rolled + " eyelets on the dice.");
+//				Thread.sleep(1000);
+				int position = BoardSystem.movePlayer(whosTurn, rolled);
+				System.out.println("You moved to position " + position + ".");
+//				Thread.sleep(1000);
+				Class staticCardClass = BoardSystem.getStaticCardClass(position);
+				// DEBUG
+//				System.out.println(staticCardClass.getSimpleName());
+				
+				switch(staticCardClass.getSimpleName()) {
+				case "Property":
+					Property property = BoardSystem.getPropertyCardWithBoardPosition(position);
+					System.out.println("You're standing at " + property.getName() + ".");
+					if (!property.isOwned()) {
+						System.out.println("This utility/railroad is not owned by anyone. Would you wish to buy it for " + property.getBuyCost() + "? (Y\\N)");
+						String response = sc.nextLine().toUpperCase();
+						if (response.equals("Y")) {
+							if (whosTurn.getMoney() >= property.getBuyCost()) {
+								whosTurn.setMoney(whosTurn.getMoney() - property.getBuyCost());
+								property.setOwned(true);
+								property.setOwner(whosTurn);
+								System.out.println(property.getName() + " is now yours.");
+							}
+						}
+					} else {
+						// TODO
+					}
+					break;
+				case "City":
+					City city = BoardSystem.getCityCardWithBoardPosition(position);
+					System.out.println("You're standing at " + city.getName() + ".");
+					if (!city.isOwned()) {
+						System.out.println("This city does not belong to anyone. Would you wish to buy it for " + city.getBuyCost() + "? (Y\\N)");
+						String response = sc.nextLine().toUpperCase();
+						if (response.equals("Y")) {
+							if (whosTurn.getMoney() >= city.getBuyCost()) {
+								whosTurn.setMoney(whosTurn.getMoney() - city.getBuyCost());
+								city.setOwned(true);
+								city.setOwner(whosTurn);
+								System.out.println(city.getName() + " is now yours.");
+							}
+						}
+					} else {
+						// TODO
+					}
+					break;
+				case "Tax":
+					Tax tax = BoardSystem.getTaxCardWithBoardPosition(position);
+					System.out.println("You're standing at " + tax.getName() + ".");
+					if (whosTurn.getMoney() >= tax.getValue()) {
+						whosTurn.setMoney(whosTurn.getMoney() - tax.getValue());
+						System.out.println("You paid " + tax.getValue() + " " + tax.getName().toLowerCase());
+					}
+					
+					break;
+				case "SpecialCard":
+					SpecialCard specialCard = BoardSystem.getSpecialCardWithBoardPosition(position);
+					if (specialCard.getName().equals("JAIL")) {
+						System.out.println("You're visiting " + specialCard.getName() + ".");
+					} else {
+						System.out.println("You're standing at " + specialCard.getName() + ".");
+					}
+					cr.executeCommand(whosTurn, specialCard.getCommand(), specialCard.getId());
+					break;
+				}
+			} else {			
+				System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") is rolling the dice");
+//				Thread.sleep(1000);
+				Integer rolled = BoardSystem.rollTheDice();
+				System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") got " + rolled + " eyelets on the dice.");
+//				Thread.sleep(1000);
+				int position = BoardSystem.movePlayer(whosTurn, rolled);
+				System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") moved to position " + position + ".");
+//				Thread.sleep(1000);
+				Class staticCardClass = BoardSystem.getStaticCardClass(position);
+				// DEBUG
+//				System.out.println(staticCardClass.getSimpleName());
+				
+				switch(staticCardClass.getSimpleName()) {
+				case "Property":
+					Property property = BoardSystem.getPropertyCardWithBoardPosition(position);
+					System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") is standing at " + property.getName() + ".");
+					if (!property.isOwned()) {
 						if (whosTurn.getMoney() >= property.getBuyCost()) {
 							whosTurn.setMoney(whosTurn.getMoney() - property.getBuyCost());
 							property.setOwned(true);
 							property.setOwner(whosTurn);
-							System.out.println(property.getName() + " is now yours.");
-						}
+							System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") bought " + property.getName() + ".");
+						}	
+					} else {
+						// TODO
 					}
-				} else {
-					// TODO
-				}
-				break;
-			case "City":
-				City city = BoardSystem.getCityCardWithBoardPosition(position);
-				System.out.println("You're standing at " + city.getName() + ".");
-				if (!city.isOwned()) {
-					System.out.println("This city does not belong to anyone. Would you wish to buy it for " + city.getBuyCost() + "? (Y\\N)");
-					String response = sc.nextLine().toUpperCase();
-					if (response.equals("Y")) {
+					break;
+				case "City":
+					City city = BoardSystem.getCityCardWithBoardPosition(position);
+					System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") is standing at " + city.getName() + ".");
+					if (!city.isOwned()) {
 						if (whosTurn.getMoney() >= city.getBuyCost()) {
 							whosTurn.setMoney(whosTurn.getMoney() - city.getBuyCost());
 							city.setOwned(true);
 							city.setOwner(whosTurn);
-							System.out.println(city.getName() + " is now yours.");
+							System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") bought " + city.getName() + ".");
 						}
+					} else {
+						// TODO
 					}
-				} else {
-					// TODO
+					break;
+				case "Tax":
+					Tax tax = BoardSystem.getTaxCardWithBoardPosition(position);
+					System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") is standing at " + tax.getName() + ".");
+					if (whosTurn.getMoney() >= tax.getValue()) {
+						whosTurn.setMoney(whosTurn.getMoney() - tax.getValue());
+						System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") paid " + tax.getValue() + " " + tax.getName().toLowerCase());
+					} else {
+						
+					}
+					break;
+				case "SpecialCard":
+					SpecialCard specialCard = BoardSystem.getSpecialCardWithBoardPosition(position);
+					if (specialCard.getName().equals("JAIL")) {
+						System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") is visiting " + specialCard.getName() + ".");
+					} else {
+						System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") is standing at " + specialCard.getName() + ".");
+					}
+					cr.executeCommand(whosTurn, specialCard.getCommand(), specialCard.getId());
+					break;
 				}
-				break;
-			case "Tax":
-				Tax tax = BoardSystem.getTaxCardWithBoardPosition(position);
-				System.out.println("You're standing at " + tax.getName() + ".");
-				if (whosTurn.getMoney() >= tax.getValue()) {
-					whosTurn.setMoney(whosTurn.getMoney() - tax.getValue());
-					System.out.println("You paid " + tax.getValue() + " " + tax.getName().toLowerCase());
-				}
-				
-				break;
-			case "SpecialCard":
-				SpecialCard specialCard = BoardSystem.getSpecialCardWithBoardPosition(position);
-				cr.executeCommand(whosTurn, specialCard.getCommand(), specialCard.getId());
-				break;
 			}
-		} else {			
-//			int position = BoardSystem.movePlayer(whosTurn, BoardSystem.rollTheDice());
-//			System.out.println("Player " + whosTurn.getName() + " moved to position " + position + ".");
-//			Class staticCardClass = BoardSystem.getStaticCardClass(position);
-//			// DEBUG
-//			System.out.println(staticCardClass.getSimpleName());
-//			
-//			switch(staticCardClass.getSimpleName()) {
-//			case "Property":
-//				Property property = BoardSystem.getPropertyCardWithBoardPosition(position);
-//				if (!property.isOwned()) {
-//					System.out.println("This utility/railroad is unowned. Would you wish to buy it for " + property.getBuyCost() + "? (Y\\N)");
-//					String response = sc.nextLine().toUpperCase();
-//					if (response.equals("Y")) {
-//						if (whosTurn.getMoney() >= property.getBuyCost()) {
-//							whosTurn.setMoney(whosTurn.getMoney() - property.getBuyCost());
-//							
-//						}
-//					}
-//
-//				}
-//				break;
-//			case "City":
-//				City city = BoardSystem.getCityCardWithBoardPosition(position);
-//				break;
-//			case "Tax":
-//				Tax tax = BoardSystem.getTaxCardWithBoardPosition(position);
-//				break;
-//			case "Special Card":
-//				SpecialCard specialCard = BoardSystem.getSpecialCardWithBoardPosition(position);
-//				break;
-//			}
+			BoardSystem.nextTurn();
+			System.out.println();
 		}
 	}
 	
@@ -160,7 +202,7 @@ public class Main {
 		Deque<DrawableCard> communityChestCards = new ArrayDeque<DrawableCard>();
 		Deque<DrawableCard> chanceCards = new ArrayDeque<DrawableCard>();
 
-		SpecialCard cid1 = new SpecialCard("Go".toUpperCase(), 1, "Collect salary");
+		SpecialCard cid1 = new SpecialCard("Go".toUpperCase(), 1, "No action"); // Previous command "Collect salary"
 		
 		// Brown
 		City cid2 = new City("Mediterranean Avenue".toUpperCase(), 2, 60, false, 2, 10, 30, 90, 160, 250, 30, 50, 50);
@@ -218,7 +260,7 @@ public class Main {
 		City cid40 = new City("Boardwalk".toUpperCase(), 40, 400, false, 50, 200, 600, 1400, 1700, 2000, 200, 200, 200);
 
 		// Community chest cards
-		DrawableCard cid41 = new DrawableCard("Advance to Go (Collect $200)", "Collect 200", DrawableType.COMMUNITY_CHEST);
+		DrawableCard cid41 = new DrawableCard("Advance to Go (Collect $200)", "Collect 200", DrawableType.COMMUNITY_CHEST); // TODO work on the command
 		DrawableCard cid42 = new DrawableCard("Bank error in your favor - Collect $200", "Collect 200", DrawableType.COMMUNITY_CHEST);
 		DrawableCard cid43 = new DrawableCard("Doctor's fee - Pay $50", "Pay 50", DrawableType.COMMUNITY_CHEST);
 		DrawableCard cid44 = new DrawableCard("From sale of stock you get $50", "Get 50", DrawableType.COMMUNITY_CHEST);

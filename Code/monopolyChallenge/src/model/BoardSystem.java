@@ -109,6 +109,7 @@ public class BoardSystem {
 		Player player = new Player();
 		while (it.hasNext() && !found) {
 			player = it.next();
+			
 			if (player.getId() == id) {
 				found = true;
 			}
@@ -227,7 +228,7 @@ public class BoardSystem {
 		} else {
 			int currentTurn = whosTurn.getId();
 			int nextIDTurn = (currentTurn + 1);
-			if (nextIDTurn == 4) nextIDTurn = 1;	
+			if (nextIDTurn == activePlayers.size() + 1) nextIDTurn = 1;	
 			
 			whosTurn = getPlayerWithID(nextIDTurn);
 			turnCounter++;
@@ -261,10 +262,30 @@ public class BoardSystem {
 	}
 	
 	public static String getStaticCardName(int id) {
-		StaticCard card = (StaticCard) staticCards.get(id);
+		StaticCard card = getStaticCardWithID(id);
 		String name = card.getName();
 		
 		return name;
+	}
+	
+	public static StaticCard getStaticCardWithID(int id) {
+		Iterator<? super StaticCard> it = staticCards.iterator();
+		boolean found = false;
+		StaticCard sc = new StaticCard();
+		
+		while (it.hasNext() && !found) {
+			sc = (StaticCard) it.next();
+			if (sc.getId() == id) {
+				found = true;
+			}
+		}
+		
+		if (found) {
+			return sc;
+		} else {
+			return (StaticCard) null;
+		}
+		
 	}
 	
 //	public static DrawableCard getChanceCard(int chanceCardID) {
