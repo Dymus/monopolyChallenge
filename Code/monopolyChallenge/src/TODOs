@@ -1,4 +1,6 @@
 TODOs
-# !!! Keeping of cards in the SystemBoard, the staticCards.
 # https://stackoverflow.com/questions/5762491/how-to-print-color-in-console-using-system-out-println JColor library to mark cards.
 # method that calculates how many places you need to move, if you want to move to position X
+# Fix null pointer errors.
+# Rent paying for player and bot.
+# Auctions if a player doesn't buy property/city.

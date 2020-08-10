@@ -18,6 +18,16 @@ import model.Tax;
 public class Main {
 	private static Scanner sc = new Scanner(System.in);
 	private static CommandResolver cr = new CommandResolver();
+	private static ColorGroup<City> brown;
+	private static ColorGroup<City> lightBlue;
+	private static ColorGroup<City> pink;
+	private static ColorGroup<City> orange;
+	private static ColorGroup<City> red;
+	private static ColorGroup<City> yellow;
+	private static ColorGroup<City> green;
+	private static ColorGroup<City> darkBlue;
+	private static ColorGroup<Property> railroads;
+	private static ColorGroup<Property> utilities;
 			
 	public static void main(String[] args) throws InterruptedException {
 		init();
@@ -80,7 +90,55 @@ public class Main {
 							}
 						}
 					} else {
-						// TODO
+						Player owner = property.getOwner();
+						System.out.println("This property belongs to player " + owner.getName() + "(ID:" + owner.getId() + ").");
+						int amountOwned = 0;
+						int rent = 0;
+						
+						// Calculating rent
+						
+						// Checking if property is railroad or utility 
+						boolean isRailroad = false;
+						if (railroads.getCards().contains(property)) {
+							isRailroad = true;
+						}
+						
+						// Counting owned properties
+						if (isRailroad) {
+							for (Property p: railroads.getCards()) {
+								if (p.getOwner() == owner) {
+									amountOwned++;
+								}
+							}
+							if (amountOwned == 1) {
+								rent = 25;
+							} else if (amountOwned == 2) {
+								rent = 50;
+							} else if (amountOwned == 3) {
+								rent = 100;
+							} else if (amountOwned == 4) {
+								rent = 200;
+							}
+						} else {
+							for (Property p: utilities.getCards()) {
+								if (p.getOwner() == owner) {
+									amountOwned++;
+								}
+							}
+							if (amountOwned == 1) {
+								rent = rolled * 4;
+							} else if (amountOwned == 2) {
+								rent = rolled * 10;
+							}
+						}
+						
+						if (whosTurn.getMoney() >= rent) {
+							whosTurn.setMoney(whosTurn.getMoney() - rent);
+							System.out.println("You paid " + rent + " rent to player " + owner.getName() + "(ID:" + owner.getId() + ").");
+						} else {
+							// TODO credits? end game? mortgage options?
+							System.out.println("You don't have sufficient funds to pay rent!");
+						}	
 					}
 					break;
 				case "City":
@@ -98,6 +156,13 @@ public class Main {
 							}
 						}
 					} else {
+						// TODO RENT
+						Player owner = city.getOwner();
+						System.out.println("This city belongs to player " + owner.getName() + "(ID:" + owner.getId() + ").");
+						int amountOwned = 0;
+						int rent = 0;
+						
+						// Calculating rent
 						// TODO
 					}
 					break;
@@ -145,7 +210,7 @@ public class Main {
 							System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") bought " + property.getName() + ".");
 						}	
 					} else {
-						// TODO
+						// TODO RENT
 					}
 					break;
 				case "City":
@@ -159,7 +224,7 @@ public class Main {
 							System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") bought " + city.getName() + ".");
 						}
 					} else {
-						// TODO
+						// TODO RENT
 					}
 					break;
 				case "Tax":
@@ -189,18 +254,18 @@ public class Main {
 	}
 	
 	private static void init() {
-		ColorGroup<City> brown = new ColorGroup("Brown");
-		ColorGroup<City> lightBlue = new ColorGroup("Light Blue");
-		ColorGroup<City> pink = new ColorGroup("Pink");
-		ColorGroup<City> orange = new ColorGroup("Orange");
-		ColorGroup<City> red = new ColorGroup("Red");
-		ColorGroup<City> yellow = new ColorGroup("Yellow");
-		ColorGroup<City> green = new ColorGroup("Green");
-		ColorGroup<City> darkBlue = new ColorGroup("Dark Blue");
-		ColorGroup<Property> stations = new ColorGroup("Stations");
-		ColorGroup<Property> utilities = new ColorGroup("Utilities");
-		Deque<DrawableCard> communityChestCards = new ArrayDeque<DrawableCard>();
-		Deque<DrawableCard> chanceCards = new ArrayDeque<DrawableCard>();
+		brown = new ColorGroup("Brown");
+		lightBlue = new ColorGroup("Light Blue");
+		pink = new ColorGroup("Pink");
+		orange = new ColorGroup("Orange");
+		red = new ColorGroup("Red");
+		yellow = new ColorGroup("Yellow");
+		green = new ColorGroup("Green");
+		darkBlue = new ColorGroup("Dark Blue");
+		railroads = new ColorGroup("Railroads");
+		utilities = new ColorGroup("Utilities");
+//		Deque<DrawableCard> communityChestCards = new ArrayDeque<DrawableCard>();
+//		Deque<DrawableCard> chanceCards = new ArrayDeque<DrawableCard>();
 
 		SpecialCard cid1 = new SpecialCard("Go".toUpperCase(), 1, "No action"); // Previous command "Collect salary"
 		
@@ -260,7 +325,7 @@ public class Main {
 		City cid40 = new City("Boardwalk".toUpperCase(), 40, 400, false, 50, 200, 600, 1400, 1700, 2000, 200, 200, 200);
 
 		// Community chest cards
-		DrawableCard cid41 = new DrawableCard("Advance to Go (Collect $200)", "Collect 200", DrawableType.COMMUNITY_CHEST); // TODO work on the command
+		DrawableCard cid41 = new DrawableCard("Advance to Go (Collect $200)", "Go ID 1", DrawableType.COMMUNITY_CHEST); 
 		DrawableCard cid42 = new DrawableCard("Bank error in your favor - Collect $200", "Collect 200", DrawableType.COMMUNITY_CHEST);
 		DrawableCard cid43 = new DrawableCard("Doctor's fee - Pay $50", "Pay 50", DrawableType.COMMUNITY_CHEST);
 		DrawableCard cid44 = new DrawableCard("From sale of stock you get $50", "Get 50", DrawableType.COMMUNITY_CHEST);
@@ -307,7 +372,7 @@ public class Main {
 		yellow.add(cid27, cid28, cid30);
 		green.add(cid32, cid33, cid35);
 		darkBlue.add(cid38, cid40);
-		stations.add(cid6, cid16, cid26, cid36);
+		railroads.add(cid6, cid16, cid26, cid36);
 		utilities.add(cid13, cid29);
 		
 		

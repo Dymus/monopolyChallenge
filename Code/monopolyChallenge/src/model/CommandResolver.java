@@ -127,9 +127,9 @@ public class CommandResolver {
 			for (Player activePlayer : activePlayers) {
 				activePlayer.setMoney(activePlayer.getMoney()+value);
 			}
-			System.out.println("Player with ID "+player.getId()+ " has drawn card with ID " + drawableCardID + ". Every player received " + value + " dollars");
+			System.out.println("Player with ID " + player.getId() + " has drawn card with ID " + drawableCardID + ". Every player received " + value + " dollars");
 		} else {
-			System.err.println("Player with ID "+player.getId()+ " has drawn card with ID " + drawableCardID + " but does not have sufficient funds to complete the transaction.");
+			System.err.println("Player with ID " + player.getId() + " has drawn card with ID " + drawableCardID + " but does not have sufficient funds to complete the transaction.");
 		}
 	}
 }
