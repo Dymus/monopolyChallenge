@@ -29,10 +29,7 @@ public class Main {
 	private static ColorGroup<Property> railroads;
 	private static ColorGroup<Property> utilities;
 			
-	public static void main(String[] args) throws InterruptedException {
-		init();
-		System.out.println("Succesfully configured the board. \n");
-		
+	public static void initializePlayers() {
 		// Test playing
 		System.out.println("Please let us know how we should call you below: ");
 		String name = sc.nextLine();
@@ -48,7 +45,16 @@ public class Main {
 		BoardSystem.addNewPlayer(p2);
 //		BoardSystem.addNewPlayer(p3);
 //		BoardSystem.addNewPlayer(p4);
+	}
+	
+	public static int start() {
 		
+		// Start tracking thread with GUI
+		PlayerStatTracker trackerThread = new PlayerStatTracker();
+		new Thread(trackerThread).start();
+		
+
+
 		// DEBUG
 //		for (int i = 0; i < BoardSystem.getStaticCards().size(); i++) {
 //			System.out.println(i+1 + " " + BoardSystem.getStaticCards().get(i).getClass().getSimpleName());
@@ -153,6 +159,8 @@ public class Main {
 								city.setOwned(true);
 								city.setOwner(whosTurn);
 								System.out.println(city.getName() + " is now yours.");
+							} else {
+								// TODO no money
 							}
 						}
 					} else {
@@ -164,6 +172,8 @@ public class Main {
 						
 						// Calculating rent
 						// TODO
+						
+						
 					}
 					break;
 				case "Tax":
@@ -253,7 +263,14 @@ public class Main {
 		}
 	}
 	
-	private static void init() {
+	public static void main(String[] args) throws InterruptedException {
+		init();
+		initializePlayers();
+		System.out.println("Succesfully configured the board. \n");
+		start();
+	}
+	
+	public static void init() {
 		brown = new ColorGroup("Brown");
 		lightBlue = new ColorGroup("Light Blue");
 		pink = new ColorGroup("Pink");
