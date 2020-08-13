@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
 import model.BoardSystem;
+import model.CardSetType;
 import model.DrawableCard;
 import model.Player;
 import model.SpecialCard;
@@ -36,8 +37,8 @@ public class BoardSystemTests {
 		BoardSystem.addNewPlayer(testPlayer3);
 		
 		
-		SpecialCard cid1 = new SpecialCard("Go".toUpperCase(), 1, "Collect salary");
-		SpecialCard cid2 = new SpecialCard("Chance Pink".toUpperCase(), 2, "Draw Chance");
+		SpecialCard cid1 = new SpecialCard("Go".toUpperCase(), 1, CardSetType.OTHER, "Collect salary");
+		SpecialCard cid2 = new SpecialCard("Chance Pink".toUpperCase(), 2, CardSetType.OTHER, "Draw Chance");
 		BoardSystem.addCard(cid1);
 		BoardSystem.addCard(cid2);
 	}

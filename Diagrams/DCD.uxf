@@ -4,7 +4,7 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>100</x>
+      <x>170</x>
       <y>650</y>
       <w>140</w>
       <h>150</h>
@@ -25,7 +25,7 @@ _- idCounter: int_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>710</x>
+      <x>810</x>
       <y>360</y>
       <w>160</w>
       <h>160</h>
@@ -43,7 +43,7 @@ _- idCounter: int_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>350</x>
+      <x>450</x>
       <y>800</y>
       <w>160</w>
       <h>160</h>
@@ -60,7 +60,7 @@ _- idCounter: int_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>540</x>
+      <x>640</x>
       <y>800</y>
       <w>120</w>
       <h>160</h>
@@ -76,10 +76,10 @@ _- idCounter: int_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>350</x>
+      <x>450</x>
       <y>1000</y>
       <w>160</w>
-      <h>180</h>
+      <h>220</h>
     </coordinates>
     <panel_attributes>city
 --
@@ -91,13 +91,15 @@ _- idCounter: int_
 - withHotel: int
 - mortgageValue: int
 - houseCost: int
-- hotelCost: int</panel_attributes>
+- hotelCost: int
+- houses: int
+- hotels: int</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>420</x>
+      <x>520</x>
       <y>710</y>
       <w>180</w>
       <h>110</h>
@@ -108,7 +110,7 @@ _- idCounter: int_
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>580</x>
+      <x>680</x>
       <y>710</y>
       <w>80</w>
       <h>110</h>
@@ -119,8 +121,8 @@ _- idCounter: int_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1180</x>
-      <y>440</y>
+      <x>1210</x>
+      <y>480</y>
       <w>150</w>
       <h>160</h>
     </coordinates>
@@ -132,7 +134,7 @@ _- idCounter: int_
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>0</x>
+      <x>70</x>
       <y>600</y>
       <w>100</w>
       <h>50</h>
@@ -145,36 +147,38 @@ bg=yellow</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>410</x>
-      <y>220</y>
-      <w>190</w>
+      <x>310</x>
+      <y>410</y>
+      <w>380</w>
       <h>100</h>
     </coordinates>
-    <panel_attributes>ColorGroup
+    <panel_attributes>CardSet
 --
 - name: String
-- cards: ArrayList&lt;Card&gt;
+- cards: ArrayList&lt;StaticCard&gt;
+-
++ getSetWithName(String name): CardSet
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>590</x>
-      <y>220</y>
-      <w>140</w>
+      <x>680</x>
+      <y>400</y>
+      <w>110</w>
       <h>180</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
 m2=1..*
 holds &gt;</panel_attributes>
-    <additional_attributes>10.0;10.0;60.0;10.0;60.0;150.0;120.0;150.0</additional_attributes>
+    <additional_attributes>10.0;20.0;70.0;20.0;70.0;160.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>700</x>
+      <x>800</x>
       <y>800</y>
       <w>140</w>
       <h>160</h>
@@ -189,7 +193,7 @@ holds &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>410</x>
+      <x>510</x>
       <y>950</y>
       <w>30</w>
       <h>70</h>
@@ -200,7 +204,7 @@ holds &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>680</x>
+      <x>780</x>
       <y>710</y>
       <w>110</w>
       <h>110</h>
@@ -211,21 +215,21 @@ holds &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>230</x>
+      <x>300</x>
       <y>650</y>
-      <w>140</w>
+      <w>170</w>
       <h>190</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
 m2=1..*
 owns &gt;</panel_attributes>
-    <additional_attributes>10.0;10.0;50.0;10.0;50.0;160.0;120.0;160.0</additional_attributes>
+    <additional_attributes>10.0;10.0;80.0;10.0;80.0;160.0;150.0;160.0</additional_attributes>
   </element>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>530</x>
+      <x>630</x>
       <y>970</y>
       <w>140</w>
       <h>50</h>
@@ -238,7 +242,7 @@ bg=gray</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>680</x>
+      <x>780</x>
       <y>970</y>
       <w>180</w>
       <h>170</h>
@@ -260,7 +264,7 @@ bg=green</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>890</x>
+      <x>950</x>
       <y>730</y>
       <w>210</w>
       <h>30</h>
@@ -272,8 +276,8 @@ bg=black</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>240</x>
-      <y>210</y>
+      <x>80</x>
+      <y>430</y>
       <w>150</w>
       <h>60</h>
     </coordinates>
@@ -286,7 +290,7 @@ bg=pink</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>190</x>
+      <x>290</x>
       <y>850</y>
       <w>150</w>
       <h>60</h>
@@ -299,7 +303,7 @@ bg=red</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>860</x>
+      <x>960</x>
       <y>210</y>
       <w>190</w>
       <h>190</h>
@@ -313,7 +317,7 @@ m2=1
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1030</x>
+      <x>1130</x>
       <y>210</y>
       <w>310</w>
       <h>160</h>
@@ -330,7 +334,7 @@ m2=1
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>910</x>
+      <x>970</x>
       <y>560</y>
       <w>150</w>
       <h>160</h>
@@ -345,32 +349,33 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>800</x>
+      <x>900</x>
       <y>510</y>
-      <w>190</w>
+      <w>150</w>
       <h>70</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;170.0;50.0</additional_attributes>
+    <additional_attributes>10.0;10.0;130.0;50.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>560</x>
+      <x>620</x>
       <y>560</y>
-      <w>150</w>
+      <w>210</w>
       <h>160</h>
     </coordinates>
     <panel_attributes>StaticCard
 --
 - name: String
-- boardPosition: int</panel_attributes>
+- boardPosition: int
+- cardSetType: cardSetType</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>890</x>
+      <x>990</x>
       <y>400</y>
       <w>180</w>
       <h>50</h>
@@ -384,7 +389,7 @@ bg=orange</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>60</x>
+      <x>160</x>
       <y>1050</y>
       <w>280</w>
       <h>30</h>
@@ -396,32 +401,32 @@ bg=yellow</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>620</x>
+      <x>750</x>
       <y>510</y>
-      <w>150</w>
+      <w>120</w>
       <h>70</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>130.0;10.0;10.0;50.0</additional_attributes>
+    <additional_attributes>100.0;10.0;10.0;50.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>160</x>
+      <x>230</x>
       <y>110</y>
-      <w>1030</w>
+      <w>1060</w>
       <h>560</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=*
 m2=1
 &lt; manages</panel_attributes>
-    <additional_attributes>10.0;540.0;10.0;20.0;1000.0;20.0;1000.0;100.0</additional_attributes>
+    <additional_attributes>10.0;540.0;10.0;20.0;1030.0;20.0;1030.0;100.0</additional_attributes>
   </element>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>890</x>
+      <x>950</x>
       <y>760</y>
       <w>260</w>
       <h>30</h>
@@ -433,7 +438,7 @@ m2=1
   <element>
     <id>UMLUseCase</id>
     <coordinates>
-      <x>660</x>
+      <x>760</x>
       <y>0</y>
       <w>230</w>
       <h>90</h>
@@ -442,5 +447,34 @@ m2=1
 version
 bg=#3c7a00</panel_attributes>
     <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>250</x>
+      <y>270</y>
+      <w>410</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>CardSetManager
+--
+cardSets: ArrayList&lt;CardSet&gt;
+--
++ doesPlayerOwnWholeSet(Player p, String name): boolean</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>420</x>
+      <y>210</y>
+      <w>290</w>
+      <h>220</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1..*
+manages &gt;</panel_attributes>
+    <additional_attributes>10.0;60.0;10.0;20.0;250.0;20.0;250.0;200.0</additional_attributes>
   </element>
 </diagram>

@@ -56,6 +56,7 @@ public class PlayerStatTracker extends JFrame implements Runnable {
 			public void run() {
 				try {
 					PlayerStatTracker frame = new PlayerStatTracker();
+					frame.setAlwaysOnTop (true);
 					refresh();
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -77,7 +78,7 @@ public class PlayerStatTracker extends JFrame implements Runnable {
 		contentPane.setLayout(null);
 		
 		panel = new JPanel();
-		panel.setBackground(Color.LIGHT_GRAY);
+		panel.setBackground(Color.GREEN);
 		panel.setBounds(160, 16, 100, 100);
 		contentPane.add(panel);
 		
@@ -154,7 +155,7 @@ public class PlayerStatTracker extends JFrame implements Runnable {
 		contentPane.add(lblNewLabel_8);
 		
 		panel_1 = new JPanel();
-		panel_1.setBackground(Color.LIGHT_GRAY);
+		panel_1.setBackground(Color.PINK);
 		panel_1.setBounds(342, 16, 100, 100);
 		contentPane.add(panel_1);
 		
@@ -190,7 +191,6 @@ public class PlayerStatTracker extends JFrame implements Runnable {
 	}
 	
 	private static void refresh() {
-		// TODO
 		ArrayList<Player> players = BoardSystem.getActivePlayers();
 		Player p1 = players.get(0);
 		Player p2 = players.get(1);
@@ -211,9 +211,5 @@ public class PlayerStatTracker extends JFrame implements Runnable {
 		lblNewLabel_3_1.setText(String.valueOf(p2.getPosition()));
 		lblNewLabel_4_1.setText(String.valueOf(p2.getId()));
 		lblNewLabel_5_1.setText(String.valueOf(p2.isBot()));
-		
-
-		
-		
 	}
 }

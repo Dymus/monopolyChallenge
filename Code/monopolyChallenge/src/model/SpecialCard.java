@@ -13,8 +13,8 @@ public class SpecialCard extends StaticCard {
 		
 	}
 	
-	public SpecialCard(String name, int boardPosition, String command) {
-		super(name, boardPosition);
+	public SpecialCard(String name, int boardPosition, CardSetType cardSetType, String command) {
+		super(name, boardPosition, cardSetType);
 		this.command = command;
 	}
 	

@@ -13,14 +13,16 @@ public class City extends Property {
 	private int mortgageValue;
 	private int houseCost;
 	private int hotelCost;
+	private int houses = 0;
+	private int hotels = 0;
 	
 	public City() {
 		
 	}
 	
-	public City(String name, int boardPosition, int buyCost, boolean owned, int rent, int with1House, int with2Houses, int with3Houses, int with4Houses,
+	public City(String name, int boardPosition, CardSetType cardSetType, int buyCost, boolean owned, int rent, int with1House, int with2Houses, int with3Houses, int with4Houses,
 			int withHotel, int mortgageValue, int houseCost, int hotelCost) {
-		super(name, boardPosition, buyCost, owned);
+		super(name, boardPosition, cardSetType, buyCost, owned);
 		this.rent = rent;
 		this.with1House = with1House;
 		this.with2Houses = with2Houses;
@@ -102,5 +104,29 @@ public class City extends Property {
 	
 	public void setHotelCost(int hotelCost) { 
 		this.hotelCost = houseCost;
+	}
+
+	public int getHouses() {
+		return houses;
+	}
+
+	public void setHouses(int houses) {
+		this.houses = houses;
+	}
+
+	public int getHotels() {
+		return hotels;
+	}
+
+	public void setHotels(int hotels) {
+		this.hotels = hotels;
+	}
+	
+	public boolean isUnimproved() {
+		if (houses == 0 && hotels == 0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

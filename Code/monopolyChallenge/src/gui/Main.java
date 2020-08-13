@@ -1,12 +1,15 @@
 package gui;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Deque;
 import java.util.Scanner;
 
+import ctr.CardSetManager;
 import model.BoardSystem;
 import model.City;
-import model.ColorGroup;
+import model.CardSet;
+import model.CardSetType;
 import model.CommandResolver;
 import model.DrawableCard;
 import model.DrawableType;
@@ -18,24 +21,26 @@ import model.Tax;
 public class Main {
 	private static Scanner sc = new Scanner(System.in);
 	private static CommandResolver cr = new CommandResolver();
-	private static ColorGroup<City> brown;
-	private static ColorGroup<City> lightBlue;
-	private static ColorGroup<City> pink;
-	private static ColorGroup<City> orange;
-	private static ColorGroup<City> red;
-	private static ColorGroup<City> yellow;
-	private static ColorGroup<City> green;
-	private static ColorGroup<City> darkBlue;
-	private static ColorGroup<Property> railroads;
-	private static ColorGroup<Property> utilities;
+	private static CardSetManager csM = new CardSetManager(); 
+	private static CardSet<City> brown;
+	private static CardSet<City> lightBlue;
+	private static CardSet<City> pink;
+	private static CardSet<City> orange;
+	private static CardSet<City> red;
+	private static CardSet<City> yellow;
+	private static CardSet<City> green;
+	private static CardSet<City> darkBlue;
+	private static CardSet<Property> railroads;
+	private static CardSet<Property> utilities;
 			
 	public static void initializePlayers() {
 		// Test playing
 		System.out.println("Please let us know how we should call you below: ");
 		String name = sc.nextLine();
 		
-		Player p1 = new Player(name, 1500, true, 1, false); // used to be Craig :)
-		Player p2 = new Player("David", 1500, true, 1, true); 
+		// 9999999 money temporarily, 1500 on start by rules
+		Player p1 = new Player(name, 9999999, true, 1, false); // used to be Craig :)
+		Player p2 = new Player("David", 9999999, true, 1, true); 
 //		Player p3 = new Player("Jake", 1500, true, 1, true);
 //		Player p4 = new Player("Jonah", 1500, true, 1, true);
 		
@@ -47,14 +52,16 @@ public class Main {
 //		BoardSystem.addNewPlayer(p4);
 	}
 	
-	public static int start() {
+	public static int start() throws InterruptedException {
 		
-		// Start tracking thread with GUI
-		PlayerStatTracker trackerThread = new PlayerStatTracker();
+		// Start player statistics tracking thread with GUI
+		PlayerStatTracker playerStattrackerThread = new PlayerStatTracker();
+		new Thread(playerStattrackerThread).start();
+		
+		// Start card set tracking thread with GUI
+		CardSetTracker trackerThread = new CardSetTracker(csM);
 		new Thread(trackerThread).start();
 		
-
-
 		// DEBUG
 //		for (int i = 0; i < BoardSystem.getStaticCards().size(); i++) {
 //			System.out.println(i+1 + " " + BoardSystem.getStaticCards().get(i).getClass().getSimpleName());
@@ -92,7 +99,10 @@ public class Main {
 								whosTurn.setMoney(whosTurn.getMoney() - property.getBuyCost());
 								property.setOwned(true);
 								property.setOwner(whosTurn);
+//								csM.updateCardInCardSet(property, property.getCardSetType());
 								System.out.println(property.getName() + " is now yours.");
+							} else {
+								// TODO no moneys
 							}
 						}
 					} else {
@@ -116,6 +126,7 @@ public class Main {
 									amountOwned++;
 								}
 							}
+							
 							if (amountOwned == 1) {
 								rent = 25;
 							} else if (amountOwned == 2) {
@@ -158,6 +169,7 @@ public class Main {
 								whosTurn.setMoney(whosTurn.getMoney() - city.getBuyCost());
 								city.setOwned(true);
 								city.setOwner(whosTurn);
+//								csM.updateCardInCardSet(city, city.getCardSetType());
 								System.out.println(city.getName() + " is now yours.");
 							} else {
 								// TODO no money
@@ -167,13 +179,42 @@ public class Main {
 						// TODO RENT
 						Player owner = city.getOwner();
 						System.out.println("This city belongs to player " + owner.getName() + "(ID:" + owner.getId() + ").");
-						int amountOwned = 0;
 						int rent = 0;
 						
 						// Calculating rent
-						// TODO
 						
+						// Getting cardSet from the city
+						CardSetType cst = city.getCardSetType();
 						
+						// Checking if lot is unimproved, if it has houses or hotels 
+						// and calculating final rent
+						if (city.isUnimproved()) {
+							if (csM.doesPlayerOwnWholeSet(owner, cst)) {
+								rent = city.getRent() * 2;
+							} else {
+								rent = city.getRent();
+							}
+						} else {
+							int houses = city.getHouses();
+							int hotels = city.getHotels();
+							if (hotels == 1) {
+								rent = city.getWithHotel();
+							} else {
+								if (houses == 1) rent = city.getRentWith1House();
+								else if (houses == 2) rent = city.getWith2Houses();
+								else if (houses == 3) rent = city.getWith3Houses();
+								else rent = city.getWith4Houses();
+							}
+						}
+						
+						// Paying rent
+						if (whosTurn.getMoney() >= rent) {
+							whosTurn.setMoney(whosTurn.getMoney() - rent);
+							System.out.println("You paid " + rent + " rent to player " + owner.getName() + "(ID:" + owner.getId() + ").");
+						} else {
+							// TODO credits? end game? mortgage options?
+							System.out.println("You don't have sufficient funds to pay rent!");
+						}
 					}
 					break;
 				case "Tax":
@@ -217,10 +258,60 @@ public class Main {
 							whosTurn.setMoney(whosTurn.getMoney() - property.getBuyCost());
 							property.setOwned(true);
 							property.setOwner(whosTurn);
+//							csM.updateCardInCardSet(property, property.getCardSetType());
 							System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") bought " + property.getName() + ".");
 						}	
 					} else {
-						// TODO RENT
+						Player owner = property.getOwner();
+						System.out.println("This property belongs to player " + owner.getName() + "(ID:" + owner.getId() + ").");
+						int amountOwned = 0;
+						int rent = 0;
+						
+						// Calculating rent
+						
+						// Checking if property is railroad or utility 
+						boolean isRailroad = false;
+						if (railroads.getCards().contains(property)) {
+							isRailroad = true;
+						}
+						
+						// Counting owned properties
+						if (isRailroad) {
+							for (Property p: railroads.getCards()) {
+								if (p.getOwner() == owner) {
+									amountOwned++;
+								}
+							}
+							
+							if (amountOwned == 1) {
+								rent = 25;
+							} else if (amountOwned == 2) {
+								rent = 50;
+							} else if (amountOwned == 3) {
+								rent = 100;
+							} else if (amountOwned == 4) {
+								rent = 200;
+							}
+						} else {
+							for (Property p: utilities.getCards()) {
+								if (p.getOwner() == owner) {
+									amountOwned++;
+								}
+							}
+							if (amountOwned == 1) {
+								rent = rolled * 4;
+							} else if (amountOwned == 2) {
+								rent = rolled * 10;
+							}
+						}
+						
+						if (whosTurn.getMoney() >= rent) {
+							whosTurn.setMoney(whosTurn.getMoney() - rent);
+							System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") payed " + rent + " rent to player " + owner.getName() + "(ID:" + owner.getId() + ").");
+						} else {
+							// TODO credits? end game? mortgage options?
+							System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") doesn't have sufficient funds to pay rent!");
+						}
 					}
 					break;
 				case "City":
@@ -231,10 +322,49 @@ public class Main {
 							whosTurn.setMoney(whosTurn.getMoney() - city.getBuyCost());
 							city.setOwned(true);
 							city.setOwner(whosTurn);
+//							csM.updateCardInCardSet(city, city.getCardSetType());
 							System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") bought " + city.getName() + ".");
 						}
 					} else {
 						// TODO RENT
+						Player owner = city.getOwner();
+						System.out.println("This city belongs to player " + owner.getName() + "(ID:" + owner.getId() + ").");
+						int rent = 0;
+						
+						// Calculating rent
+						
+						// Getting cardSet from the city
+						CardSetType cst = city.getCardSetType();
+						
+						// Checking if lot is unimproved, if it has houses or hotels 
+						// and calculating final rent
+						if (city.isUnimproved()) {
+							if (csM.doesPlayerOwnWholeSet(owner, cst)) {
+								rent = city.getRent() * 2;
+							} else {
+								rent = city.getRent();
+							}
+						} else {
+							int houses = city.getHouses();
+							int hotels = city.getHotels();
+							if (hotels == 1) {
+								rent = city.getWithHotel();
+							} else {
+								if (houses == 1) rent = city.getRentWith1House();
+								else if (houses == 2) rent = city.getWith2Houses();
+								else if (houses == 3) rent = city.getWith3Houses();
+								else rent = city.getWith4Houses();
+							}
+						}
+						
+						// Paying rent
+						if (whosTurn.getMoney() >= rent) {
+							whosTurn.setMoney(whosTurn.getMoney() - rent);
+							System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") payed " + rent + " rent to player " + owner.getName() + "(ID:" + owner.getId() + ").");
+						} else {
+							// TODO credits? end game? mortgage options?
+							System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") doesn't have sufficient funds to pay rent!");
+						}
 					}
 					break;
 				case "Tax":
@@ -263,83 +393,76 @@ public class Main {
 		}
 	}
 	
-	public static void main(String[] args) throws InterruptedException {
-		init();
-		initializePlayers();
-		System.out.println("Succesfully configured the board. \n");
-		start();
-	}
-	
 	public static void init() {
-		brown = new ColorGroup("Brown");
-		lightBlue = new ColorGroup("Light Blue");
-		pink = new ColorGroup("Pink");
-		orange = new ColorGroup("Orange");
-		red = new ColorGroup("Red");
-		yellow = new ColorGroup("Yellow");
-		green = new ColorGroup("Green");
-		darkBlue = new ColorGroup("Dark Blue");
-		railroads = new ColorGroup("Railroads");
-		utilities = new ColorGroup("Utilities");
+		brown = new CardSet<City>(CardSetType.BROWN);
+		lightBlue = new CardSet<City>(CardSetType.LIGHT_BLUE);
+		pink = new CardSet<City>(CardSetType.PINK);
+		orange = new CardSet<City>(CardSetType.ORANGE);
+		red = new CardSet<City>(CardSetType.RED);
+		yellow = new CardSet<City>(CardSetType.YELLOW);
+		green = new CardSet<City>(CardSetType.GREEN);
+		darkBlue = new CardSet<City>(CardSetType.DARK_BLUE);
+		railroads = new CardSet<Property>(CardSetType.RAILROADS);
+		utilities = new CardSet<Property>(CardSetType.UTILITIES);
 //		Deque<DrawableCard> communityChestCards = new ArrayDeque<DrawableCard>();
 //		Deque<DrawableCard> chanceCards = new ArrayDeque<DrawableCard>();
 
-		SpecialCard cid1 = new SpecialCard("Go".toUpperCase(), 1, "No action"); // Previous command "Collect salary"
+		SpecialCard cid1 = new SpecialCard("Go".toUpperCase(), 1, CardSetType.OTHER, "No action"); // Previous command "Collect salary"
 		
 		// Brown
-		City cid2 = new City("Mediterranean Avenue".toUpperCase(), 2, 60, false, 2, 10, 30, 90, 160, 250, 30, 50, 50);
-		SpecialCard cid3 = new SpecialCard("Community Chest 1".toUpperCase(), 3, "Draw community chest");
-		City cid4 = new City("Baltic Avenue".toUpperCase(), 4, 60, false, 4, 20, 60, 180, 320, 450, 30, 50, 50);
-		Tax cid5 = new Tax("Income Tax".toUpperCase(), 5, 200);
-		Property cid6 = new Property("Reading Railroad".toUpperCase(), 6, 200, false); // Station
+		City cid2 = new City("Mediterranean Avenue".toUpperCase(), 2, CardSetType.BROWN, 60, false, 2, 10, 30, 90, 160, 250, 30, 50, 50);
+		SpecialCard cid3 = new SpecialCard("Community Chest 1".toUpperCase(), 3, CardSetType.OTHER, "Draw community chest");
+		City cid4 = new City("Baltic Avenue".toUpperCase(), 4, CardSetType.BROWN, 60, false, 4, 20, 60, 180, 320, 450, 30, 50, 50);
+		Tax cid5 = new Tax("Income Tax".toUpperCase(), 5, CardSetType.OTHER, 200);
+		Property cid6 = new Property("Reading Railroad".toUpperCase(), 6, CardSetType.RAILROADS, 200, false); // Station
 		
 		// Light Blue
-		City cid7 = new City("Oriental Avenue".toUpperCase(), 7, 100, false, 6, 30, 90, 270, 400, 550, 50, 50, 50);
-		SpecialCard cid8 = new SpecialCard("Chance Pink".toUpperCase(), 8, "Draw chance");
-		City cid9 = new City("Vermont Avenue".toUpperCase(), 9, 100, false, 6, 30, 90, 270, 400, 550, 50, 50, 50);
-		City cid10 = new City("Connecticut Avenue".toUpperCase(), 10, 120, false, 8, 40, 100, 300, 450, 600, 60, 50, 50);
-		SpecialCard cid11 = new SpecialCard("Jail".toUpperCase(), 11, "No action");
+		City cid7 = new City("Oriental Avenue".toUpperCase(), 7, CardSetType.LIGHT_BLUE, 100, false, 6, 30, 90, 270, 400, 550, 50, 50, 50);
+		SpecialCard cid8 = new SpecialCard("Chance Pink".toUpperCase(), 8, CardSetType.OTHER, "Draw chance");
+		City cid9 = new City("Vermont Avenue".toUpperCase(), 9, CardSetType.LIGHT_BLUE, 100, false, 6, 30, 90, 270, 400, 550, 50, 50, 50);
+		City cid10 = new City("Connecticut Avenue".toUpperCase(), 10, CardSetType.LIGHT_BLUE, 120, false, 8, 40, 100, 300, 450, 600, 60, 50, 50);
+		SpecialCard cid11 = new SpecialCard("Jail".toUpperCase(), 11, CardSetType.OTHER, "No action");
 		
 		// Pink
-		City cid12 = new City("St.Charles Place".toUpperCase(), 12, 140, false, 10, 50, 150, 450, 625, 750, 70, 100, 100);
-		Property cid13 = new Property("Electric Company".toUpperCase(), 13, 150, false); // Utility
-		City cid14 = new City("States Avenue".toUpperCase(), 14, 140, false, 10, 50, 150, 450, 625, 750, 70, 100, 100);
-		City cid15 = new City("Virginia Avenue".toUpperCase(), 15, 160, false, 12, 60, 180, 500, 700, 900, 80, 100, 100);
-		Property cid16 = new Property("Pennsylvania Railroad".toUpperCase(), 16, 200, false); // Station
+		City cid12 = new City("St.Charles Place".toUpperCase(), 12, CardSetType.PINK, 140, false, 10, 50, 150, 450, 625, 750, 70, 100, 100);
+		Property cid13 = new Property("Electric Company".toUpperCase(), 13, CardSetType.UTILITIES,  150, false); // Utility
+		City cid14 = new City("States Avenue".toUpperCase(), 14, CardSetType.PINK, 140, false, 10, 50, 150, 450, 625, 750, 70, 100, 100);
+		City cid15 = new City("Virginia Avenue".toUpperCase(), 15, CardSetType.PINK, 160, false, 12, 60, 180, 500, 700, 900, 80, 100, 100);
+		Property cid16 = new Property("Pennsylvania Railroad".toUpperCase(), 16, CardSetType.RAILROADS, 200, false); // Station
 		
 		// Orange
-		City cid17 = new City("St. James Place".toUpperCase(), 17, 180, false, 14, 70, 200, 550, 750, 950, 90, 100, 100);
-		SpecialCard cid18 = new SpecialCard("Community Chest 2".toUpperCase(), 18, "Draw community chest");
-		City cid19 = new City("Tennessee Avenue".toUpperCase(), 19, 180, false, 14, 70, 200, 550, 750, 950, 90, 100, 100);
-		City cid20 = new City("New York Avenue".toUpperCase(), 20, 200, false, 16, 80, 220, 600, 800, 1000, 100, 100, 100);
-		SpecialCard cid21 = new SpecialCard("Free Parking".toUpperCase(), 21, "No action");
+		City cid17 = new City("St. James Place".toUpperCase(), 17, CardSetType.ORANGE, 180, false, 14, 70, 200, 550, 750, 950, 90, 100, 100);
+		SpecialCard cid18 = new SpecialCard("Community Chest 2".toUpperCase(), 18, CardSetType.OTHER, "Draw community chest");
+		City cid19 = new City("Tennessee Avenue".toUpperCase(), 19, CardSetType.ORANGE, 180, false, 14, 70, 200, 550, 750, 950, 90, 100, 100);
+		City cid20 = new City("New York Avenue".toUpperCase(), 20, CardSetType.ORANGE, 200, false, 16, 80, 220, 600, 800, 1000, 100, 100, 100);
+		SpecialCard cid21 = new SpecialCard("Free Parking".toUpperCase(), 21, CardSetType.OTHER, "No action");
 		
 		// Red
-		City cid22 = new City("Kentucky Avenue".toUpperCase(), 22, 220, false, 18, 90, 250, 700, 875, 1050, 110, 150, 150);
-		SpecialCard cid23 = new SpecialCard("Chance Blue".toUpperCase(), 23, "Draw chance");
-		City cid24 = new City("Indiana Avenue".toUpperCase(), 24, 220, false, 18, 90, 250, 700, 875, 1050, 110, 150, 150);
-		City cid25 = new City("Illinoi Avenue".toUpperCase(), 25, 240, false, 20, 100, 300, 750, 925, 1100, 120, 150, 150);
-		Property cid26 = new Property("B. & O. Railroad".toUpperCase(), 26, 200, false); // Station
+		City cid22 = new City("Kentucky Avenue".toUpperCase(), 22, CardSetType.RED, 220, false, 18, 90, 250, 700, 875, 1050, 110, 150, 150);
+		SpecialCard cid23 = new SpecialCard("Chance Blue".toUpperCase(), 23, CardSetType.OTHER, "Draw chance");
+		City cid24 = new City("Indiana Avenue".toUpperCase(), 24, CardSetType.RED, 220, false, 18, 90, 250, 700, 875, 1050, 110, 150, 150);
+		City cid25 = new City("Illinoi Avenue".toUpperCase(), 25, CardSetType.RED, 240, false, 20, 100, 300, 750, 925, 1100, 120, 150, 150);
+		Property cid26 = new Property("B. & O. Railroad".toUpperCase(), 26, CardSetType.RAILROADS, 200, false); // Station
 		
 		// Yellow
-		City cid27 = new City("Atlantic Avenue".toUpperCase(), 27, 260, false, 22, 110, 330, 800, 975, 1150, 130, 150, 150);
-		City cid28 = new City("Ventnor Avenue".toUpperCase(), 28, 260, false, 22, 110, 330, 800, 975, 1150, 130, 150, 150);
-		Property cid29 = new Property("Water Works".toUpperCase(), 29, 150, false); // Utility
-		City cid30 = new City("Marvin Gardens".toUpperCase(), 30, 280, false, 24, 120, 360, 850, 1025, 1200, 140, 150, 150);
-		SpecialCard cid31 = new SpecialCard("Go To Jail".toUpperCase(), 31, "Go Jail");
+		City cid27 = new City("Atlantic Avenue".toUpperCase(), 27, CardSetType.YELLOW, 260, false, 22, 110, 330, 800, 975, 1150, 130, 150, 150);
+		City cid28 = new City("Ventnor Avenue".toUpperCase(), 28, CardSetType.YELLOW, 260, false, 22, 110, 330, 800, 975, 1150, 130, 150, 150);
+		Property cid29 = new Property("Water Works".toUpperCase(), 29, CardSetType.UTILITIES, 150, false); // Utility
+		City cid30 = new City("Marvin Gardens".toUpperCase(), 30, CardSetType.YELLOW, 280, false, 24, 120, 360, 850, 1025, 1200, 140, 150, 150);
+		SpecialCard cid31 = new SpecialCard("Go To Jail".toUpperCase(), 31, CardSetType.OTHER, "Go Jail");
 		
 		// Green
-		City cid32 = new City("Pacific Avenue".toUpperCase(), 32, 300, false, 26, 130, 390, 900, 1100, 1275, 150, 200, 200);
-		City cid33 = new City("North Carolina Avenue".toUpperCase(), 33, 300, false, 26, 130, 390, 900, 1100, 1275, 150, 200, 200);
-		SpecialCard cid34 = new SpecialCard("Community Chest 3", 34, "Draw Community Chest");
-		City cid35 = new City("Pennsylvania Avenue".toUpperCase(), 35, 320, false, 28, 150, 450, 1000, 1200, 1400, 160, 200, 200);
-		Property cid36 = new Property("Short Line".toUpperCase(), 36, 200, false); // Station
-		SpecialCard cid37 = new SpecialCard("Chance Orange".toUpperCase(), 37, "Draw Chance");
+		City cid32 = new City("Pacific Avenue".toUpperCase(), 32, CardSetType.GREEN, 300, false, 26, 130, 390, 900, 1100, 1275, 150, 200, 200);
+		City cid33 = new City("North Carolina Avenue".toUpperCase(), 33, CardSetType.GREEN, 300, false, 26, 130, 390, 900, 1100, 1275, 150, 200, 200);
+		SpecialCard cid34 = new SpecialCard("Community Chest 3", 34, CardSetType.OTHER, "Draw Community Chest");
+		City cid35 = new City("Pennsylvania Avenue".toUpperCase(), 35, CardSetType.GREEN, 320, false, 28, 150, 450, 1000, 1200, 1400, 160, 200, 200);
+		Property cid36 = new Property("Short Line".toUpperCase(), 36, CardSetType.RAILROADS, 200, false); // Station
+		SpecialCard cid37 = new SpecialCard("Chance Orange".toUpperCase(), 37, CardSetType.OTHER, "Draw Chance");
 		
 		// Dark Blue
-		City cid38 = new City("Park Place".toUpperCase(), 38, 350, false, 35, 175, 500, 1100, 1300, 1500, 175, 200, 200);
-		Tax cid39 = new Tax("Luxury Tax".toUpperCase(), 39, 100);
-		City cid40 = new City("Boardwalk".toUpperCase(), 40, 400, false, 50, 200, 600, 1400, 1700, 2000, 200, 200, 200);
+		City cid38 = new City("Park Place".toUpperCase(), 38, CardSetType.DARK_BLUE, 350, false, 35, 175, 500, 1100, 1300, 1500, 175, 200, 200);
+		Tax cid39 = new Tax("Luxury Tax".toUpperCase(), 39, CardSetType.OTHER, 100);
+		City cid40 = new City("Boardwalk".toUpperCase(), 40, CardSetType.DARK_BLUE, 400, false, 50, 200, 600, 1400, 1700, 2000, 200, 200, 200);
 
 		// Community chest cards
 		DrawableCard cid41 = new DrawableCard("Advance to Go (Collect $200)", "Go ID 1", DrawableType.COMMUNITY_CHEST); 
@@ -392,6 +515,16 @@ public class Main {
 		railroads.add(cid6, cid16, cid26, cid36);
 		utilities.add(cid13, cid29);
 		
+		csM.addCardSet(brown);
+		csM.addCardSet(lightBlue);
+		csM.addCardSet(pink);
+		csM.addCardSet(orange);
+		csM.addCardSet(red);
+		csM.addCardSet(yellow);
+		csM.addCardSet(green);
+		csM.addCardSet(darkBlue);
+		csM.addCardSet(railroads);
+		csM.addCardSet(utilities);		
 		
 //		communityChestCards.add(cid41);
 //		communityChestCards.add(cid42);
@@ -512,5 +645,12 @@ public class Main {
 		BoardSystem.addChanceCard(cid71);
 		BoardSystem.addChanceCard(cid72);
 		BoardSystem.addChanceCard(cid73);		
+	}
+	
+	public static void main(String[] args) throws InterruptedException {
+		init();
+		initializePlayers();
+		System.out.println("Succesfully configured the board. \n");
+		start();
 	}
 }

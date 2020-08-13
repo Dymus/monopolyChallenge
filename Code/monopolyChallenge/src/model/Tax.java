@@ -11,8 +11,8 @@ public class Tax extends StaticCard {
 		
 	}
 	
-	public Tax(String name, int boardPosition, int value) {
-		super(name,boardPosition);
+	public Tax(String name, int boardPosition, CardSetType cardSetType, int value) {
+		super(name, boardPosition, cardSetType);
 		this.value = value;
 	}
 	

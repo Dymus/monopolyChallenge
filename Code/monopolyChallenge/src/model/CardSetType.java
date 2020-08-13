@@ -1,0 +1,5 @@
+package model;
+
+public enum CardSetType {
+	BROWN, LIGHT_BLUE, PINK, ORANGE, RED, YELLOW, GREEN, DARK_BLUE, RAILROADS, UTILITIES, OTHER
+}

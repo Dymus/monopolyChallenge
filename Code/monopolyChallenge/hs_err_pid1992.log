@@ -1,0 +1,30 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x000000010ad93430, pid=1992, tid=17927
+#
+# JRE version: Java(TM) SE Runtime Environment (11.0.2+9) (build 11.0.2+9-LTS)
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (11.0.2+9-LTS, mixed mode, tiered, compressed oops, g1 gc, bsd-amd64)
+# Problematic frame:
+# C  [libjimage.dylib+0x2430]  ImageFileReader::find_location_index(char const*, unsigned long long*) const+0x2c
+#
+# No core dump will be written. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.java.com/bugreport/crash.jsp
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: -agentlib:jdwp=transport=dt_socket,suspend=y,address=localhost:49979 -javaagent:/Users/dymus/eclipse/java-2019-12/Eclipse.app/Contents/Eclipse/configuration/org.eclipse.osgi/695/0/.cp/lib/javaagent-shaded.jar -Dfile.encoding=UTF-8 --module-path=/Users/dymus/.p2/pool/plugins/org.junit.jupiter.api_5.6.0.v20200203-2009.jar:/Users/dymus/.p2/pool/plugins/org.junit.jupiter.engine_5.6.0.v20200203-2009.jar:/Users/dymus/.p2/pool/plugins/org.junit.jupiter.migrationsupport_5.6.0.v20200203-2009.jar:/Users/dymus/.p2/pool/plugins/org.junit.jupiter.params_5.6.0.v20200203-2009.jar:/Users/dymus/.p2/pool/plugins/org.junit.platform.commons_1.6.0.v20200203-2009.jar:/Users/dymus/.p2/pool/plugins/org.junit.platform.engine_1.6.0.v20200203-2009.jar:/Users/dymus/.p2/pool/plugins/org.junit.platform.launcher_1.6.0.v20200203-2009.jar:/Users/dymus/.p2/pool/plugins/org.junit.platform.runner_1.6.0.v20200203-2009.jar:/Users/dymus/.p2/pool/plugins/org.junit.platform.suite.api_1.6.0.v20200203-2009.jar:/Users/dymus/.p2/pool/plugins/org.junit.vintage.engine_5.6.0.v20200203-2009.jar:/Users/dymus/.p2/pool/plugins/org.opentest4j_1.2.0.v20190826-0900.jar:/Users/dymus/.p2/pool/plugins/org.apiguardian_1.1.0.v20190826-0900.jar:/Users/dymus/.p2/pool/plugins/org.junit_4.13.0.v20200204-1500.jar:/Users/dymus/.p2/pool/plugins/org.hamcrest.core_1.3.0.v20180420-1519.jar:/Users/dymus/Developer/monopolyChallenge/Code/monopolyChallenge/bin -Djdk.module.main=monopolyChallenge monopolyChallenge/gui.Main
+
+Host: iMac18,1 x86_64 3600 MHz, 6 cores, 8G, Darwin 17.7.0
+Time: Thu Aug 13 18:11:30 2020 CEST elapsed time: 128 seconds (0d 0h 2m 8s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00007f9f87808800):  JavaThread "Signal Dispatcher" daemon [_thread_in_vm, id=17927, stack(0x0000700001e45000,0x0000700001f45000)]
+
+Stack: [0x0000700001e45000,0x0000700001f45000],  sp=0x0000700001f432c0,  free space=1016k
+Native frames: (J=compiled Java code, A=aot compiled Java code, j=interpreted, Vv=VM code, C=native code)
+C

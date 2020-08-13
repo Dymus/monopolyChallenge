@@ -13,8 +13,8 @@ public class Property extends StaticCard {
 		
 	}
 	
-	public Property(String name, int boardPosition, int buyCost, boolean owned) {
-		super(name, boardPosition);
+	public Property(String name, int boardPosition, CardSetType cardSetType, int buyCost, boolean owned) {
+		super(name, boardPosition, cardSetType);
 		this.buyCost = buyCost;
 		this.owned = owned;
 	}

@@ -323,5 +323,4 @@ public class BoardSystem {
 //			return (DrawableCard) null;
 //		}
 //	}
-
 } 
