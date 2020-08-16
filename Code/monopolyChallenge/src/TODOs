@@ -1,12 +1,16 @@
 TODOs
+ 
+# Add money when you pass through GO.
 # Fix null pointer errors.
 
+
 # Should make container class for CardSet ? :woozy:
-# Rent paying for player and bot.
+
 
 
 # https://stackoverflow.com/questions/5762491/how-to-print-color-in-console-using-system-out-println JColor library to mark cards.
 # method that calculates how many places you need to move, if you want to move to position X
-# Auctions if a player doesn't buy property/city.
+# Auction if a player doesn't buy property/city.
 # Houses must be built evenly across all properties.
 # Allow players to interact with a lot after they drew a community chest card or chance card and where moved to that place.
+# Return CommunityChest and Chance cards after drawing.

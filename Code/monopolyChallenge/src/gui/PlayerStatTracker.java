@@ -33,6 +33,12 @@ public class PlayerStatTracker extends JFrame implements Runnable {
 	private static JLabel lblNewLabel_2_1;
 	private static JLabel lblNewLabel_1_1;
 	private static JLabel lblNewLabel_8;
+	private static JLabel lblNewLabel_7;
+	private static JLabel lblNewLabel_7_1;
+	private static JLabel lblNewLabel_7_2;
+	private static JLabel lblNewLabel_7_3;
+	private static JLabel lblNewLabel_7_4;
+	private static JLabel lblNewLabel_7_5;
 
 	@Override
 	public void run() {
@@ -71,7 +77,7 @@ public class PlayerStatTracker extends JFrame implements Runnable {
 	 */
 	public PlayerStatTracker() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 704, 460);
+		setBounds(100, 100, 704, 338);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -188,12 +194,54 @@ public class PlayerStatTracker extends JFrame implements Runnable {
 		lblNewLabel_6_5.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblNewLabel_6_5.setBounds(62, 216, 100, 13);
 		contentPane.add(lblNewLabel_6_5);
+		
+		JPanel panel_1_1 = new JPanel();
+		panel_1_1.setBackground(Color.ORANGE);
+		panel_1_1.setBounds(524, 16, 100, 100);
+		contentPane.add(panel_1_1);
+		
+		lblNewLabel_7 = new JLabel("New label");
+		lblNewLabel_7.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_7.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_7.setBounds(524, 126, 100, 13);
+		contentPane.add(lblNewLabel_7);
+		
+		lblNewLabel_7_1 = new JLabel("New label");
+		lblNewLabel_7_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_7_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_7_1.setBounds(524, 148, 100, 13);
+		contentPane.add(lblNewLabel_7_1);
+		
+		lblNewLabel_7_2 = new JLabel("New label");
+		lblNewLabel_7_2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_7_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_7_2.setBounds(524, 171, 100, 13);
+		contentPane.add(lblNewLabel_7_2);
+		
+		lblNewLabel_7_3 = new JLabel("New label");
+		lblNewLabel_7_3.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_7_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_7_3.setBounds(524, 194, 100, 13);
+		contentPane.add(lblNewLabel_7_3);
+		
+		lblNewLabel_7_4 = new JLabel("New label");
+		lblNewLabel_7_4.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_7_4.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_7_4.setBounds(524, 217, 100, 13);
+		contentPane.add(lblNewLabel_7_4);
+		
+		lblNewLabel_7_5 = new JLabel("New label");
+		lblNewLabel_7_5.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_7_5.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_7_5.setBounds(524, 240, 100, 13);
+		contentPane.add(lblNewLabel_7_5);
 	}
 	
 	private static void refresh() {
 		ArrayList<Player> players = BoardSystem.getActivePlayers();
 		Player p1 = players.get(0);
 		Player p2 = players.get(1);
+		Player p3 = players.get(2);
 		
 		// P1
 		
@@ -211,5 +259,13 @@ public class PlayerStatTracker extends JFrame implements Runnable {
 		lblNewLabel_3_1.setText(String.valueOf(p2.getPosition()));
 		lblNewLabel_4_1.setText(String.valueOf(p2.getId()));
 		lblNewLabel_5_1.setText(String.valueOf(p2.isBot()));
+		
+		// P3
+		lblNewLabel_7.setText(p3.getName());
+		lblNewLabel_7_1.setText(String.valueOf(p3.getMoney()));
+		lblNewLabel_7_2.setText(String.valueOf(p3.isPlaying()));
+		lblNewLabel_7_3.setText(String.valueOf(p3.getPosition()));
+		lblNewLabel_7_4.setText(String.valueOf(p3.getId()));
+		lblNewLabel_7_5.setText(String.valueOf(p3.isBot()));
 	}
 }

@@ -82,6 +82,16 @@ public class BoardSystem {
 		return chanceCards.poll();
 	}
 	
+	// Return chance card
+	public static boolean returnChanceCard(DrawableCard card) {
+		if (chanceCards.add(card)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	
 	public static void setCommunityChestCards(ArrayDeque<DrawableCard> newCommunityChestCards) {
 		communityChestCards = newCommunityChestCards;
 	}
@@ -93,6 +103,15 @@ public class BoardSystem {
 	// Draw community chest card
 	public static DrawableCard drawCommunityChestCard() {
 		return communityChestCards.poll();
+	}
+	
+	// Return community chest card
+	public static boolean returnCommunityChestCard(DrawableCard card) {
+		if (communityChestCards.add(card)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	public static ArrayList<? super StaticCard> getStaticCards() {
@@ -286,6 +305,14 @@ public class BoardSystem {
 			return (StaticCard) null;
 		}
 		
+	}
+	
+	public static int getCommunityChestCardDeckSize() {
+		return communityChestCards.size();
+	}
+	
+	public static int getChanceCardDeckSize() {
+		return chanceCards.size();
 	}
 	
 //	public static DrawableCard getChanceCard(int chanceCardID) {

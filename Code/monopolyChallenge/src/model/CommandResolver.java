@@ -33,12 +33,21 @@ public class CommandResolver {
 		case "PAY":
 			if(Character.isDigit(tokens[1].charAt(0))) {
 				Integer value = Integer.parseInt(tokens[1]);
-				if (2 < tokens.length) {
+				if (tokens.length > 2) {
 					if (tokens[2].equals("ALL")) {
 						giveAllMoneyFromPlayer(drawer, value, drawableCardID);
 					}
 				} else {
-					drawer.setMoney(drawer.getMoney() - value);
+					if (drawer.getMoney() >= value) {
+						drawer.setMoney(drawer.getMoney() - value);
+					} else {
+						if (drawer.isBot()) {
+							System.out.println("Player " + drawer.getName() + "(ID:" + drawer.getId() + ") has drawn card with ID " + drawableCardID + ", but does not have sufficient funds to pay the bank.");
+						} else {
+							// TODO No money
+							System.out.println("You have drawn card with ID " + drawableCardID + ", but don't have sufficient funds to pay the bank.");
+						}
+					}
 				}
 			} else {
 				// ERROR
@@ -51,22 +60,24 @@ public class CommandResolver {
 				DrawableCard card = BoardSystem.drawChanceCard();
 
 				if (drawer.isBot()) {
-					System.out.println("Player " + BoardSystem.getWhosTurn().getName() + " drew the following chance card: " + card.getText());
+					System.out.println("Player " + drawer.getName() + " drew the following chance card: " + card.getText());
 				} else {
 					System.out.println("You drew the following chance card: " + card.getText());
 				}
 				
 				executeCommand(drawer, card.getCommand(), card.getId());
+				BoardSystem.returnChanceCard(card);
 			} else if (tokens[1].equals("COMMUNITY")) {
 				DrawableCard card = BoardSystem.drawCommunityChestCard();
 				
 				if (drawer.isBot()) {
-					System.out.println("Player " + BoardSystem.getWhosTurn().getName() + " drew the following community chest card: " + card.getText());
+					System.out.println("Player " + drawer.getName() + "(ID:" + drawer.getId() + ") drew the following community chest card: " + card.getText());
 				} else {
 					System.out.println("You drew the following community chest card: " + card.getText());
 				}
 		
 				executeCommand(drawer, card.getCommand(), card.getId());
+				BoardSystem.returnCommunityChestCard(card);
 			}
 			break;
 		case "GO":
@@ -88,7 +99,7 @@ public class CommandResolver {
 				String newPositionName = BoardSystem.getStaticCardName(newPosition);
 				
 				if (drawer.isBot()) {
-					System.out.println("Player " + BoardSystem.getWhosTurn().getName() + " moved to position: " + newPositionName);
+					System.out.println("Player " + drawer.getName() + "(ID:" + BoardSystem.getWhosTurn().getId() + ") moved to position: " + newPositionName);
 				} else {
 					System.out.println("You moved to position: " + newPositionName);
 				}
@@ -115,7 +126,7 @@ public class CommandResolver {
 		// Getting active players
 		ArrayList<Player> activePlayers = BoardSystem.getActivePlayers();
 		int amountOfActivePlayers = activePlayers.size();
-		
+
 		// Need to remove the player who is paying from the arrayList
 		activePlayers.remove(player);
 		
@@ -129,7 +140,11 @@ public class CommandResolver {
 			}
 			System.out.println("Player with ID " + player.getId() + " has drawn card with ID " + drawableCardID + ". Every player received " + value + " dollars");
 		} else {
+			// TODO No money
 			System.err.println("Player with ID " + player.getId() + " has drawn card with ID " + drawableCardID + " but does not have sufficient funds to complete the transaction.");
 		}
+		
+		// Adding the player who is paying back to the ArrayList
+		activePlayers.add(player);
 	}
 }

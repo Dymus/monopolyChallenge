@@ -39,16 +39,16 @@ public class Main {
 		String name = sc.nextLine();
 		
 		// 9999999 money temporarily, 1500 on start by rules
-		Player p1 = new Player(name, 9999999, true, 1, false); // used to be Craig :)
-		Player p2 = new Player("David", 9999999, true, 1, true); 
-//		Player p3 = new Player("Jake", 1500, true, 1, true);
+		Player p1 = new Player(name, 1500, true, 1, false); // used to be Craig :)
+		Player p2 = new Player("David", 1500, true, 1, true); 
+		Player p3 = new Player("Jake", 1500, true, 1, true);
 //		Player p4 = new Player("Jonah", 1500, true, 1, true);
 		
 		// Adding 4 players
 		
 		BoardSystem.addNewPlayer(p1);
 		BoardSystem.addNewPlayer(p2);
-//		BoardSystem.addNewPlayer(p3);
+		BoardSystem.addNewPlayer(p3);
 //		BoardSystem.addNewPlayer(p4);
 	}
 	
@@ -104,58 +104,64 @@ public class Main {
 							} else {
 								// TODO no moneys
 							}
+						} else {
+							// TODO AUCTION
 						}
 					} else {
-						Player owner = property.getOwner();
-						System.out.println("This property belongs to player " + owner.getName() + "(ID:" + owner.getId() + ").");
-						int amountOwned = 0;
-						int rent = 0;
-						
-						// Calculating rent
-						
-						// Checking if property is railroad or utility 
-						boolean isRailroad = false;
-						if (railroads.getCards().contains(property)) {
-							isRailroad = true;
-						}
-						
-						// Counting owned properties
-						if (isRailroad) {
-							for (Property p: railroads.getCards()) {
-								if (p.getOwner() == owner) {
-									amountOwned++;
+						if (!property.getOwner().equals(whosTurn)) {
+							Player owner = property.getOwner();
+							System.out.println("This property belongs to player " + owner.getName() + "(ID:" + owner.getId() + ").");
+							int amountOwned = 0;
+							int rent = 0;
+							
+							// Calculating rent
+							
+							// Checking if property is railroad or utility 
+							boolean isRailroad = false;
+							if (railroads.getCards().contains(property)) {
+								isRailroad = true;
+							}
+							
+							// Counting owned properties
+							if (isRailroad) {
+								for (Property p: railroads.getCards()) {
+									if (p.getOwner() == owner) {
+										amountOwned++;
+									}
+								}
+								
+								if (amountOwned == 1) {
+									rent = 25;
+								} else if (amountOwned == 2) {
+									rent = 50;
+								} else if (amountOwned == 3) {
+									rent = 100;
+								} else if (amountOwned == 4) {
+									rent = 200;
+								}
+							} else {
+								for (Property p: utilities.getCards()) {
+									if (p.getOwner() == owner) {
+										amountOwned++;
+									}
+								}
+								if (amountOwned == 1) {
+									rent = rolled * 4;
+								} else if (amountOwned == 2) {
+									rent = rolled * 10;
 								}
 							}
 							
-							if (amountOwned == 1) {
-								rent = 25;
-							} else if (amountOwned == 2) {
-								rent = 50;
-							} else if (amountOwned == 3) {
-								rent = 100;
-							} else if (amountOwned == 4) {
-								rent = 200;
+							if (whosTurn.getMoney() >= rent) {
+								whosTurn.setMoney(whosTurn.getMoney() - rent);
+								System.out.println("You paid " + rent + " rent to player " + owner.getName() + "(ID:" + owner.getId() + ").");
+							} else {
+								// TODO credits? end game? mortgage options?
+								System.out.println("You don't have sufficient funds to pay rent!");
 							}
 						} else {
-							for (Property p: utilities.getCards()) {
-								if (p.getOwner() == owner) {
-									amountOwned++;
-								}
-							}
-							if (amountOwned == 1) {
-								rent = rolled * 4;
-							} else if (amountOwned == 2) {
-								rent = rolled * 10;
-							}
+							System.out.println("You're standing at the property you own.");
 						}
-						
-						if (whosTurn.getMoney() >= rent) {
-							whosTurn.setMoney(whosTurn.getMoney() - rent);
-							System.out.println("You paid " + rent + " rent to player " + owner.getName() + "(ID:" + owner.getId() + ").");
-						} else {
-							// TODO credits? end game? mortgage options?
-							System.out.println("You don't have sufficient funds to pay rent!");
-						}	
 					}
 					break;
 				case "City":
@@ -174,46 +180,51 @@ public class Main {
 							} else {
 								// TODO no money
 							}
+						} else {
+							// TODO AUCTION
 						}
 					} else {
-						// TODO RENT
-						Player owner = city.getOwner();
-						System.out.println("This city belongs to player " + owner.getName() + "(ID:" + owner.getId() + ").");
-						int rent = 0;
-						
-						// Calculating rent
-						
-						// Getting cardSet from the city
-						CardSetType cst = city.getCardSetType();
-						
-						// Checking if lot is unimproved, if it has houses or hotels 
-						// and calculating final rent
-						if (city.isUnimproved()) {
-							if (csM.doesPlayerOwnWholeSet(owner, cst)) {
-								rent = city.getRent() * 2;
+						if (!city.getOwner().equals(whosTurn)) {
+							Player owner = city.getOwner();
+							System.out.println("This city belongs to player " + owner.getName() + "(ID:" + owner.getId() + ").");
+							int rent = 0;
+							
+							// Calculating rent
+							
+							// Getting cardSet from the city
+							CardSetType cst = city.getCardSetType();
+							
+							// Checking if lot is unimproved, if it has houses or hotels 
+							// and calculating final rent
+							if (city.isUnimproved()) {
+								if (csM.doesPlayerOwnWholeSet(owner, cst)) {
+									rent = city.getRent() * 2;
+								} else {
+									rent = city.getRent();
+								}
 							} else {
-								rent = city.getRent();
+								int houses = city.getHouses();
+								int hotels = city.getHotels();
+								if (hotels == 1) {
+									rent = city.getWithHotel();
+								} else {
+									if (houses == 1) rent = city.getRentWith1House();
+									else if (houses == 2) rent = city.getWith2Houses();
+									else if (houses == 3) rent = city.getWith3Houses();
+									else rent = city.getWith4Houses();
+								}
+							}
+							
+							// Paying rent
+							if (whosTurn.getMoney() >= rent) {
+								whosTurn.setMoney(whosTurn.getMoney() - rent);
+								System.out.println("You paid " + rent + " rent to player " + owner.getName() + "(ID:" + owner.getId() + ").");
+							} else {
+								// TODO credits? end game? mortgage options?
+								System.out.println("You don't have sufficient funds to pay rent!");
 							}
 						} else {
-							int houses = city.getHouses();
-							int hotels = city.getHotels();
-							if (hotels == 1) {
-								rent = city.getWithHotel();
-							} else {
-								if (houses == 1) rent = city.getRentWith1House();
-								else if (houses == 2) rent = city.getWith2Houses();
-								else if (houses == 3) rent = city.getWith3Houses();
-								else rent = city.getWith4Houses();
-							}
-						}
-						
-						// Paying rent
-						if (whosTurn.getMoney() >= rent) {
-							whosTurn.setMoney(whosTurn.getMoney() - rent);
-							System.out.println("You paid " + rent + " rent to player " + owner.getName() + "(ID:" + owner.getId() + ").");
-						} else {
-							// TODO credits? end game? mortgage options?
-							System.out.println("You don't have sufficient funds to pay rent!");
+							System.out.println("You're standing at the city you own.");
 						}
 					}
 					break;
@@ -223,6 +234,8 @@ public class Main {
 					if (whosTurn.getMoney() >= tax.getValue()) {
 						whosTurn.setMoney(whosTurn.getMoney() - tax.getValue());
 						System.out.println("You paid " + tax.getValue() + " " + tax.getName().toLowerCase());
+					} else {
+						// TODO No money
 					}
 					
 					break;
@@ -260,57 +273,63 @@ public class Main {
 							property.setOwner(whosTurn);
 //							csM.updateCardInCardSet(property, property.getCardSetType());
 							System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") bought " + property.getName() + ".");
-						}	
-					} else {
-						Player owner = property.getOwner();
-						System.out.println("This property belongs to player " + owner.getName() + "(ID:" + owner.getId() + ").");
-						int amountOwned = 0;
-						int rent = 0;
-						
-						// Calculating rent
-						
-						// Checking if property is railroad or utility 
-						boolean isRailroad = false;
-						if (railroads.getCards().contains(property)) {
-							isRailroad = true;
+						} else {
+							// TODO AUCTION
 						}
-						
-						// Counting owned properties
-						if (isRailroad) {
-							for (Property p: railroads.getCards()) {
-								if (p.getOwner() == owner) {
-									amountOwned++;
+					} else {
+						if (!property.getOwner().equals(whosTurn)) {
+							Player owner = property.getOwner();
+							System.out.println("This property belongs to player " + owner.getName() + "(ID:" + owner.getId() + ").");
+							int amountOwned = 0;
+							int rent = 0;
+							
+							// Calculating rent
+							
+							// Checking if property is railroad or utility 
+							boolean isRailroad = false;
+							if (railroads.getCards().contains(property)) {
+								isRailroad = true;
+							}
+							
+							// Counting owned properties
+							if (isRailroad) {
+								for (Property p: railroads.getCards()) {
+									if (p.getOwner() == owner) {
+										amountOwned++;
+									}
+								}
+								
+								if (amountOwned == 1) {
+									rent = 25;
+								} else if (amountOwned == 2) {
+									rent = 50;
+								} else if (amountOwned == 3) {
+									rent = 100;
+								} else if (amountOwned == 4) {
+									rent = 200;
+								}
+							} else {
+								for (Property p: utilities.getCards()) {
+									if (p.getOwner() == owner) {
+										amountOwned++;
+									}
+								}
+								if (amountOwned == 1) {
+									rent = rolled * 4;
+								} else if (amountOwned == 2) {
+									rent = rolled * 10;
 								}
 							}
 							
-							if (amountOwned == 1) {
-								rent = 25;
-							} else if (amountOwned == 2) {
-								rent = 50;
-							} else if (amountOwned == 3) {
-								rent = 100;
-							} else if (amountOwned == 4) {
-								rent = 200;
+							if (whosTurn.getMoney() >= rent) {
+								whosTurn.setMoney(whosTurn.getMoney() - rent);
+								System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") payed " + rent + " rent to player " + owner.getName() + "(ID:" + owner.getId() + ").");
+							} else {
+								// TODO credits? end game? mortgage options?
+								System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") doesn't have sufficient funds to pay rent!");
 							}
 						} else {
-							for (Property p: utilities.getCards()) {
-								if (p.getOwner() == owner) {
-									amountOwned++;
-								}
-							}
-							if (amountOwned == 1) {
-								rent = rolled * 4;
-							} else if (amountOwned == 2) {
-								rent = rolled * 10;
-							}
-						}
-						
-						if (whosTurn.getMoney() >= rent) {
-							whosTurn.setMoney(whosTurn.getMoney() - rent);
-							System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") payed " + rent + " rent to player " + owner.getName() + "(ID:" + owner.getId() + ").");
-						} else {
-							// TODO credits? end game? mortgage options?
-							System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") doesn't have sufficient funds to pay rent!");
+							System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") is standing at the property it owns.");
 						}
 					}
 					break;
@@ -324,46 +343,51 @@ public class Main {
 							city.setOwner(whosTurn);
 //							csM.updateCardInCardSet(city, city.getCardSetType());
 							System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") bought " + city.getName() + ".");
+						} else {
+							// TODO AUCTION
 						}
 					} else {
-						// TODO RENT
-						Player owner = city.getOwner();
-						System.out.println("This city belongs to player " + owner.getName() + "(ID:" + owner.getId() + ").");
-						int rent = 0;
-						
-						// Calculating rent
-						
-						// Getting cardSet from the city
-						CardSetType cst = city.getCardSetType();
-						
-						// Checking if lot is unimproved, if it has houses or hotels 
-						// and calculating final rent
-						if (city.isUnimproved()) {
-							if (csM.doesPlayerOwnWholeSet(owner, cst)) {
-								rent = city.getRent() * 2;
+						if (!city.getOwner().equals(whosTurn)) {
+							Player owner = city.getOwner();
+							System.out.println("This city belongs to player " + owner.getName() + "(ID:" + owner.getId() + ").");
+							int rent = 0;
+							
+							// Calculating rent
+							
+							// Getting cardSet from the city
+							CardSetType cst = city.getCardSetType();
+							
+							// Checking if lot is unimproved, if it has houses or hotels 
+							// and calculating final rent
+							if (city.isUnimproved()) {
+								if (csM.doesPlayerOwnWholeSet(owner, cst)) {
+									rent = city.getRent() * 2;
+								} else {
+									rent = city.getRent();
+								}
 							} else {
-								rent = city.getRent();
+								int houses = city.getHouses();
+								int hotels = city.getHotels();
+								if (hotels == 1) {
+									rent = city.getWithHotel();
+								} else {
+									if (houses == 1) rent = city.getRentWith1House();
+									else if (houses == 2) rent = city.getWith2Houses();
+									else if (houses == 3) rent = city.getWith3Houses();
+									else rent = city.getWith4Houses();
+								}
+							}
+							
+							// Paying rent
+							if (whosTurn.getMoney() >= rent) {
+								whosTurn.setMoney(whosTurn.getMoney() - rent);
+								System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") payed " + rent + " rent to player " + owner.getName() + "(ID:" + owner.getId() + ").");
+							} else {
+								// TODO credits? end game? mortgage options?
+								System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") doesn't have sufficient funds to pay rent!");
 							}
 						} else {
-							int houses = city.getHouses();
-							int hotels = city.getHotels();
-							if (hotels == 1) {
-								rent = city.getWithHotel();
-							} else {
-								if (houses == 1) rent = city.getRentWith1House();
-								else if (houses == 2) rent = city.getWith2Houses();
-								else if (houses == 3) rent = city.getWith3Houses();
-								else rent = city.getWith4Houses();
-							}
-						}
-						
-						// Paying rent
-						if (whosTurn.getMoney() >= rent) {
-							whosTurn.setMoney(whosTurn.getMoney() - rent);
-							System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") payed " + rent + " rent to player " + owner.getName() + "(ID:" + owner.getId() + ").");
-						} else {
-							// TODO credits? end game? mortgage options?
-							System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") doesn't have sufficient funds to pay rent!");
+							System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") is standing at the city it owns.");
 						}
 					}
 					break;
@@ -374,7 +398,7 @@ public class Main {
 						whosTurn.setMoney(whosTurn.getMoney() - tax.getValue());
 						System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") paid " + tax.getValue() + " " + tax.getName().toLowerCase());
 					} else {
-						
+						// TODO No money
 					}
 					break;
 				case "SpecialCard":

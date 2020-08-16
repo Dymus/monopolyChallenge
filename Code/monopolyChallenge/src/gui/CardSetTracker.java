@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Font;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -106,6 +107,10 @@ public class CardSetTracker extends JFrame implements Runnable {
 	private static JLabel lblNewLabel_76;
 	private static JLabel lblNewLabel_77;
 	private static JLabel lblNewLabel_78;
+	private JLabel lblNewLabel_79;
+	private JLabel lblNewLabel_80;
+	private static JLabel communityChestlbl;
+	private static JLabel chancelbl;
 
 	@Override
 	public void run() {
@@ -401,6 +406,13 @@ public class CardSetTracker extends JFrame implements Runnable {
 		gbc_lblNewLabel_11.gridy = 13;
 		contentPane.add(lblNewLabel_11, gbc_lblNewLabel_11);
 		
+		lblNewLabel_23 = new JLabel("Railroads:");
+		GridBagConstraints gbc_lblNewLabel_23 = new GridBagConstraints();
+		gbc_lblNewLabel_23.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_23.gridx = 12;
+		gbc_lblNewLabel_23.gridy = 13;
+		contentPane.add(lblNewLabel_23, gbc_lblNewLabel_23);
+		
 		lblNewLabel_12 = new JLabel("ST. JAMES PLACE");
 		GridBagConstraints gbc_lblNewLabel_12 = new GridBagConstraints();
 		gbc_lblNewLabel_12.insets = new Insets(0, 0, 5, 5);
@@ -414,6 +426,20 @@ public class CardSetTracker extends JFrame implements Runnable {
 		gbc_lblNewLabel_47.gridx = 7;
 		gbc_lblNewLabel_47.gridy = 14;
 		contentPane.add(lblNewLabel_47, gbc_lblNewLabel_47);
+		
+		lblNewLabel_31 = new JLabel("READING RAILROAD");
+		GridBagConstraints gbc_lblNewLabel_31 = new GridBagConstraints();
+		gbc_lblNewLabel_31.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_31.gridx = 13;
+		gbc_lblNewLabel_31.gridy = 14;
+		contentPane.add(lblNewLabel_31, gbc_lblNewLabel_31);
+		
+		lblNewLabel_61 = new JLabel("None");
+		GridBagConstraints gbc_lblNewLabel_61 = new GridBagConstraints();
+		gbc_lblNewLabel_61.insets = new Insets(0, 0, 5, 0);
+		gbc_lblNewLabel_61.gridx = 19;
+		gbc_lblNewLabel_61.gridy = 14;
+		contentPane.add(lblNewLabel_61, gbc_lblNewLabel_61);
 		
 		lblNewLabel_13 = new JLabel("TENNESSEE AVENUE");
 		GridBagConstraints gbc_lblNewLabel_13 = new GridBagConstraints();
@@ -429,6 +455,20 @@ public class CardSetTracker extends JFrame implements Runnable {
 		gbc_lblNewLabel_48.gridy = 15;
 		contentPane.add(lblNewLabel_48, gbc_lblNewLabel_48);
 		
+		lblNewLabel_33 = new JLabel("PENNSYLVANIA RAILROAD");
+		GridBagConstraints gbc_lblNewLabel_33 = new GridBagConstraints();
+		gbc_lblNewLabel_33.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_33.gridx = 13;
+		gbc_lblNewLabel_33.gridy = 15;
+		contentPane.add(lblNewLabel_33, gbc_lblNewLabel_33);
+		
+		lblNewLabel_62 = new JLabel("None");
+		GridBagConstraints gbc_lblNewLabel_62 = new GridBagConstraints();
+		gbc_lblNewLabel_62.insets = new Insets(0, 0, 5, 0);
+		gbc_lblNewLabel_62.gridx = 19;
+		gbc_lblNewLabel_62.gridy = 15;
+		contentPane.add(lblNewLabel_62, gbc_lblNewLabel_62);
+		
 		lblNewLabel_14 = new JLabel("NEW YORK AVENUE");
 		GridBagConstraints gbc_lblNewLabel_14 = new GridBagConstraints();
 		gbc_lblNewLabel_14.insets = new Insets(0, 0, 5, 5);
@@ -443,12 +483,19 @@ public class CardSetTracker extends JFrame implements Runnable {
 		gbc_lblNewLabel_49.gridy = 16;
 		contentPane.add(lblNewLabel_49, gbc_lblNewLabel_49);
 		
-		lblNewLabel_23 = new JLabel("Railroads:");
-		GridBagConstraints gbc_lblNewLabel_23 = new GridBagConstraints();
-		gbc_lblNewLabel_23.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_23.gridx = 12;
-		gbc_lblNewLabel_23.gridy = 16;
-		contentPane.add(lblNewLabel_23, gbc_lblNewLabel_23);
+		lblNewLabel_34 = new JLabel("B. & O. RAILROAD");
+		GridBagConstraints gbc_lblNewLabel_34 = new GridBagConstraints();
+		gbc_lblNewLabel_34.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_34.gridx = 13;
+		gbc_lblNewLabel_34.gridy = 16;
+		contentPane.add(lblNewLabel_34, gbc_lblNewLabel_34);
+		
+		lblNewLabel_63 = new JLabel("None");
+		GridBagConstraints gbc_lblNewLabel_63 = new GridBagConstraints();
+		gbc_lblNewLabel_63.insets = new Insets(0, 0, 5, 0);
+		gbc_lblNewLabel_63.gridx = 19;
+		gbc_lblNewLabel_63.gridy = 16;
+		contentPane.add(lblNewLabel_63, gbc_lblNewLabel_63);
 		
 		lblNewLabel_15 = new JLabel("Red:");
 		lblNewLabel_15.setForeground(new Color(255, 0, 0));
@@ -458,19 +505,19 @@ public class CardSetTracker extends JFrame implements Runnable {
 		gbc_lblNewLabel_15.gridy = 17;
 		contentPane.add(lblNewLabel_15, gbc_lblNewLabel_15);
 		
-		lblNewLabel_31 = new JLabel("READING RAILROAD");
-		GridBagConstraints gbc_lblNewLabel_31 = new GridBagConstraints();
-		gbc_lblNewLabel_31.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_31.gridx = 13;
-		gbc_lblNewLabel_31.gridy = 17;
-		contentPane.add(lblNewLabel_31, gbc_lblNewLabel_31);
+		lblNewLabel_35 = new JLabel("SHORT LINE");
+		GridBagConstraints gbc_lblNewLabel_35 = new GridBagConstraints();
+		gbc_lblNewLabel_35.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_35.gridx = 13;
+		gbc_lblNewLabel_35.gridy = 17;
+		contentPane.add(lblNewLabel_35, gbc_lblNewLabel_35);
 		
-		lblNewLabel_61 = new JLabel("None");
-		GridBagConstraints gbc_lblNewLabel_61 = new GridBagConstraints();
-		gbc_lblNewLabel_61.insets = new Insets(0, 0, 5, 0);
-		gbc_lblNewLabel_61.gridx = 19;
-		gbc_lblNewLabel_61.gridy = 17;
-		contentPane.add(lblNewLabel_61, gbc_lblNewLabel_61);
+		lblNewLabel_64 = new JLabel("None");
+		GridBagConstraints gbc_lblNewLabel_64 = new GridBagConstraints();
+		gbc_lblNewLabel_64.insets = new Insets(0, 0, 5, 0);
+		gbc_lblNewLabel_64.gridx = 19;
+		gbc_lblNewLabel_64.gridy = 17;
+		contentPane.add(lblNewLabel_64, gbc_lblNewLabel_64);
 		
 		lblNewLabel_16 = new JLabel("KENTUCKY AVENUE");
 		GridBagConstraints gbc_lblNewLabel_16 = new GridBagConstraints();
@@ -486,19 +533,12 @@ public class CardSetTracker extends JFrame implements Runnable {
 		gbc_lblNewLabel_50.gridy = 18;
 		contentPane.add(lblNewLabel_50, gbc_lblNewLabel_50);
 		
-		lblNewLabel_33 = new JLabel("PENNSYLVANIA RAILROAD");
-		GridBagConstraints gbc_lblNewLabel_33 = new GridBagConstraints();
-		gbc_lblNewLabel_33.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_33.gridx = 13;
-		gbc_lblNewLabel_33.gridy = 18;
-		contentPane.add(lblNewLabel_33, gbc_lblNewLabel_33);
-		
-		lblNewLabel_62 = new JLabel("None");
-		GridBagConstraints gbc_lblNewLabel_62 = new GridBagConstraints();
-		gbc_lblNewLabel_62.insets = new Insets(0, 0, 5, 0);
-		gbc_lblNewLabel_62.gridx = 19;
-		gbc_lblNewLabel_62.gridy = 18;
-		contentPane.add(lblNewLabel_62, gbc_lblNewLabel_62);
+		lblNewLabel_36 = new JLabel("Utilies:");
+		GridBagConstraints gbc_lblNewLabel_36 = new GridBagConstraints();
+		gbc_lblNewLabel_36.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_36.gridx = 12;
+		gbc_lblNewLabel_36.gridy = 18;
+		contentPane.add(lblNewLabel_36, gbc_lblNewLabel_36);
 		
 		lblNewLabel_17 = new JLabel("INDIANA AVENUE");
 		GridBagConstraints gbc_lblNewLabel_17 = new GridBagConstraints();
@@ -514,19 +554,19 @@ public class CardSetTracker extends JFrame implements Runnable {
 		gbc_lblNewLabel_51.gridy = 19;
 		contentPane.add(lblNewLabel_51, gbc_lblNewLabel_51);
 		
-		lblNewLabel_34 = new JLabel("B. & O. RAILROAD");
-		GridBagConstraints gbc_lblNewLabel_34 = new GridBagConstraints();
-		gbc_lblNewLabel_34.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_34.gridx = 13;
-		gbc_lblNewLabel_34.gridy = 19;
-		contentPane.add(lblNewLabel_34, gbc_lblNewLabel_34);
+		lblNewLabel_37 = new JLabel("ELECTRIC COMPANY");
+		GridBagConstraints gbc_lblNewLabel_37 = new GridBagConstraints();
+		gbc_lblNewLabel_37.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_37.gridx = 13;
+		gbc_lblNewLabel_37.gridy = 19;
+		contentPane.add(lblNewLabel_37, gbc_lblNewLabel_37);
 		
-		lblNewLabel_63 = new JLabel("None");
-		GridBagConstraints gbc_lblNewLabel_63 = new GridBagConstraints();
-		gbc_lblNewLabel_63.insets = new Insets(0, 0, 5, 0);
-		gbc_lblNewLabel_63.gridx = 19;
-		gbc_lblNewLabel_63.gridy = 19;
-		contentPane.add(lblNewLabel_63, gbc_lblNewLabel_63);
+		lblNewLabel_65 = new JLabel("None");
+		GridBagConstraints gbc_lblNewLabel_65 = new GridBagConstraints();
+		gbc_lblNewLabel_65.insets = new Insets(0, 0, 5, 0);
+		gbc_lblNewLabel_65.gridx = 19;
+		gbc_lblNewLabel_65.gridy = 19;
+		contentPane.add(lblNewLabel_65, gbc_lblNewLabel_65);
 		
 		lblNewLabel_18 = new JLabel("ILLINOI AVENUE");
 		GridBagConstraints gbc_lblNewLabel_18 = new GridBagConstraints();
@@ -542,19 +582,19 @@ public class CardSetTracker extends JFrame implements Runnable {
 		gbc_lblNewLabel_52.gridy = 20;
 		contentPane.add(lblNewLabel_52, gbc_lblNewLabel_52);
 		
-		lblNewLabel_35 = new JLabel("SHORT LINE");
-		GridBagConstraints gbc_lblNewLabel_35 = new GridBagConstraints();
-		gbc_lblNewLabel_35.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_35.gridx = 13;
-		gbc_lblNewLabel_35.gridy = 20;
-		contentPane.add(lblNewLabel_35, gbc_lblNewLabel_35);
+		lblNewLabel_38 = new JLabel("WATER WORKS");
+		GridBagConstraints gbc_lblNewLabel_38 = new GridBagConstraints();
+		gbc_lblNewLabel_38.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_38.gridx = 13;
+		gbc_lblNewLabel_38.gridy = 20;
+		contentPane.add(lblNewLabel_38, gbc_lblNewLabel_38);
 		
-		lblNewLabel_64 = new JLabel("None");
-		GridBagConstraints gbc_lblNewLabel_64 = new GridBagConstraints();
-		gbc_lblNewLabel_64.insets = new Insets(0, 0, 5, 0);
-		gbc_lblNewLabel_64.gridx = 19;
-		gbc_lblNewLabel_64.gridy = 20;
-		contentPane.add(lblNewLabel_64, gbc_lblNewLabel_64);
+		lblNewLabel_66 = new JLabel("None");
+		GridBagConstraints gbc_lblNewLabel_66 = new GridBagConstraints();
+		gbc_lblNewLabel_66.insets = new Insets(0, 0, 5, 0);
+		gbc_lblNewLabel_66.gridx = 19;
+		gbc_lblNewLabel_66.gridy = 20;
+		contentPane.add(lblNewLabel_66, gbc_lblNewLabel_66);
 		
 		lblNewLabel_20 = new JLabel("Yellow:");
 		lblNewLabel_20.setForeground(new Color(255, 255, 0));
@@ -563,13 +603,6 @@ public class CardSetTracker extends JFrame implements Runnable {
 		gbc_lblNewLabel_20.gridx = 1;
 		gbc_lblNewLabel_20.gridy = 21;
 		contentPane.add(lblNewLabel_20, gbc_lblNewLabel_20);
-		
-		lblNewLabel_36 = new JLabel("Utilies:");
-		GridBagConstraints gbc_lblNewLabel_36 = new GridBagConstraints();
-		gbc_lblNewLabel_36.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_36.gridx = 12;
-		gbc_lblNewLabel_36.gridy = 21;
-		contentPane.add(lblNewLabel_36, gbc_lblNewLabel_36);
 		
 		lblNewLabel_21 = new JLabel("ATLANTIC AVENUE");
 		GridBagConstraints gbc_lblNewLabel_21 = new GridBagConstraints();
@@ -585,20 +618,6 @@ public class CardSetTracker extends JFrame implements Runnable {
 		gbc_lblNewLabel_53.gridy = 22;
 		contentPane.add(lblNewLabel_53, gbc_lblNewLabel_53);
 		
-		lblNewLabel_37 = new JLabel("ELECTRIC COMPANY");
-		GridBagConstraints gbc_lblNewLabel_37 = new GridBagConstraints();
-		gbc_lblNewLabel_37.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_37.gridx = 13;
-		gbc_lblNewLabel_37.gridy = 22;
-		contentPane.add(lblNewLabel_37, gbc_lblNewLabel_37);
-		
-		lblNewLabel_65 = new JLabel("None");
-		GridBagConstraints gbc_lblNewLabel_65 = new GridBagConstraints();
-		gbc_lblNewLabel_65.insets = new Insets(0, 0, 5, 0);
-		gbc_lblNewLabel_65.gridx = 19;
-		gbc_lblNewLabel_65.gridy = 22;
-		contentPane.add(lblNewLabel_65, gbc_lblNewLabel_65);
-		
 		lblNewLabel_22 = new JLabel("VENTNOR AVENUE");
 		GridBagConstraints gbc_lblNewLabel_22 = new GridBagConstraints();
 		gbc_lblNewLabel_22.insets = new Insets(0, 0, 5, 5);
@@ -613,19 +632,19 @@ public class CardSetTracker extends JFrame implements Runnable {
 		gbc_lblNewLabel_54.gridy = 23;
 		contentPane.add(lblNewLabel_54, gbc_lblNewLabel_54);
 		
-		lblNewLabel_38 = new JLabel("WATER WORKS");
-		GridBagConstraints gbc_lblNewLabel_38 = new GridBagConstraints();
-		gbc_lblNewLabel_38.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_38.gridx = 13;
-		gbc_lblNewLabel_38.gridy = 23;
-		contentPane.add(lblNewLabel_38, gbc_lblNewLabel_38);
+		lblNewLabel_79 = new JLabel("Community chest cards in deck:");
+		GridBagConstraints gbc_lblNewLabel_79 = new GridBagConstraints();
+		gbc_lblNewLabel_79.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_79.gridx = 12;
+		gbc_lblNewLabel_79.gridy = 23;
+		contentPane.add(lblNewLabel_79, gbc_lblNewLabel_79);
 		
-		lblNewLabel_66 = new JLabel("None");
-		GridBagConstraints gbc_lblNewLabel_66 = new GridBagConstraints();
-		gbc_lblNewLabel_66.insets = new Insets(0, 0, 5, 0);
-		gbc_lblNewLabel_66.gridx = 19;
-		gbc_lblNewLabel_66.gridy = 23;
-		contentPane.add(lblNewLabel_66, gbc_lblNewLabel_66);
+		communityChestlbl = new JLabel("New label");
+		GridBagConstraints gbc_communityChestlbl = new GridBagConstraints();
+		gbc_communityChestlbl.insets = new Insets(0, 0, 5, 5);
+		gbc_communityChestlbl.gridx = 13;
+		gbc_communityChestlbl.gridy = 23;
+		contentPane.add(communityChestlbl, gbc_communityChestlbl);
 		
 		lblNewLabel_32 = new JLabel("MARVIN GARDENS");
 		GridBagConstraints gbc_lblNewLabel_32 = new GridBagConstraints();
@@ -640,6 +659,20 @@ public class CardSetTracker extends JFrame implements Runnable {
 		gbc_lblNewLabel_55.gridx = 7;
 		gbc_lblNewLabel_55.gridy = 24;
 		contentPane.add(lblNewLabel_55, gbc_lblNewLabel_55);
+		
+		lblNewLabel_80 = new JLabel("Chance cards in deck:");
+		GridBagConstraints gbc_lblNewLabel_80 = new GridBagConstraints();
+		gbc_lblNewLabel_80.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_80.gridx = 12;
+		gbc_lblNewLabel_80.gridy = 24;
+		contentPane.add(lblNewLabel_80, gbc_lblNewLabel_80);
+		
+		chancelbl = new JLabel("New label");
+		GridBagConstraints gbc_chancelbl = new GridBagConstraints();
+		gbc_chancelbl.insets = new Insets(0, 0, 5, 5);
+		gbc_chancelbl.gridx = 13;
+		gbc_chancelbl.gridy = 24;
+		contentPane.add(chancelbl, gbc_chancelbl);
 		
 		lblNewLabel_67 = new JLabel("x");
 		GridBagConstraints gbc_lblNewLabel_67 = new GridBagConstraints();
@@ -739,85 +772,171 @@ public class CardSetTracker extends JFrame implements Runnable {
 		CardSet railroads = csM.getCardSetWithCardSetType(CardSetType.RAILROADS);
 		CardSet utilities = csM.getCardSetWithCardSetType(CardSetType.UTILITIES);
 		
-		if ( ((City) brown.getCardWithBoardPosition(2)).isOwned() ) lblNewLabel_39.setText(((City) brown.getCardWithBoardPosition(2)).getOwner().getName());
+		Font f = lblNewLabel_39.getFont();
+		
+		if ( ((City) brown.getCardWithBoardPosition(2)).isOwned() ) {
+			lblNewLabel_39.setText(((City) brown.getCardWithBoardPosition(2)).getOwner().getName());
+			lblNewLabel_39.setFont(f.deriveFont(f.getStyle() | Font.BOLD));
+		}
 		else lblNewLabel_39.setText("None");
 		
-		if ( ((City) brown.getCardWithBoardPosition(4)).isOwned() ) lblNewLabel_40.setText(((City) brown.getCardWithBoardPosition(4)).getOwner().getName());
+		if ( ((City) brown.getCardWithBoardPosition(4)).isOwned() ) {
+			lblNewLabel_40.setText(((City) brown.getCardWithBoardPosition(4)).getOwner().getName());
+			lblNewLabel_40.setFont(f.deriveFont(f.getStyle() | Font.BOLD));
+		}
 		else lblNewLabel_40.setText("None");
 		
-		if ( ((Property) railroads.getCardWithBoardPosition(6)).isOwned() ) lblNewLabel_61.setText(((Property) railroads.getCardWithBoardPosition(6)).getOwner().getName());
+		if ( ((Property) railroads.getCardWithBoardPosition(6)).isOwned() ) {
+			lblNewLabel_61.setText(((Property) railroads.getCardWithBoardPosition(6)).getOwner().getName());
+			lblNewLabel_61.setFont(f.deriveFont(f.getStyle() | Font.BOLD));
+		}
 		else lblNewLabel_61.setText("None");
 		
-		if ( ((City) lightBlue.getCardWithBoardPosition(7)).isOwned() ) lblNewLabel_41.setText(((City) lightBlue.getCardWithBoardPosition(7)).getOwner().getName());
+		if ( ((City) lightBlue.getCardWithBoardPosition(7)).isOwned() ) {
+			lblNewLabel_41.setText(((City) lightBlue.getCardWithBoardPosition(7)).getOwner().getName());
+			lblNewLabel_41.setFont(f.deriveFont(f.getStyle() | Font.BOLD));
+		}
 		else lblNewLabel_41.setText("None");
 			
-		if ( ((City) lightBlue.getCardWithBoardPosition(9)).isOwned() ) lblNewLabel_42.setText(((City) lightBlue.getCardWithBoardPosition(9)).getOwner().getName());
+		if ( ((City) lightBlue.getCardWithBoardPosition(9)).isOwned() ) {
+			lblNewLabel_42.setText(((City) lightBlue.getCardWithBoardPosition(9)).getOwner().getName());
+			lblNewLabel_42.setFont(f.deriveFont(f.getStyle() | Font.BOLD));
+		}
 		else lblNewLabel_42.setText("None");
 		
-		if ( ((City) lightBlue.getCardWithBoardPosition(10)).isOwned() ) lblNewLabel_43.setText(((City) lightBlue.getCardWithBoardPosition(10)).getOwner().getName());
+		if ( ((City) lightBlue.getCardWithBoardPosition(10)).isOwned() ) {
+			lblNewLabel_43.setText(((City) lightBlue.getCardWithBoardPosition(10)).getOwner().getName());
+			lblNewLabel_43.setFont(f.deriveFont(f.getStyle() | Font.BOLD));
+		}
 		else lblNewLabel_43.setText("None");
 		
-		if ( ((City) pink.getCardWithBoardPosition(12)).isOwned() ) lblNewLabel_44.setText(((City) pink.getCardWithBoardPosition(12)).getOwner().getName());
+		if ( ((City) pink.getCardWithBoardPosition(12)).isOwned() ) {
+			lblNewLabel_44.setText(((City) pink.getCardWithBoardPosition(12)).getOwner().getName());
+			lblNewLabel_44.setFont(f.deriveFont(f.getStyle() | Font.BOLD));
+		}
 		else lblNewLabel_44.setText("None");
 		
-		if ( ((Property) utilities.getCardWithBoardPosition(13)).isOwned() ) lblNewLabel_65.setText(((Property) utilities.getCardWithBoardPosition(13)).getOwner().getName());
+		if ( ((Property) utilities.getCardWithBoardPosition(13)).isOwned() ) {
+			lblNewLabel_65.setText(((Property) utilities.getCardWithBoardPosition(13)).getOwner().getName());
+			lblNewLabel_65.setFont(f.deriveFont(f.getStyle() | Font.BOLD));
+		}
 		else lblNewLabel_65.setText("None");
 		
-		if ( ((City) pink.getCardWithBoardPosition(15)).isOwned() ) lblNewLabel_46.setText(((City) pink.getCardWithBoardPosition(15)).getOwner().getName());
+		if ( ((City) pink.getCardWithBoardPosition(15)).isOwned() ) {
+			lblNewLabel_46.setText(((City) pink.getCardWithBoardPosition(15)).getOwner().getName());
+			lblNewLabel_46.setFont(f.deriveFont(f.getStyle() | Font.BOLD));
+		}
 		else lblNewLabel_46.setText("None");
 		
-		if ( ((Property) railroads.getCardWithBoardPosition(16)).isOwned() ) lblNewLabel_62.setText(((Property) railroads.getCardWithBoardPosition(16)).getOwner().getName());
+		if ( ((Property) railroads.getCardWithBoardPosition(16)).isOwned() ) {
+			lblNewLabel_62.setText(((Property) railroads.getCardWithBoardPosition(16)).getOwner().getName());
+			lblNewLabel_62.setFont(f.deriveFont(f.getStyle() | Font.BOLD));
+		}
 		else lblNewLabel_62.setText("None");
 		
-		if ( ((City) orange.getCardWithBoardPosition(17)).isOwned() ) lblNewLabel_47.setText(((City) orange.getCardWithBoardPosition(17)).getOwner().getName());
+		if ( ((City) orange.getCardWithBoardPosition(17)).isOwned() ) {
+			lblNewLabel_47.setText(((City) orange.getCardWithBoardPosition(17)).getOwner().getName());
+			lblNewLabel_47.setFont(f.deriveFont(f.getStyle() | Font.BOLD));
+		}
 		else lblNewLabel_47.setText("None");
 		
-		if ( ((City) orange.getCardWithBoardPosition(19)).isOwned() ) lblNewLabel_48.setText(((City) orange.getCardWithBoardPosition(19)).getOwner().getName());
+		if ( ((City) orange.getCardWithBoardPosition(19)).isOwned() ) {
+			lblNewLabel_48.setText(((City) orange.getCardWithBoardPosition(19)).getOwner().getName());
+			lblNewLabel_48.setFont(f.deriveFont(f.getStyle() | Font.BOLD));
+		}
 		else lblNewLabel_48.setText("None");
 		
-		if ( ((City) orange.getCardWithBoardPosition(20)).isOwned() ) lblNewLabel_49.setText(((City) orange.getCardWithBoardPosition(20)).getOwner().getName());
+		if ( ((City) orange.getCardWithBoardPosition(20)).isOwned() ) {
+			lblNewLabel_49.setText(((City) orange.getCardWithBoardPosition(20)).getOwner().getName());
+			lblNewLabel_49.setFont(f.deriveFont(f.getStyle() | Font.BOLD));
+		}
 		else lblNewLabel_49.setText("None");
 		
-		if ( ((City) red.getCardWithBoardPosition(22)).isOwned() ) lblNewLabel_50.setText(((City) red.getCardWithBoardPosition(22)).getOwner().getName());
+		if ( ((City) red.getCardWithBoardPosition(22)).isOwned() ) {
+			lblNewLabel_50.setText(((City) red.getCardWithBoardPosition(22)).getOwner().getName());
+			lblNewLabel_50.setFont(f.deriveFont(f.getStyle() | Font.BOLD));
+		}
 		else lblNewLabel_50.setText("None");
 		
-		if ( ((City) red.getCardWithBoardPosition(24)).isOwned() ) lblNewLabel_51.setText(((City) red.getCardWithBoardPosition(24)).getOwner().getName());
+		if ( ((City) red.getCardWithBoardPosition(24)).isOwned() ) {
+			lblNewLabel_51.setText(((City) red.getCardWithBoardPosition(24)).getOwner().getName());
+			lblNewLabel_51.setFont(f.deriveFont(f.getStyle() | Font.BOLD));
+		}
 		else lblNewLabel_51.setText("None");
 		
-		if ( ((City) red.getCardWithBoardPosition(25)).isOwned() ) lblNewLabel_52.setText(((City) red.getCardWithBoardPosition(25)).getOwner().getName());
+		if ( ((City) red.getCardWithBoardPosition(25)).isOwned() ) {
+			lblNewLabel_52.setText(((City) red.getCardWithBoardPosition(25)).getOwner().getName());
+			lblNewLabel_52.setFont(f.deriveFont(f.getStyle() | Font.BOLD));
+		}
 		else lblNewLabel_52.setText("None");
 		
-		if ( ((Property) railroads.getCardWithBoardPosition(26)).isOwned() ) lblNewLabel_63.setText(((Property) railroads.getCardWithBoardPosition(26)).getOwner().getName());
+		if ( ((Property) railroads.getCardWithBoardPosition(26)).isOwned() ) {
+			lblNewLabel_63.setText(((Property) railroads.getCardWithBoardPosition(26)).getOwner().getName());
+			lblNewLabel_63.setFont(f.deriveFont(f.getStyle() | Font.BOLD));
+		}
 		else lblNewLabel_63.setText("None");
 		
-		if ( ((City) yellow.getCardWithBoardPosition(27)).isOwned() ) lblNewLabel_53.setText(((City) yellow.getCardWithBoardPosition(27)).getOwner().getName());
+		if ( ((City) yellow.getCardWithBoardPosition(27)).isOwned() ) {
+			lblNewLabel_53.setText(((City) yellow.getCardWithBoardPosition(27)).getOwner().getName());
+			lblNewLabel_53.setFont(f.deriveFont(f.getStyle() | Font.BOLD));
+		}
 		else lblNewLabel_53.setText("None");
 		
-		if ( ((City) yellow.getCardWithBoardPosition(28)).isOwned() ) lblNewLabel_54.setText(((City) yellow.getCardWithBoardPosition(28)).getOwner().getName());
+		if ( ((City) yellow.getCardWithBoardPosition(28)).isOwned() ) {
+			lblNewLabel_54.setText(((City) yellow.getCardWithBoardPosition(28)).getOwner().getName());
+			lblNewLabel_54.setFont(f.deriveFont(f.getStyle() | Font.BOLD));
+		}
 		else lblNewLabel_54.setText("None");
 		
-		if ( ((Property) utilities.getCardWithBoardPosition(29)).isOwned() ) lblNewLabel_66.setText(((Property) utilities.getCardWithBoardPosition(29)).getOwner().getName());
+		if ( ((Property) utilities.getCardWithBoardPosition(29)).isOwned() ) {
+			lblNewLabel_66.setText(((Property) utilities.getCardWithBoardPosition(29)).getOwner().getName());
+			lblNewLabel_66.setFont(f.deriveFont(f.getStyle() | Font.BOLD));
+		}
 		else lblNewLabel_66.setText("None");
 
-		if ( ((City) yellow.getCardWithBoardPosition(30)).isOwned() ) lblNewLabel_55.setText(((City) yellow.getCardWithBoardPosition(30)).getOwner().getName());
+		if ( ((City) yellow.getCardWithBoardPosition(30)).isOwned() ) {
+			lblNewLabel_55.setText(((City) yellow.getCardWithBoardPosition(30)).getOwner().getName());
+			lblNewLabel_55.setFont(f.deriveFont(f.getStyle() | Font.BOLD));
+		}
 		else lblNewLabel_55.setText("None");
 		
-		if ( ((City) green.getCardWithBoardPosition(32)).isOwned() ) lblNewLabel_56.setText(((City) green.getCardWithBoardPosition(32)).getOwner().getName());
+		if ( ((City) green.getCardWithBoardPosition(32)).isOwned() ) {
+			lblNewLabel_56.setText(((City) green.getCardWithBoardPosition(32)).getOwner().getName());
+			lblNewLabel_56.setFont(f.deriveFont(f.getStyle() | Font.BOLD));
+		}
 		else lblNewLabel_56.setText("None");
 		
-		if ( ((City) green.getCardWithBoardPosition(33)).isOwned() ) lblNewLabel_57.setText(((City) green.getCardWithBoardPosition(33)).getOwner().getName());
+		if ( ((City) green.getCardWithBoardPosition(33)).isOwned() ) {
+			lblNewLabel_57.setText(((City) green.getCardWithBoardPosition(33)).getOwner().getName());
+			lblNewLabel_57.setFont(f.deriveFont(f.getStyle() | Font.BOLD));
+		}
 		else lblNewLabel_57.setText("None");
 		
-		if ( ((City) green.getCardWithBoardPosition(35)).isOwned() ) lblNewLabel_58.setText(((City) green.getCardWithBoardPosition(35)).getOwner().getName());
+		if ( ((City) green.getCardWithBoardPosition(35)).isOwned() ) {
+			lblNewLabel_58.setText(((City) green.getCardWithBoardPosition(35)).getOwner().getName());
+			lblNewLabel_58.setFont(f.deriveFont(f.getStyle() | Font.BOLD));
+		}
 		else lblNewLabel_58.setText("None");
 		
-		if ( ((Property) railroads.getCardWithBoardPosition(36)).isOwned() ) lblNewLabel_64.setText(((Property) railroads.getCardWithBoardPosition(36)).getOwner().getName());
+		if ( ((Property) railroads.getCardWithBoardPosition(36)).isOwned() ) {
+			lblNewLabel_64.setText(((Property) railroads.getCardWithBoardPosition(36)).getOwner().getName());
+			lblNewLabel_64.setFont(f.deriveFont(f.getStyle() | Font.BOLD));
+		}
 		else lblNewLabel_64.setText("None");
 		
-		if ( ((City) darkBlue.getCardWithBoardPosition(38)).isOwned() ) lblNewLabel_59.setText(((City) darkBlue.getCardWithBoardPosition(38)).getOwner().getName());
+		if ( ((City) darkBlue.getCardWithBoardPosition(38)).isOwned() ) {
+			lblNewLabel_59.setText(((City) darkBlue.getCardWithBoardPosition(38)).getOwner().getName());
+			lblNewLabel_59.setFont(f.deriveFont(f.getStyle() | Font.BOLD));
+		}
 		else lblNewLabel_59.setText("None");
 		
-		if ( ((City) darkBlue.getCardWithBoardPosition(40)).isOwned() ) lblNewLabel_60.setText(((City) darkBlue.getCardWithBoardPosition(40)).getOwner().getName());
+		if ( ((City) darkBlue.getCardWithBoardPosition(40)).isOwned() ) {
+			lblNewLabel_60.setText(((City) darkBlue.getCardWithBoardPosition(40)).getOwner().getName());
+			lblNewLabel_60.setFont(f.deriveFont(f.getStyle() | Font.BOLD));
+		}
 		else lblNewLabel_60.setText("None");
+		
+		communityChestlbl.setText(String.valueOf(BoardSystem.getCommunityChestCardDeckSize()));
+		chancelbl.setText(String.valueOf(BoardSystem.getChanceCardDeckSize()));
 	}
 }
