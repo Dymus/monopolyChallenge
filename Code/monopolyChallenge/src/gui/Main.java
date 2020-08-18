@@ -19,7 +19,8 @@ import model.Tax;
 public class Main {
 	private static Scanner sc = new Scanner(System.in);
 	private static CommandResolver cr = new CommandResolver();
-	private static CardSetManager csM = new CardSetManager(); 
+	private static CardSetManager csM = new CardSetManager();
+	
 	private static CardSet<City> brown;
 	private static CardSet<City> lightBlue;
 	private static CardSet<City> pink;
@@ -80,11 +81,19 @@ public class Main {
 				
 				// Checking if player is in jail
 				if (whosTurn.isImprisoned()) {
-					if (whosTurn.getAmountOfGetOutOfJailCards() > 0) {
+					if (whosTurn.getGetOutOfJailCards().size() > 0) {
 						System.out.println("You happen to have a card that lets you get out of jail for free, do you wish to use it? (Y\\N)");
 						String answer = sc.nextLine().toUpperCase();
 						if (answer.equals("Y")) {
-							whosTurn.removeGetOutOfJailCard();
+							
+							// Returning the card to appropriate deque
+							DrawableCard card = whosTurn.popGetOutOfJailCard();
+							if (card.getType() == DrawableType.CHANCE) {
+								BoardSystem.addChanceCard(card);
+							} else {
+								BoardSystem.addCommunityChestCard(card);
+							}
+							
 							whosTurn.setBannedTurns(0);
 							whosTurn.setImprisoned(false);
 							System.out.println("You're getting out of JAIL");
@@ -326,8 +335,16 @@ public class Main {
 				
 				// Checking if player is in jail
 				if (whosTurn.isImprisoned()) {
-					if (whosTurn.getAmountOfGetOutOfJailCards() > 0) {
-						whosTurn.removeGetOutOfJailCard();
+					if (whosTurn.getGetOutOfJailCards().size() > 0) {
+						
+						// Returning the card to appropriate deque
+						DrawableCard card = whosTurn.popGetOutOfJailCard();
+						if (card.getType() == DrawableType.CHANCE) {
+							BoardSystem.addChanceCard(card);
+						} else {
+							BoardSystem.addCommunityChestCard(card);
+						}
+						
 						whosTurn.setBannedTurns(0);
 						whosTurn.setImprisoned(false);
 						System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + " is using a card to get out of JAIL");
@@ -624,6 +641,7 @@ public class Main {
 		DrawableCard cid43 = new DrawableCard("Doctor's fee - Pay $50", "Pay 50", DrawableType.COMMUNITY_CHEST);
 		DrawableCard cid44 = new DrawableCard("From sale of stock you get $50", "Get 50", DrawableType.COMMUNITY_CHEST);
 		DrawableCard cid45 = new DrawableCard("Get Out of Jail Free", "Keep Jail Free", DrawableType.COMMUNITY_CHEST);
+		
 		DrawableCard cid46 = new DrawableCard("Go to Jail - Go directly to jail - Do not pass Go - Do not collect $200", "Go Jail", DrawableType.COMMUNITY_CHEST);
 		DrawableCard cid47 = new DrawableCard("Grand Opera Night - Collect $50 from every player for opening night seats", "Get 50 All", DrawableType.COMMUNITY_CHEST);
 		DrawableCard cid48 = new DrawableCard("Holiday Fund matures - Receive $100", "Receive 100", DrawableType.COMMUNITY_CHEST);

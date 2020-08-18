@@ -4,6 +4,9 @@
  */
 package model;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+
 public class Player {
 	private String name;
 	private int money = 1500;
@@ -13,7 +16,7 @@ public class Player {
 	private int id;
 	private boolean isImprisoned = false;
 	private int bannedTurns = 0;
-	private int amountOfGetOutOfJailCards = 0;
+	private Deque<DrawableCard> getOutOfJailCards = new ArrayDeque<>();
 	private static int idCounter = 1;
 	
 	public Player() {
@@ -107,19 +110,35 @@ public class Player {
 		return --bannedTurns;
 	}
 
-	public int getAmountOfGetOutOfJailCards() {
-		return amountOfGetOutOfJailCards;
+	public Deque<DrawableCard> getGetOutOfJailCards() {
+		return getOutOfJailCards;
 	}
 
-	public void setAmountOfGetOutOfJailCards(int amountOfGetOutOfJailCards) {
-		this.amountOfGetOutOfJailCards = amountOfGetOutOfJailCards;
+	public void setGetOutOfJailCards(Deque<DrawableCard> getOutOfJailCards) {
+		this.getOutOfJailCards = getOutOfJailCards;
 	}
 	
-	public void addGetOutOfJailCard() {
-		amountOfGetOutOfJailCards++;
+	public DrawableCard popGetOutOfJailCard() {
+		return getOutOfJailCards.pop();
 	}
 	
-	public void removeGetOutOfJailCard() {
-		amountOfGetOutOfJailCards--;
+	public void pushGetOutOfJailCard(DrawableCard card) {
+		getOutOfJailCards.push(card);
 	}
+
+//	public int getAmountOfGetOutOfJailCards() {
+//		return amountOfGetOutOfJailCards;
+//	}
+//
+//	public void setAmountOfGetOutOfJailCards(int amountOfGetOutOfJailCards) {
+//		this.amountOfGetOutOfJailCards = amountOfGetOutOfJailCards;
+//	}
+//	
+//	public void addGetOutOfJailCard() {
+//		amountOfGetOutOfJailCards++;
+//	}
+//	
+//	public void removeGetOutOfJailCard() {
+//		amountOfGetOutOfJailCards--;
+//	}
 }

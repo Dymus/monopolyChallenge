@@ -91,7 +91,6 @@ public class BoardSystem {
 		}
 	}
 	
-	
 	public static void setCommunityChestCards(ArrayDeque<DrawableCard> newCommunityChestCards) {
 		communityChestCards = newCommunityChestCards;
 	}
@@ -330,6 +329,14 @@ public class BoardSystem {
 	
 	public static int getChanceCardDeckSize() {
 		return chanceCards.size();
+	}
+	
+	public static Deque<DrawableCard> getChanceCards() {
+		return chanceCards;
+	}
+	
+	public static Deque<DrawableCard> getCommunityChestCards() {
+		return communityChestCards;
 	}
 	
 //	public static DrawableCard getChanceCard(int chanceCardID) {

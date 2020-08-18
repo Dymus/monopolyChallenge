@@ -66,7 +66,12 @@ public class CommandResolver {
 				}
 				
 				executeCommand(drawer, card.getCommand(), card.getId());
-				BoardSystem.returnChanceCard(card);
+				
+				if (card.getCommand().equals("Keep Jail Free")) {
+					drawer.pushGetOutOfJailCard(card);
+				} else {
+					BoardSystem.returnChanceCard(card);
+				}
 			} else if (tokens[1].equals("COMMUNITY")) {
 				DrawableCard card = BoardSystem.drawCommunityChestCard();
 				
@@ -77,7 +82,12 @@ public class CommandResolver {
 				}
 		
 				executeCommand(drawer, card.getCommand(), card.getId());
-				BoardSystem.returnCommunityChestCard(card);
+				
+				if (card.getCommand().equals("Keep Jail Free")) {
+					drawer.pushGetOutOfJailCard(card);
+				} else {
+					BoardSystem.returnCommunityChestCard(card);
+				}
 			}
 			break;
 		case "GO":
@@ -121,13 +131,11 @@ public class CommandResolver {
 			}
 			break;
 		case "KEEP":
-			drawer.addGetOutOfJailCard();
 			if (drawer.isBot()) {
 				System.out.println("Player " + drawer.getName() + "(ID:" + BoardSystem.getWhosTurn().getId() + ") received a \"Get Out Of Jail For Free\" card.");
 			} else {
 				System.out.println("You received a \"Get Out Of Jail For Free\" card. You can use it to break free the next time you are sent to JAIL");
 			}
-			
 			break;
 		default:
 			System.err.println("Ran into unknown problem!");
