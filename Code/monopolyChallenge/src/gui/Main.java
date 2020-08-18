@@ -1,8 +1,5 @@
 package gui;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Deque;
 import java.util.Scanner;
 
 import ctr.CardSetManager;
@@ -11,6 +8,7 @@ import model.City;
 import model.CardSet;
 import model.CardSetType;
 import model.CommandResolver;
+import model.Die;
 import model.DrawableCard;
 import model.DrawableType;
 import model.Player;
@@ -55,12 +53,16 @@ public class Main {
 	public static int start() throws InterruptedException {
 		
 		// Start player statistics tracking thread with GUI
-		PlayerStatTracker playerStattrackerThread = new PlayerStatTracker();
-		new Thread(playerStattrackerThread).start();
+		PlayerStatTracker playerStatTrackerThread = new PlayerStatTracker();
+		new Thread(playerStatTrackerThread).start();
 		
 		// Start card set tracking thread with GUI
-		CardSetTracker trackerThread = new CardSetTracker(csM);
-		new Thread(trackerThread).start();
+		CardSetTracker cardTrackerThread = new CardSetTracker(csM);
+		new Thread(cardTrackerThread).start();
+		
+//		// Die tracker
+//		DieTracker dieTrackerThread = new DieTracker();
+//		new Thread(dieTrackerThread).start();
 		
 		// DEBUG
 //		for (int i = 0; i < BoardSystem.getStaticCards().size(); i++) {
@@ -74,15 +76,56 @@ public class Main {
 		
 		while (true) {
 			whosTurn = BoardSystem.getWhosTurn();
+//			int diceThrownByPlayerInThisTurn = 0;
+//			
 			if (!whosTurn.isBot()) {
+				
+				// Checking if player is in jail
+				if (whosTurn.isImprisoned()) {
+					if (whosTurn.getBannedTurns() < 2) {
+						whosTurn.decreaseBannedTurns();
+						whosTurn.setImprisoned(false);
+					} else {
+						whosTurn.decreaseBannedTurns();
+					}
+					System.out.println("You're in jail, you're skipping the turn. Remaining turns to skip: " + whosTurn.getBannedTurns());
+					
+					BoardSystem.nextTurn();
+					System.out.println();
+					continue;
+				}
+				
+				// Rolling the dice
 				System.out.println("You're rolling the dice");
-//				Thread.sleep(1000);
-				Integer rolled = BoardSystem.rollTheDice();
-				System.out.println("You got " + rolled + " eyelets on the dice.");
-//				Thread.sleep(1000);
+				Thread.sleep(1000);
+				Die.rollTheDice();
+				Integer rolled = Die.getResult();				
+				System.out.println("You got " + Die.getFirstRoll() + " and " + Die.getSecondRoll() + " eyelets on the dice.");
+				if (Die.isRolledDouble()) {
+					System.out.println("That's a double!");
+				}
+				
+				// Check if player got double amount of pips three times in a row
+				if (Die.getTimesRolledDouble() == 3 ) {
+					// Imprison player
+					System.out.println("You rolled double on the dice three times in a row. You're skipping this turn and going to jail.");
+					whosTurn.setImprisoned(true);
+					whosTurn.setBannedTurns(3);
+					
+					// Resetting the double counter on Die
+					Die.resetTimesRolledDouble();
+					Die.setRolledDouble(false);
+					
+					// Next turn and continue loop
+					BoardSystem.nextTurn();
+					System.out.println();
+					continue;
+				}
+				
+				Thread.sleep(1000);
 				int position = BoardSystem.movePlayer(whosTurn, rolled);
 				System.out.println("You moved to position " + position + ".");
-//				Thread.sleep(1000);
+				Thread.sleep(1000);
 				Class staticCardClass = BoardSystem.getStaticCardClass(position);
 				// DEBUG
 //				System.out.println(staticCardClass.getSimpleName());
@@ -249,15 +292,62 @@ public class Main {
 					cr.executeCommand(whosTurn, specialCard.getCommand(), specialCard.getId());
 					break;
 				}
-			} else {			
+				
+				// If the player rolled double, it gets to roll the dice again
+				if (Die.isRolledDouble()) {
+					System.out.println();
+					continue;
+				}
+				
+			} else {	
+				
+				// Checking if player is in jail
+				if (whosTurn.isImprisoned()) {
+					if (whosTurn.getBannedTurns() < 2) {
+						whosTurn.decreaseBannedTurns();
+						whosTurn.setImprisoned(false);
+					} else {
+						whosTurn.decreaseBannedTurns();
+					}
+					System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") is in jail and skipping the turn. In jail for " + whosTurn.getBannedTurns() + " more turns.");
+					
+					BoardSystem.nextTurn();
+					System.out.println();
+					continue;
+				}
+				
+				
+				// Rolling the dice
 				System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") is rolling the dice");
-//				Thread.sleep(1000);
-				Integer rolled = BoardSystem.rollTheDice();
-				System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") got " + rolled + " eyelets on the dice.");
-//				Thread.sleep(1000);
+				Thread.sleep(1000);
+				Die.rollTheDice();
+				Integer rolled = Die.getResult();
+				System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") got " + Die.getFirstRoll() + " and " + Die.getSecondRoll() + " eyelets on the dice.");
+				if (Die.isRolledDouble()) {
+					System.out.println("That's a double!");
+				}
+				
+				// Check if player got double amount of pips three times in a row
+				if (Die.getTimesRolledDouble() == 3 ) {
+					// Imprison player
+					System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") rolled double on the dice three times in a row. It's now skipping this turn and going to jail.");
+					whosTurn.setImprisoned(true);
+					whosTurn.setBannedTurns(3);
+					
+					// Resetting the double counter on Die
+					Die.resetTimesRolledDouble();
+					Die.setRolledDouble(false);
+					
+					// Next turn and continue loop
+					BoardSystem.nextTurn();
+					System.out.println();
+					continue;
+				}
+				
+				Thread.sleep(1000);
 				int position = BoardSystem.movePlayer(whosTurn, rolled);
 				System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") moved to position " + position + ".");
-//				Thread.sleep(1000);
+				Thread.sleep(1000);
 				Class staticCardClass = BoardSystem.getStaticCardClass(position);
 				// DEBUG
 //				System.out.println(staticCardClass.getSimpleName());
@@ -329,7 +419,7 @@ public class Main {
 								System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") doesn't have sufficient funds to pay rent!");
 							}
 						} else {
-							System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") is standing at the property it owns.");
+							System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") is standing at the property owned by that player.");
 						}
 					}
 					break;
@@ -387,7 +477,7 @@ public class Main {
 								System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") doesn't have sufficient funds to pay rent!");
 							}
 						} else {
-							System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") is standing at the city it owns.");
+							System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") is standing at the city owned by that player.");
 						}
 					}
 					break;
@@ -412,6 +502,13 @@ public class Main {
 					break;
 				}
 			}
+			
+			// If the player rolled double, it gets to roll the dice again
+			if (Die.isRolledDouble()) {
+				System.out.println();
+				continue;
+			}
+			
 			BoardSystem.nextTurn();
 			System.out.println();
 		}
@@ -465,7 +562,7 @@ public class Main {
 		City cid22 = new City("Kentucky Avenue".toUpperCase(), 22, CardSetType.RED, 220, false, 18, 90, 250, 700, 875, 1050, 110, 150, 150);
 		SpecialCard cid23 = new SpecialCard("Chance Blue".toUpperCase(), 23, CardSetType.OTHER, "Draw chance");
 		City cid24 = new City("Indiana Avenue".toUpperCase(), 24, CardSetType.RED, 220, false, 18, 90, 250, 700, 875, 1050, 110, 150, 150);
-		City cid25 = new City("Illinoi Avenue".toUpperCase(), 25, CardSetType.RED, 240, false, 20, 100, 300, 750, 925, 1100, 120, 150, 150);
+		City cid25 = new City("Illinois Avenue".toUpperCase(), 25, CardSetType.RED, 240, false, 20, 100, 300, 750, 925, 1100, 120, 150, 150);
 		Property cid26 = new Property("B. & O. Railroad".toUpperCase(), 26, CardSetType.RAILROADS, 200, false); // Station
 		
 		// Yellow

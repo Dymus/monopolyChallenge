@@ -4,10 +4,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>170</x>
+      <x>100</x>
       <y>650</y>
-      <w>140</w>
-      <h>150</h>
+      <w>180</w>
+      <h>180</h>
     </coordinates>
     <panel_attributes>Player
 --
@@ -17,6 +17,8 @@
 - position: int
 - id: int
 - bot: boolean
+- isImprisoned: boolean
+- bannedTurns: int;
 _- idCounter: int_
 
 </panel_attributes>
@@ -101,22 +103,22 @@ _- idCounter: int_
     <coordinates>
       <x>520</x>
       <y>710</y>
-      <w>180</w>
+      <w>130</w>
       <h>110</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>160.0;10.0;10.0;90.0</additional_attributes>
+    <additional_attributes>110.0;10.0;10.0;90.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>680</x>
+      <x>690</x>
       <y>710</y>
-      <w>80</w>
+      <w>30</w>
       <h>110</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>60.0;10.0;10.0;90.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
@@ -134,7 +136,7 @@ _- idCounter: int_
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>70</x>
+      <x>0</x>
       <y>600</y>
       <w>100</w>
       <h>50</h>
@@ -147,7 +149,7 @@ bg=yellow</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>310</x>
+      <x>290</x>
       <y>410</y>
       <w>380</w>
       <h>100</h>
@@ -164,7 +166,7 @@ bg=yellow</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>680</x>
+      <x>660</x>
       <y>400</y>
       <w>110</w>
       <h>180</h>
@@ -193,7 +195,7 @@ holds &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>510</x>
+      <x>520</x>
       <y>950</y>
       <w>30</w>
       <h>70</h>
@@ -204,27 +206,27 @@ holds &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>780</x>
+      <x>770</x>
       <y>710</y>
-      <w>110</w>
+      <w>120</w>
       <h>110</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;90.0;90.0</additional_attributes>
+    <additional_attributes>10.0;10.0;100.0;90.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>300</x>
+      <x>270</x>
       <y>650</y>
-      <w>170</w>
+      <w>200</w>
       <h>190</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
 m2=1..*
 owns &gt;</panel_attributes>
-    <additional_attributes>10.0;10.0;80.0;10.0;80.0;160.0;150.0;160.0</additional_attributes>
+    <additional_attributes>10.0;10.0;110.0;10.0;110.0;160.0;180.0;160.0</additional_attributes>
   </element>
   <element>
     <id>UMLNote</id>
@@ -276,8 +278,8 @@ bg=black</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>80</x>
-      <y>430</y>
+      <x>310</x>
+      <y>520</y>
       <w>150</w>
       <h>60</h>
     </coordinates>
@@ -360,7 +362,7 @@ m2=1
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>620</x>
+      <x>600</x>
       <y>560</y>
       <w>210</w>
       <h>160</h>
@@ -375,53 +377,40 @@ m2=1
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>990</x>
-      <y>400</y>
-      <w>180</w>
+      <x>290</x>
+      <y>1030</y>
+      <w>150</w>
       <h>50</h>
     </coordinates>
-    <panel_attributes>//ID also acts as position 
-//on the board
-fg=black
-bg=orange</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLNote</id>
-    <coordinates>
-      <x>160</x>
-      <y>1050</y>
-      <w>280</w>
-      <h>30</h>
-    </coordinates>
-    <panel_attributes>rent with color set is always doubled
-bg=yellow</panel_attributes>
+    <panel_attributes>rent with color set 
+is always doubled
+bg=pink</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>750</x>
+      <x>730</x>
       <y>510</y>
-      <w>120</w>
+      <w>140</w>
       <h>70</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>100.0;10.0;10.0;50.0</additional_attributes>
+    <additional_attributes>120.0;10.0;10.0;50.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>230</x>
+      <x>200</x>
       <y>110</y>
-      <w>1060</w>
+      <w>1120</w>
       <h>560</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=*
 m2=1
 &lt; manages</panel_attributes>
-    <additional_attributes>10.0;540.0;10.0;20.0;1030.0;20.0;1030.0;100.0</additional_attributes>
+    <additional_attributes>10.0;540.0;10.0;20.0;1090.0;20.0;1090.0;100.0</additional_attributes>
   </element>
   <element>
     <id>UMLNote</id>
@@ -451,7 +440,7 @@ bg=#3c7a00</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>250</x>
+      <x>230</x>
       <y>270</y>
       <w>410</w>
       <h>120</h>
@@ -466,7 +455,7 @@ cardSets: ArrayList&lt;CardSet&gt;
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>420</x>
+      <x>400</x>
       <y>210</y>
       <w>290</w>
       <h>220</h>

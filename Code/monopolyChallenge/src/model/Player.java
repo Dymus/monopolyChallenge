@@ -11,6 +11,8 @@ public class Player {
 	private int position = 1;
 	private boolean bot;
 	private int id;
+	private boolean isImprisoned = false;
+	private int bannedTurns = 0;
 	private static int idCounter = 1;
 	
 	public Player() {
@@ -77,4 +79,32 @@ public class Player {
 	public static void resetCounter() {
 		idCounter = 1;
 	}
+
+	public boolean isImprisoned() {
+		return isImprisoned;
+	}
+
+	public void setImprisoned(boolean isImprisoned) {
+		this.isImprisoned = isImprisoned;
+	}
+
+	public int getBannedTurns() {
+		return bannedTurns;
+	}
+
+	public void setBannedTurns(int bannedTurns) {
+		this.bannedTurns = bannedTurns;
+	}
+	
+	// Increases the amount of banned turns by 1, and returns the number of banned turns(bannedTurns) after they had been increased.
+	public int increaseBannedTurns() {
+		return ++bannedTurns;
+	}
+	
+	// Decreases the amount of banned turns by 1, and returns the number of banned turns(bannedTurns) after they had been decreased.
+	public int decreaseBannedTurns() {
+		return --bannedTurns;
+	}
+	
+	
 }

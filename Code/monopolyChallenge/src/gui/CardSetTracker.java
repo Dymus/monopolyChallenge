@@ -568,7 +568,7 @@ public class CardSetTracker extends JFrame implements Runnable {
 		gbc_lblNewLabel_65.gridy = 19;
 		contentPane.add(lblNewLabel_65, gbc_lblNewLabel_65);
 		
-		lblNewLabel_18 = new JLabel("ILLINOI AVENUE");
+		lblNewLabel_18 = new JLabel("ILLINOIS AVENUE");
 		GridBagConstraints gbc_lblNewLabel_18 = new GridBagConstraints();
 		gbc_lblNewLabel_18.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_18.gridx = 2;
@@ -821,6 +821,12 @@ public class CardSetTracker extends JFrame implements Runnable {
 			lblNewLabel_65.setFont(f.deriveFont(f.getStyle() | Font.BOLD));
 		}
 		else lblNewLabel_65.setText("None");
+		
+		if ( ((City) pink.getCardWithBoardPosition(14)).isOwned() ) {
+			lblNewLabel_45.setText(((City) pink.getCardWithBoardPosition(14)).getOwner().getName());
+			lblNewLabel_45.setFont(f.deriveFont(f.getStyle() | Font.BOLD));
+		}
+		else lblNewLabel_45.setText("None");
 		
 		if ( ((City) pink.getCardWithBoardPosition(15)).isOwned() ) {
 			lblNewLabel_46.setText(((City) pink.getCardWithBoardPosition(15)).getOwner().getName());

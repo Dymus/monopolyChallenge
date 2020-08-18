@@ -235,7 +235,18 @@ public class BoardSystem {
 				timesPassedThroughGo++;
 			}
 		}
+		
 		player.setPosition(newPosition);
+		
+		System.out.println("Passed through GO " + timesPassedThroughGo + " time(s).");
+		
+		// Add 200 for every time a player has passed GO
+		if (timesPassedThroughGo > 0) {
+			for (int i = 1; i <= timesPassedThroughGo; i++) {
+				player.setMoney(player.getMoney() + 200);
+			}
+		}	
+		
 		return newPosition;
 	}
 	
@@ -252,6 +263,12 @@ public class BoardSystem {
 			whosTurn = getPlayerWithID(nextIDTurn);
 			turnCounter++;
 		}
+	}
+	
+	public static Die rollTheDie2() {
+		Die die = new Die();
+		die.rollTheDice();
+		return die;
 	}
 	
 	// TODO differentiate dies to check for doubles

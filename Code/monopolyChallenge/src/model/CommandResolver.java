@@ -87,11 +87,9 @@ public class CommandResolver {
 				int oldPosition = drawer.getPosition();
 				int placesToMove;
 				
-				// TODO debug
 				if (desiredPosition < oldPosition) {
-					placesToMove = BoardSystem.getStaticCards().size() % Math.abs(desiredPosition - oldPosition);
+					placesToMove = desiredPosition - oldPosition + BoardSystem.getStaticCards().size();
 				} else {
-					
 					placesToMove = desiredPosition - oldPosition;
 				}
 
@@ -104,7 +102,16 @@ public class CommandResolver {
 					System.out.println("You moved to position: " + newPositionName);
 				}
 			} else if (tokens[1].equals("JAIL")) {
+				drawer.setImprisoned(true);
+				drawer.setBannedTurns(3);
+				Die.setRolledDouble(false);
+				Die.resetTimesRolledDouble();
 				
+				if (drawer.isBot()) {
+					System.out.println("Player " + drawer.getName() + "(ID:" + BoardSystem.getWhosTurn().getId() + ") went to JAIL");
+				} else {
+					System.out.println("You went to JAIL");
+				}
 			}
 			break;
 		case "NO":

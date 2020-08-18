@@ -238,10 +238,14 @@ public class PlayerStatTracker extends JFrame implements Runnable {
 	}
 	
 	private static void refresh() {
-		ArrayList<Player> players = BoardSystem.getActivePlayers();
-		Player p1 = players.get(0);
-		Player p2 = players.get(1);
-		Player p3 = players.get(2);
+//		ArrayList<Player> players = BoardSystem.getActivePlayers();
+//		Player p1 = players.get(0);
+//		Player p2 = players.get(1);
+//		Player p3 = players.get(2);
+		
+		Player p1 = BoardSystem.getPlayerWithID(1);
+		Player p2 = BoardSystem.getPlayerWithID(2);
+		Player p3 = BoardSystem.getPlayerWithID(3);
 		
 		// P1
 		
