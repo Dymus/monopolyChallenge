@@ -120,6 +120,15 @@ public class CommandResolver {
 				
 			}
 			break;
+		case "KEEP":
+			drawer.addGetOutOfJailCard();
+			if (drawer.isBot()) {
+				System.out.println("Player " + drawer.getName() + "(ID:" + BoardSystem.getWhosTurn().getId() + ") received a \"Get Out Of Jail For Free\" card.");
+			} else {
+				System.out.println("You received a \"Get Out Of Jail For Free\" card. You can use it to break free the next time you are sent to JAIL");
+			}
+			
+			break;
 		default:
 			System.err.println("Ran into unknown problem!");
 		}

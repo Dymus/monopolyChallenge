@@ -13,6 +13,7 @@ public class Player {
 	private int id;
 	private boolean isImprisoned = false;
 	private int bannedTurns = 0;
+	private int amountOfGetOutOfJailCards = 0;
 	private static int idCounter = 1;
 	
 	public Player() {
@@ -105,6 +106,20 @@ public class Player {
 	public int decreaseBannedTurns() {
 		return --bannedTurns;
 	}
+
+	public int getAmountOfGetOutOfJailCards() {
+		return amountOfGetOutOfJailCards;
+	}
+
+	public void setAmountOfGetOutOfJailCards(int amountOfGetOutOfJailCards) {
+		this.amountOfGetOutOfJailCards = amountOfGetOutOfJailCards;
+	}
 	
+	public void addGetOutOfJailCard() {
+		amountOfGetOutOfJailCards++;
+	}
 	
+	public void removeGetOutOfJailCard() {
+		amountOfGetOutOfJailCards--;
+	}
 }

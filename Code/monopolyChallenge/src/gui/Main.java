@@ -76,23 +76,46 @@ public class Main {
 		
 		while (true) {
 			whosTurn = BoardSystem.getWhosTurn();
-//			int diceThrownByPlayerInThisTurn = 0;
-//			
 			if (!whosTurn.isBot()) {
 				
 				// Checking if player is in jail
 				if (whosTurn.isImprisoned()) {
-					if (whosTurn.getBannedTurns() < 2) {
+					if (whosTurn.getAmountOfGetOutOfJailCards() > 0) {
+						System.out.println("You happen to have a card that lets you get out of jail for free, do you wish to use it? (Y\\N)");
+						String answer = sc.nextLine().toUpperCase();
+						if (answer.equals("Y")) {
+							whosTurn.removeGetOutOfJailCard();
+							whosTurn.setBannedTurns(0);
+							whosTurn.setImprisoned(false);
+							System.out.println("You're getting out of JAIL");
+						} else {
+							int leftTurns = whosTurn.decreaseBannedTurns();
+							if (leftTurns == 0) {
+								whosTurn.setImprisoned(false);
+							}
+							System.out.println("You're in jail, you're skipping the turn. Remaining turns to skip: " + whosTurn.getBannedTurns());
+							
+							BoardSystem.nextTurn();
+							System.out.println();
+							continue;
+						}
+					}
+					else if (whosTurn.getBannedTurns() < 2) {
 						whosTurn.decreaseBannedTurns();
 						whosTurn.setImprisoned(false);
+						System.out.println("You're in jail, you're skipping the turn. Remaining turns to skip: " + whosTurn.getBannedTurns());
+						
+						BoardSystem.nextTurn();
+						System.out.println();
+						continue;
 					} else {
 						whosTurn.decreaseBannedTurns();
+						System.out.println("You're in jail, you're skipping the turn. Remaining turns to skip: " + whosTurn.getBannedTurns());
+						
+						BoardSystem.nextTurn();
+						System.out.println();
+						continue;
 					}
-					System.out.println("You're in jail, you're skipping the turn. Remaining turns to skip: " + whosTurn.getBannedTurns());
-					
-					BoardSystem.nextTurn();
-					System.out.println();
-					continue;
 				}
 				
 				// Rolling the dice
@@ -234,7 +257,7 @@ public class Main {
 							
 							// Calculating rent
 							
-							// Getting cardSet from the city
+							// Getting cardSetType from the city
 							CardSetType cst = city.getCardSetType();
 							
 							// Checking if lot is unimproved, if it has houses or hotels 
@@ -303,19 +326,29 @@ public class Main {
 				
 				// Checking if player is in jail
 				if (whosTurn.isImprisoned()) {
-					if (whosTurn.getBannedTurns() < 2) {
+					if (whosTurn.getAmountOfGetOutOfJailCards() > 0) {
+						whosTurn.removeGetOutOfJailCard();
+						whosTurn.setBannedTurns(0);
+						whosTurn.setImprisoned(false);
+						System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + " is using a card to get out of JAIL");
+					}
+					else if (whosTurn.getBannedTurns() < 2) {
 						whosTurn.decreaseBannedTurns();
 						whosTurn.setImprisoned(false);
+						System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") is in jail and skipping the turn. In jail for " + whosTurn.getBannedTurns() + " more turns.");
+						
+						BoardSystem.nextTurn();
+						System.out.println();
+						continue;
 					} else {
 						whosTurn.decreaseBannedTurns();
+						System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") is in jail and skipping the turn. In jail for " + whosTurn.getBannedTurns() + " more turns.");
+						
+						BoardSystem.nextTurn();
+						System.out.println();
+						continue;
 					}
-					System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") is in jail and skipping the turn. In jail for " + whosTurn.getBannedTurns() + " more turns.");
-					
-					BoardSystem.nextTurn();
-					System.out.println();
-					continue;
 				}
-				
 				
 				// Rolling the dice
 				System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") is rolling the dice");
@@ -444,7 +477,7 @@ public class Main {
 							
 							// Calculating rent
 							
-							// Getting cardSet from the city
+							// Getting cardSetType from the city
 							CardSetType cst = city.getCardSetType();
 							
 							// Checking if lot is unimproved, if it has houses or hotels 
