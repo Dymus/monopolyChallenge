@@ -111,6 +111,88 @@ public class CommandResolver {
 				} else {
 					System.out.println("You moved to position: " + newPositionName);
 				}
+			} else if (tokens[1].equals("CLOSEST")) {
+				/* The moves are only assumed to be forward */
+			
+				if (tokens[2].equals("UTILITY")) {
+					int currentPosition = drawer.getPosition();
+					int desiredPosition = 1;
+					
+					// Setting utility position that player should move to
+					if (currentPosition == 3 || currentPosition == 8 || currentPosition == 34  || currentPosition == 37) {
+						desiredPosition = 13;
+					} else if (currentPosition == 18 || currentPosition == 23) {
+						desiredPosition = 29;
+					}
+					
+					// Calculating places to move
+					int placesToMove;
+					if (desiredPosition < currentPosition) {
+						placesToMove = desiredPosition - currentPosition + BoardSystem.getStaticCards().size();
+					} else {
+						placesToMove = desiredPosition - currentPosition;
+					}
+					
+					// Moving player
+					int newPosition = BoardSystem.movePlayer(drawer, placesToMove);
+					String newPositionName = BoardSystem.getStaticCardName(newPosition);
+					
+					if (drawer.isBot()) {
+						System.out.println("Player " + drawer.getName() + "(ID:" + drawer.getId() + ") moved to position: " + newPositionName);
+					} else {
+						System.out.println("You moved to position: " + newPositionName);
+					}					
+				} else if (tokens[2].equals("RAILROAD")) {
+					int currentPosition = drawer.getPosition();
+					int desiredPosition = 1;
+					
+					// Setting railroad position that player should move to
+					if (currentPosition == 3 || currentPosition == 37) {
+						desiredPosition = 6;
+					} else if (currentPosition == 8) {
+						desiredPosition = 16;
+					} else if (currentPosition == 18 || currentPosition == 23) {
+						desiredPosition = 26;
+					} else if (currentPosition == 34) {
+						desiredPosition = 36;
+					}
+					
+					// Calculating places to move
+					int placesToMove;
+					if (desiredPosition < currentPosition) {
+						placesToMove = desiredPosition - currentPosition + BoardSystem.getStaticCards().size();
+					} else {
+						placesToMove = desiredPosition - currentPosition;
+					}
+					
+					// Moving player
+					int newPosition = BoardSystem.movePlayer(drawer, placesToMove);
+					String newPositionName = BoardSystem.getStaticCardName(newPosition);
+					
+					if (drawer.isBot()) {
+						System.out.println("Player " + drawer.getName() + "(ID:" + drawer.getId() + ") moved to position: " + newPositionName);
+					} else {
+						System.out.println("You moved to position: " + newPositionName);
+					}
+				}
+			} else if (Character.isDigit(tokens[1].charAt(1))) { 
+				// DEBUG
+				System.out.println("Got here");
+				Integer places = Integer.parseInt(tokens[1]);
+				
+				// Changing player's position
+				// TODO account for pos > 40 and pos < 1
+				drawer.setPosition(drawer.getPosition() + places);
+
+				// Getting new position name
+				int newPosition = drawer.getPosition();
+				String newPositionName = BoardSystem.getStaticCardName(newPosition);
+				
+				if (drawer.isBot()) {
+					System.out.println("Player " + drawer.getName() + "(ID:" + drawer.getId() + ") moved to position: " + newPositionName);
+				} else {
+					System.out.println("You moved to position: " + newPositionName);
+				}
 			} else if (tokens[1].equals("JAIL")) {
 				drawer.setImprisoned(true);
 				drawer.setBannedTurns(3);

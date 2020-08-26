@@ -124,14 +124,14 @@ _- idCounter: int_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1300</x>
-      <y>480</y>
-      <w>150</w>
+      <x>1240</x>
+      <y>400</y>
+      <w>470</w>
       <h>160</h>
     </coordinates>
     <panel_attributes>CommandResolver
 --
-</panel_attributes>
++ executeComman(Player p, String command, Integer cardID): void</panel_attributes>
     <additional_attributes/>
   </element>
   <element>

@@ -1,9 +1,20 @@
 TODOs
- # Remember: Always reset Die when a player goes bankwupt or leaves the game.
- # return get ouf of jail for free card to the deck
- 
- 
-# Allow players to interact with a lot after they drew a community chest card or chance card and where moved to that place.
+
+# !!!!!!!!!!!!!!! Wrap switch cases in methods in Main.
+# First for the player, then for bot	
+	
+	
+# Get 50 All
+	
+	
+	
+	
+	
+	
+	
+# Remember: Always reset Die when a player goes bankwupt or leaves the game.
+# Allow players to interact with a lot after they drew a community chest card or chance card and where moved to that place. And special cases for moving to nearest Utility or Railroad
+
 # Auction if a player doesn't buy property/city.
 
 
@@ -13,5 +24,5 @@ TODOs
 
 # https://stackoverflow.com/questions/5762491/how-to-print-color-in-console-using-system-out-println JColor library to mark cards.
 # method that calculates how many places you need to move, if you want to move to position X
-# Houses must be built evenly across all properties.
+# Remember: Houses must be built evenly across all properties.
 

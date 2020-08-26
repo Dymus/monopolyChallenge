@@ -53,6 +53,8 @@ public class Main {
 	
 	public static int start() throws InterruptedException {
 		
+		// Starting tracking threads
+		
 		// Start player statistics tracking thread with GUI
 		PlayerStatTracker playerStatTrackerThread = new PlayerStatTracker();
 		new Thread(playerStatTrackerThread).start();
@@ -65,11 +67,6 @@ public class Main {
 //		DieTracker dieTrackerThread = new DieTracker();
 //		new Thread(dieTrackerThread).start();
 		
-		// DEBUG
-//		for (int i = 0; i < BoardSystem.getStaticCards().size(); i++) {
-//			System.out.println(i+1 + " " + BoardSystem.getStaticCards().get(i).getClass().getSimpleName());
-//		}
-		
 		System.out.println("| STARTING THE GAME |");
 		BoardSystem.nextTurn();
 		Player whosTurn = BoardSystem.getWhosTurn();
@@ -80,51 +77,9 @@ public class Main {
 			if (!whosTurn.isBot()) {
 				
 				// Checking if player is in jail
-				if (whosTurn.isImprisoned()) {
-					if (whosTurn.getGetOutOfJailCards().size() > 0) {
-						System.out.println("You happen to have a card that lets you get out of jail for free, do you wish to use it? (Y\\N)");
-						String answer = sc.nextLine().toUpperCase();
-						if (answer.equals("Y")) {
-							
-							// Returning the card to appropriate deque
-							DrawableCard card = whosTurn.popGetOutOfJailCard();
-							if (card.getType() == DrawableType.CHANCE) {
-								BoardSystem.addChanceCard(card);
-							} else {
-								BoardSystem.addCommunityChestCard(card);
-							}
-							
-							whosTurn.setBannedTurns(0);
-							whosTurn.setImprisoned(false);
-							System.out.println("You're getting out of JAIL");
-						} else {
-							int leftTurns = whosTurn.decreaseBannedTurns();
-							if (leftTurns == 0) {
-								whosTurn.setImprisoned(false);
-							}
-							System.out.println("You're in jail, you're skipping the turn. Remaining turns to skip: " + whosTurn.getBannedTurns());
-							
-							BoardSystem.nextTurn();
-							System.out.println();
-							continue;
-						}
-					}
-					else if (whosTurn.getBannedTurns() < 2) {
-						whosTurn.decreaseBannedTurns();
-						whosTurn.setImprisoned(false);
-						System.out.println("You're in jail, you're skipping the turn. Remaining turns to skip: " + whosTurn.getBannedTurns());
-						
-						BoardSystem.nextTurn();
-						System.out.println();
-						continue;
-					} else {
-						whosTurn.decreaseBannedTurns();
-						System.out.println("You're in jail, you're skipping the turn. Remaining turns to skip: " + whosTurn.getBannedTurns());
-						
-						BoardSystem.nextTurn();
-						System.out.println();
-						continue;
-					}
+				if (checkIfImprisoned(whosTurn, false)) {
+					// Skipping turn (check the method above)
+					continue;
 				}
 				
 				// Rolling the dice
@@ -154,6 +109,7 @@ public class Main {
 					continue;
 				}
 				
+				// Moving the player
 				Thread.sleep(1000);
 				int position = BoardSystem.movePlayer(whosTurn, rolled);
 				System.out.println("You moved to position " + position + ".");
@@ -625,7 +581,7 @@ public class Main {
 		// Green
 		City cid32 = new City("Pacific Avenue".toUpperCase(), 32, CardSetType.GREEN, 300, false, 26, 130, 390, 900, 1100, 1275, 150, 200, 200);
 		City cid33 = new City("North Carolina Avenue".toUpperCase(), 33, CardSetType.GREEN, 300, false, 26, 130, 390, 900, 1100, 1275, 150, 200, 200);
-		SpecialCard cid34 = new SpecialCard("Community Chest 3", 34, CardSetType.OTHER, "Draw Community Chest");
+		SpecialCard cid34 = new SpecialCard("Community Chest 3".toUpperCase(), 34, CardSetType.OTHER, "Draw Community Chest");
 		City cid35 = new City("Pennsylvania Avenue".toUpperCase(), 35, CardSetType.GREEN, 320, false, 28, 150, 450, 1000, 1200, 1400, 160, 200, 200);
 		Property cid36 = new Property("Short Line".toUpperCase(), 36, CardSetType.RAILROADS, 200, false); // Station
 		SpecialCard cid37 = new SpecialCard("Chance Orange".toUpperCase(), 37, CardSetType.OTHER, "Draw Chance");
@@ -641,7 +597,6 @@ public class Main {
 		DrawableCard cid43 = new DrawableCard("Doctor's fee - Pay $50", "Pay 50", DrawableType.COMMUNITY_CHEST);
 		DrawableCard cid44 = new DrawableCard("From sale of stock you get $50", "Get 50", DrawableType.COMMUNITY_CHEST);
 		DrawableCard cid45 = new DrawableCard("Get Out of Jail Free", "Keep Jail Free", DrawableType.COMMUNITY_CHEST);
-		
 		DrawableCard cid46 = new DrawableCard("Go to Jail - Go directly to jail - Do not pass Go - Do not collect $200", "Go Jail", DrawableType.COMMUNITY_CHEST);
 		DrawableCard cid47 = new DrawableCard("Grand Opera Night - Collect $50 from every player for opening night seats", "Get 50 All", DrawableType.COMMUNITY_CHEST);
 		DrawableCard cid48 = new DrawableCard("Holiday Fund matures - Receive $100", "Receive 100", DrawableType.COMMUNITY_CHEST);
@@ -734,9 +689,6 @@ public class Main {
 //		chanceCards.add(cid73);
 		
 		
-		
-		
-		
 		// OFFICIAL BOARD SYSTEM
 		
 		// Adding 40 board cards
@@ -817,6 +769,62 @@ public class Main {
 		BoardSystem.addChanceCard(cid71);
 		BoardSystem.addChanceCard(cid72);
 		BoardSystem.addChanceCard(cid73);		
+	}
+	
+	// TODO rewrite to account for isBot
+	// continue returns true, otherwise false
+	private static boolean checkIfImprisoned(Player whosTurn, boolean isBot) {
+
+		if (whosTurn.isImprisoned()) {
+			if (whosTurn.getGetOutOfJailCards().size() > 0) {
+				System.out.println("You happen to have a card that lets you get out of jail for free, do you wish to use it? (Y\\N)");
+				String answer = sc.nextLine().toUpperCase();
+				if (answer.equals("Y")) {
+					
+					// Returning the card to appropriate deque
+					DrawableCard card = whosTurn.popGetOutOfJailCard();
+					if (card.getType() == DrawableType.CHANCE) {
+						BoardSystem.addChanceCard(card);
+					} else {
+						BoardSystem.addCommunityChestCard(card);
+					}
+					
+					whosTurn.setBannedTurns(0);
+					whosTurn.setImprisoned(false);
+					System.out.println("You're getting out of JAIL");
+					return false;
+				} else {
+					int leftTurns = whosTurn.decreaseBannedTurns();
+					if (leftTurns == 0) {
+						whosTurn.setImprisoned(false);
+					}
+					System.out.println("You're in jail, you're skipping the turn. Remaining turns to skip: " + whosTurn.getBannedTurns());
+					
+					BoardSystem.nextTurn();
+					System.out.println();
+					return true;
+				}
+			}
+			else if (whosTurn.getBannedTurns() < 2) {
+				whosTurn.decreaseBannedTurns();
+				whosTurn.setImprisoned(false);
+				System.out.println("You're in jail, you're skipping the turn. Remaining turns to skip: " + whosTurn.getBannedTurns());
+				
+				BoardSystem.nextTurn();
+				System.out.println();
+				return true;
+			} else {
+				whosTurn.decreaseBannedTurns();
+				System.out.println("You're in jail, you're skipping the turn. Remaining turns to skip: " + whosTurn.getBannedTurns());
+				
+				BoardSystem.nextTurn();
+				System.out.println();
+				return true;
+			}
+		} else {
+			return false;
+		}
+
 	}
 	
 	public static void main(String[] args) throws InterruptedException {
