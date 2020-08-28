@@ -27,7 +27,11 @@ public class CommandResolver {
 		case "INHERIT":
 			if (Character.isDigit(tokens[1].charAt(0))) {
 				Integer value = Integer.parseInt(tokens[1]);
-				receiveMoney(drawer, value);
+				if (tokens.length > 2) {
+					getMoneyFromPlayers(drawer, value, drawableCardID);
+				} else {
+					receiveMoney(drawer, value);
+				}
 			}
 			break;
 		case "PAY":
@@ -176,8 +180,6 @@ public class CommandResolver {
 					}
 				}
 			} else if (Character.isDigit(tokens[1].charAt(1))) { 
-				// DEBUG
-				System.out.println("Got here");
 				Integer places = Integer.parseInt(tokens[1]);
 				
 				// Changing player's position
@@ -233,11 +235,11 @@ public class CommandResolver {
 		ArrayList<Player> activePlayers = BoardSystem.getActivePlayers();
 		int amountOfActivePlayers = activePlayers.size();
 
-		// Need to remove the player who is paying from the arrayList
+		// Need to remove the player who is paying from the ArrayList
 		activePlayers.remove(player);
 		
 		// Calculate player funds needed
-		int moneyNeeded = amountOfActivePlayers * value;
+		int moneyNeeded = (amountOfActivePlayers - 1) * value;
 				
 		if (player.getMoney() >= moneyNeeded) {
 			player.setMoney(player.getMoney()-value);
@@ -251,6 +253,37 @@ public class CommandResolver {
 		}
 		
 		// Adding the player who is paying back to the ArrayList
+		activePlayers.add(player);
+	}
+	
+	public void getMoneyFromPlayers(Player player, Integer value, Integer drawableCardID) {
+		// Getting active players
+		ArrayList<Player> activePlayers = BoardSystem.getActivePlayers();
+		
+		// Need to remove the player who is getting the money from the ArrayList
+		activePlayers.remove(player);
+		
+		// Calculate the money player will get
+		int moneyReceived = 0;
+		
+		for (Player activePlayer: activePlayers) {
+			if (activePlayer.getMoney() >= value) {
+				activePlayer.setMoney(activePlayer.getMoney()-value);
+				moneyReceived += value;
+				System.out.println("+" + value + " dollars from player " + activePlayer.getName() + "(ID:" + activePlayer.getId() +").");
+			} else {
+				// TODO no money
+				System.out.println("Player " + activePlayer.getName() + "(ID:" + activePlayer.getId() +") didn't have enough money to pay player " + player.getName() + "(ID:" + player.getId() +").");
+			}
+		}
+		
+		if (player.isBot()) {
+			System.out.println("Player " + player.getName() + "(ID:" + player.getId() + ") has received " + moneyReceived + " dollars total from other players");
+		} else {
+			System.out.println("You have received " + moneyReceived + " dollars total from other players");
+		}
+		
+		// Adding the player who is getting money back to the ArrayList
 		activePlayers.add(player);
 	}
 }

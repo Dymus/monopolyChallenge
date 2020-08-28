@@ -141,8 +141,6 @@ public class BoardSystem {
 
 	}
 	
-
-	
 	public static Class getStaticCardClass(int boardPosition) {
 		Iterator<? super StaticCard> it = staticCards.iterator();
 		boolean found = false;
@@ -241,9 +239,8 @@ public class BoardSystem {
 		
 		// Add 200 for every time a player has passed GO
 		if (timesPassedThroughGo > 0) {
-			for (int i = 1; i <= timesPassedThroughGo; i++) {
-				player.setMoney(player.getMoney() + 200);
-			}
+			int moneyForPassingGo = timesPassedThroughGo * 200;
+			player.setMoney(player.getMoney() + moneyForPassingGo);
 		}	
 		
 		return newPosition;

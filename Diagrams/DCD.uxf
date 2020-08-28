@@ -157,7 +157,7 @@ bg=yellow</panel_attributes>
     </coordinates>
     <panel_attributes>CardSet
 --
-- name: String
+- cardSetType: CardSetType
 - cards: ArrayList&lt;StaticCard&gt;
 -
 + getSetWithName(String name): CardSet
@@ -339,14 +339,14 @@ m2=1
     <coordinates>
       <x>1060</x>
       <y>560</y>
-      <w>150</w>
+      <w>170</w>
       <h>160</h>
     </coordinates>
     <panel_attributes>DrawableCard
 --
 - text: String
 - command: String
-- type: enum</panel_attributes>
+- type: DrawableType</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -412,18 +412,6 @@ m1=*
 m2=1
 &lt; manages</panel_attributes>
     <additional_attributes>10.0;530.0;10.0;20.0;1120.0;20.0;1120.0;100.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLNote</id>
-    <coordinates>
-      <x>1040</x>
-      <y>760</y>
-      <w>260</w>
-      <h>30</h>
-    </coordinates>
-    <panel_attributes>enum Chance or CommunityChest
-</panel_attributes>
-    <additional_attributes/>
   </element>
   <element>
     <id>UMLUseCase</id>

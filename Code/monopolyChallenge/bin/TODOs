@@ -1,19 +1,14 @@
 TODOs
 
 # !!!!!!!!!!!!!!! Wrap switch cases in methods in Main.
-# First for the player, then for bot	
+
+# Allow players to interact with a lot after they drew a community chest card or chance card and where moved to that place. And special cases for moving to nearest Utility or Railroad
 	
 	
-# Get 50 All
-	
-	
-	
-	
-	
-	
+# Write a method for shuffling chance and community chance cards.	
+
 	
 # Remember: Always reset Die when a player goes bankwupt or leaves the game.
-# Allow players to interact with a lot after they drew a community chest card or chance card and where moved to that place. And special cases for moving to nearest Utility or Railroad
 
 # Auction if a player doesn't buy property/city.
 
