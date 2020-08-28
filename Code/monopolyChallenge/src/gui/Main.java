@@ -1,5 +1,7 @@
 package gui;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 import ctr.CardSetManager;
@@ -63,9 +65,14 @@ public class Main {
 		CardSetTracker cardTrackerThread = new CardSetTracker(csM);
 		new Thread(cardTrackerThread).start();
 		
-//		// Die tracker
+//		// Start die tracking thread with GUI
 //		DieTracker dieTrackerThread = new DieTracker();
 //		new Thread(dieTrackerThread).start();
+		
+//		// Start DrawableCard deques tracking thread with GUI
+//		DequesMonitor dequesTrackerThread = new DequesMonitor();
+//		new Thread(dequesTrackerThread).start();
+		
 		
 		System.out.println("| STARTING THE GAME |");
 		BoardSystem.nextTurn();
@@ -423,41 +430,60 @@ public class Main {
 		BoardSystem.addCard(cid39);
 		BoardSystem.addCard(cid40);
 		
-		// Adding DrawableCards to decks
-		BoardSystem.addCommunityChestCard(cid41);
-		BoardSystem.addCommunityChestCard(cid42);
-		BoardSystem.addCommunityChestCard(cid43);
-		BoardSystem.addCommunityChestCard(cid44);
-		BoardSystem.addCommunityChestCard(cid45);
-		BoardSystem.addCommunityChestCard(cid46);
-		BoardSystem.addCommunityChestCard(cid47);
-		BoardSystem.addCommunityChestCard(cid48);
-		BoardSystem.addCommunityChestCard(cid49);
-		BoardSystem.addCommunityChestCard(cid50);
-		BoardSystem.addCommunityChestCard(cid51);
-		BoardSystem.addCommunityChestCard(cid52);
-		BoardSystem.addCommunityChestCard(cid53);
-		BoardSystem.addCommunityChestCard(cid54);
-		BoardSystem.addCommunityChestCard(cid55);
-		BoardSystem.addCommunityChestCard(cid56);
-		BoardSystem.addCommunityChestCard(cid57);
+		/* Adding DrawableCards to decks */
 		
-		BoardSystem.addChanceCard(cid58);
-		BoardSystem.addChanceCard(cid59);
-		BoardSystem.addChanceCard(cid60);
-		BoardSystem.addChanceCard(cid61);
-		BoardSystem.addChanceCard(cid62);
-		BoardSystem.addChanceCard(cid63);
-		BoardSystem.addChanceCard(cid64);
-		BoardSystem.addChanceCard(cid65);
-		BoardSystem.addChanceCard(cid66);
-		BoardSystem.addChanceCard(cid67);
-		BoardSystem.addChanceCard(cid68);
-		BoardSystem.addChanceCard(cid69);
-		BoardSystem.addChanceCard(cid70);
-		BoardSystem.addChanceCard(cid71);
-		BoardSystem.addChanceCard(cid72);
-		BoardSystem.addChanceCard(cid73);		
+		// Community Chest
+		ArrayList<DrawableCard> communityChestCardsRaw = new ArrayList<>();
+		communityChestCardsRaw.add(cid41);
+		communityChestCardsRaw.add(cid42);
+		communityChestCardsRaw.add(cid43);
+		communityChestCardsRaw.add(cid44);
+		communityChestCardsRaw.add(cid45);
+		communityChestCardsRaw.add(cid46);
+		communityChestCardsRaw.add(cid47);
+		communityChestCardsRaw.add(cid48);
+		communityChestCardsRaw.add(cid49);
+		communityChestCardsRaw.add(cid50);
+		communityChestCardsRaw.add(cid51);
+		communityChestCardsRaw.add(cid52);
+		communityChestCardsRaw.add(cid53);
+		communityChestCardsRaw.add(cid54);
+		communityChestCardsRaw.add(cid55);
+		communityChestCardsRaw.add(cid56);
+		communityChestCardsRaw.add(cid57);
+		
+		// Shuffling the cards in the ArrayList
+		Collections.shuffle(communityChestCardsRaw);
+		// Adding community chest cards to the deque
+		for (DrawableCard card : communityChestCardsRaw) {
+			BoardSystem.addCommunityChestCard(card);
+		}
+		
+		// Chance
+		ArrayList<DrawableCard> chanceCardsRaw = new ArrayList<>();
+		chanceCardsRaw.add(cid58);
+		chanceCardsRaw.add(cid59);
+		chanceCardsRaw.add(cid60);
+		chanceCardsRaw.add(cid61);
+		chanceCardsRaw.add(cid62);
+		chanceCardsRaw.add(cid63);
+		chanceCardsRaw.add(cid64);
+		chanceCardsRaw.add(cid65);
+		chanceCardsRaw.add(cid66);
+		chanceCardsRaw.add(cid67);
+		chanceCardsRaw.add(cid68);
+		chanceCardsRaw.add(cid69);
+		chanceCardsRaw.add(cid70);
+		chanceCardsRaw.add(cid71);
+		chanceCardsRaw.add(cid72);
+		chanceCardsRaw.add(cid73);
+		
+		// Shuffling the cards in the ArrayList
+		Collections.shuffle(chanceCardsRaw);
+		// Adding chance cards to the deque
+		for (DrawableCard card : chanceCardsRaw) {
+			BoardSystem.addChanceCard(card);
+		}
 	}
 	
 	// TODO rewrite to account for isBot

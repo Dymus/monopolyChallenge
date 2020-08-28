@@ -39,5 +39,9 @@ public class DrawableCard extends Card {
 		this.type = type;
 	}
 
+	@Override
+	public String toString() {
+		return "[ID= " + String.valueOf(getId()) + ", Txt=" + text.substring(0, 10) + "]";
+	}
 	
 }

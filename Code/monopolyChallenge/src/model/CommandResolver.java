@@ -64,7 +64,7 @@ public class CommandResolver {
 				DrawableCard card = BoardSystem.drawChanceCard();
 
 				if (drawer.isBot()) {
-					System.out.println("Player " + drawer.getName() + " drew the following chance card: " + card.getText());
+					System.out.println("Player " + drawer.getName() + "(ID:" + drawer.getId() + ") drew the following chance card: " + card.getText());
 				} else {
 					System.out.println("You drew the following chance card: " + card.getText());
 				}
@@ -246,10 +246,20 @@ public class CommandResolver {
 			for (Player activePlayer : activePlayers) {
 				activePlayer.setMoney(activePlayer.getMoney()+value);
 			}
-			System.out.println("Player with ID " + player.getId() + " has drawn card with ID " + drawableCardID + ". Every player received " + value + " dollars");
+			if (player.isBot()) {
+				System.out.println("Player " + player.getName() + "(ID:" + player.getId() + ") has drawn card with ID " + drawableCardID + ". Every player received " + value + " dollars");
+			} else {
+				System.out.println("You have drawn a card with ID " + drawableCardID + ". You have given " + value + " dollars to every player.");
+			}
+			
 		} else {
 			// TODO No money
-			System.err.println("Player with ID " + player.getId() + " has drawn card with ID " + drawableCardID + " but does not have sufficient funds to complete the transaction.");
+			if (player.isBot()) {
+				System.err.println("Player " + player.getName() + "(ID:" + player.getId() + ") has drawn card with ID " + drawableCardID + " but does not have sufficient funds to complete the transaction.");
+			} else {
+				System.out.println("You have drawn a card with ID " + drawableCardID + " but do not have sufficient funds to complete the transaction.");
+			}
+			
 		}
 		
 		// Adding the player who is paying back to the ArrayList

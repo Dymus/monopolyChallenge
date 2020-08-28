@@ -123,7 +123,7 @@ public class Player {
 	}
 	
 	public void pushGetOutOfJailCard(DrawableCard card) {
-		getOutOfJailCards.push(card);
+		getOutOfJailCards.add(card);
 	}
 
 //	public int getAmountOfGetOutOfJailCards() {

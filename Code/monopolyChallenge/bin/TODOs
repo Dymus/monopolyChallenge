@@ -3,9 +3,6 @@ TODOs
 # !!!!!!!!!!!!!!! Wrap switch cases in methods in Main.
 
 # Allow players to interact with a lot after they drew a community chest card or chance card and where moved to that place. And special cases for moving to nearest Utility or Railroad
-	
-	
-# Write a method for shuffling chance and community chance cards.	
 
 	
 # Remember: Always reset Die when a player goes bankwupt or leaves the game.
