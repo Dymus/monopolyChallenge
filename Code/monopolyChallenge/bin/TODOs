@@ -1,8 +1,6 @@
 TODOs
 
-# !!!!!!!!!!!!!!! Wrap switch cases in methods in Main.
-
-# Allow players to interact with a lot after they drew a community chest card or chance card and where moved to that place. And special cases for moving to nearest Utility or Railroad
+# !!! Allow players to interact with a lot after they drew a community chest card or chance card and where moved to that place. And special cases for moving to nearest Utility or Railroad
 
 	
 # Remember: Always reset Die when a player goes bankwupt or leaves the game.
@@ -12,9 +10,6 @@ TODOs
 
 # Should make container class for CardSet ? :woozy:
 
-
-
 # https://stackoverflow.com/questions/5762491/how-to-print-color-in-console-using-system-out-println JColor library to mark cards.
-# method that calculates how many places you need to move, if you want to move to position X
 # Remember: Houses must be built evenly across all properties.
 
