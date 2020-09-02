@@ -81,128 +81,76 @@ public class Main {
 		
 		while (true) {
 			whosTurn = BoardSystem.getWhosTurn();
-			if (!whosTurn.isBot()) {
-				
-				// Checking if player is in jail
-				if (checkIfImprisoned(whosTurn)) {
-					// Skipping turn (check the method above)
-					continue;
-				}
-				
-				// Rolling the dice
-				System.out.println("You're rolling the dice");
-				Thread.sleep(1000);
-				Die.rollTheDice();
-				Integer rolled = Die.getResult();				
-				System.out.println("You got " + Die.getFirstRoll() + " and " + Die.getSecondRoll() + " eyelets on the dice.");
-				if (Die.isRolledDouble()) {
-					System.out.println("That's a double!");
-				}
-				
-				// Check if player got double amount of pips three times in a row
-				if (Die.getTimesRolledDouble() == 3 ) {
-					// Imprison player
-					System.out.println("You rolled double on the dice three times in a row. You're skipping this turn and going to jail.");
-					whosTurn.setImprisoned(true);
-					whosTurn.setBannedTurns(3);
-					
-					// Resetting the double counter on Die
-					Die.resetTimesRolledDouble();
-					Die.setRolledDouble(false);
-					
-					// Next turn and continue loop
-					BoardSystem.nextTurn();
-					System.out.println();
-					continue;
-				}
-				
-				// Moving the player
-				Thread.sleep(1000);
-				int position = BoardSystem.movePlayer(whosTurn, rolled);
-				System.out.println("You moved to position " + position + ".");
-				Thread.sleep(1000);
-				Class staticCardClass = BoardSystem.getStaticCardClass(position);
-				// DEBUG
-//				System.out.println(staticCardClass.getSimpleName());
-				
-				switch(staticCardClass.getSimpleName()) {
-				case "Property":
-					actOnProperty(whosTurn, position, rolled);
-					break;
-				case "City":
-					actOnCity(whosTurn, position);
-					break;
-				case "Tax":
-					actOnTax(whosTurn, position);
-					break;
-				case "SpecialCard":
-					actOnSpecialCard(whosTurn, position);
-					break;
-				}
-				
-				// If the player rolled double, it gets to roll the dice again
-				if (Die.isRolledDouble()) {
-					System.out.println();
-					continue;
-				}
-				
-			} else {	
-				
-				// Checking if player is in jail
-				if (checkIfImprisoned(whosTurn)) {
-					// Skipping turn (check the method above)
-					continue;
-				}
-				
-				// Rolling the dice
+
+			// Checking if player is in jail
+			if (checkIfImprisoned(whosTurn)) {
+				// Skipping turn (check the method above)
+				continue;
+			}
+			
+			// Rolling the dice
+			if (whosTurn.isBot()) {
 				System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") is rolling the dice");
-				Thread.sleep(1000);
-				Die.rollTheDice();
-				Integer rolled = Die.getResult();
+			} else {
+				System.out.println("You're rolling the dice");
+			}
+			Thread.sleep(2000);
+			Die.rollTheDice();
+			Integer rolled = Die.getResult();
+			if (whosTurn.isBot()) {
 				System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") got " + Die.getFirstRoll() + " and " + Die.getSecondRoll() + " eyelets on the dice.");
-				if (Die.isRolledDouble()) {
-					System.out.println("That's a double!");
-				}
-				
-				// Check if player got double amount of pips three times in a row
-				if (Die.getTimesRolledDouble() == 3 ) {
-					// Imprison player
+			} else {
+				System.out.println("You got " + Die.getFirstRoll() + " and " + Die.getSecondRoll() + " eyelets on the dice.");
+			}
+			if (Die.isRolledDouble()) {
+				System.out.println("That's a double!");
+			}
+			
+			// Check if player got double amount of pips three times in a row
+			if (Die.getTimesRolledDouble() == 3 ) {
+				// Imprison player
+				if (whosTurn.isBot()) {
 					System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") rolled double on the dice three times in a row. It's now skipping this turn and going to jail.");
-					whosTurn.setImprisoned(true);
-					whosTurn.setBannedTurns(3);
-					
-					// Resetting the double counter on Die
-					Die.resetTimesRolledDouble();
-					Die.setRolledDouble(false);
-					
-					// Next turn and continue loop
-					BoardSystem.nextTurn();
-					System.out.println();
-					continue;
+				} else {
+					System.out.println("You rolled double on the dice three times in a row. You're skipping this turn and going to jail.");
 				}
+				whosTurn.setImprisoned(true);
+				whosTurn.setBannedTurns(3);
 				
-				Thread.sleep(1000);
-				int position = BoardSystem.movePlayer(whosTurn, rolled);
+				// Resetting the double counter on Die
+				Die.resetTimesRolledDouble();
+				Die.setRolledDouble(false);
+				
+				// Next turn and continue loop
+				BoardSystem.nextTurn();
+				System.out.println();
+				continue;
+			}
+			
+			// Moving the player
+//			Thread.sleep(1000);
+			int position = BoardSystem.movePlayer(whosTurn, rolled);
+			if (whosTurn.isBot()) {
 				System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") moved to position " + position + ".");
-				Thread.sleep(1000);
-				Class staticCardClass = BoardSystem.getStaticCardClass(position);
-				// DEBUG
-//				System.out.println(staticCardClass.getSimpleName());
-				
-				switch(staticCardClass.getSimpleName()) {
-				case "Property":
-					actOnProperty(whosTurn, position, rolled);
-					break;
-				case "City":
-					actOnCity(whosTurn, position);
-					break;
-				case "Tax":
-					actOnTax(whosTurn, position);
-					break;
-				case "SpecialCard":
-					actOnSpecialCard(whosTurn, position);
-					break;
-				}
+			} else {
+				System.out.println("You moved to position " + position + ".");
+			}
+//			Thread.sleep(1000);
+			Class staticCardClass = BoardSystem.getStaticCardClass(position);
+			
+			switch(staticCardClass.getSimpleName()) {
+			case "Property":
+				actOnProperty(whosTurn, position, rolled);
+				break;
+			case "City":
+				actOnCity(whosTurn, position);
+				break;
+			case "Tax":
+				actOnTax(whosTurn, position);
+				break;
+			case "SpecialCard":
+				actOnSpecialCard(whosTurn, position);
+				break;
 			}
 			
 			// If the player rolled double, it gets to roll the dice again
