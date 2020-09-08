@@ -54,12 +54,11 @@ public class Main {
 	}
 	
 	public static int start() throws InterruptedException {
+		/* Starting tracking threads */
 		
-		// Starting tracking threads
-		
-		// Start player statistics tracking thread with GUI
-		PlayerStatTracker playerStatTrackerThread = new PlayerStatTracker();
-		new Thread(playerStatTrackerThread).start();
+//		// Start player statistics tracking thread with GUI
+//		PlayerStatTracker playerStatTrackerThread = new PlayerStatTracker();
+//		new Thread(playerStatTrackerThread).start();
 		
 		// Start card set tracking thread with GUI
 		CardSetTracker cardTrackerThread = new CardSetTracker(csM);
@@ -69,9 +68,9 @@ public class Main {
 //		DieTracker dieTrackerThread = new DieTracker();
 //		new Thread(dieTrackerThread).start();
 		
-//		// Start DrawableCard deques tracking thread with GUI
-//		DequesMonitor dequesTrackerThread = new DequesMonitor();
-//		new Thread(dequesTrackerThread).start();
+		// Start DrawableCard deques tracking thread with GUI
+		DequesMonitor dequesTrackerThread = new DequesMonitor();
+		new Thread(dequesTrackerThread).start();
 		
 		
 		System.out.println("| STARTING THE GAME |");
@@ -116,6 +115,7 @@ public class Main {
 				}
 				whosTurn.setImprisoned(true);
 				whosTurn.setBannedTurns(3);
+				whosTurn.setPosition(11);
 				
 				// Resetting the double counter on Die
 				Die.resetTimesRolledDouble();
@@ -138,23 +138,11 @@ public class Main {
 //			Thread.sleep(1000);
 			Class staticCardClass = BoardSystem.getStaticCardClass(position);
 			
-			switch(staticCardClass.getSimpleName()) {
-			case "Property":
-				actOnProperty(whosTurn, position, rolled);
-				break;
-			case "City":
-				actOnCity(whosTurn, position);
-				break;
-			case "Tax":
-				actOnTax(whosTurn, position);
-				break;
-			case "SpecialCard":
-				actOnSpecialCard(whosTurn, position);
-				break;
-			}
+			// Execute actions based on the position player has landed (City, Property, Tax, SpecialCard)
+			chooseAction(staticCardClass, whosTurn, position, rolled);
 			
 			// If the player rolled double, it gets to roll the dice again
-			if (Die.isRolledDouble()) {
+			if (Die.isRolledDouble() && !whosTurn.isImprisoned()) {
 				System.out.println();
 				continue;
 			}
@@ -182,14 +170,14 @@ public class Main {
 		
 		// Brown
 		City cid2 = new City("Mediterranean Avenue".toUpperCase(), 2, CardSetType.BROWN, 60, false, 2, 10, 30, 90, 160, 250, 30, 50, 50);
-		SpecialCard cid3 = new SpecialCard("Community Chest 1".toUpperCase(), 3, CardSetType.OTHER, "Draw community chest");
+		SpecialCard cid3 = new SpecialCard("Community Chest 1".toUpperCase(), 3, CardSetType.COMMUNITY_CHEST, "Draw community chest");
 		City cid4 = new City("Baltic Avenue".toUpperCase(), 4, CardSetType.BROWN, 60, false, 4, 20, 60, 180, 320, 450, 30, 50, 50);
 		Tax cid5 = new Tax("Income Tax".toUpperCase(), 5, CardSetType.OTHER, 200);
 		Property cid6 = new Property("Reading Railroad".toUpperCase(), 6, CardSetType.RAILROADS, 200, false); // Station
 		
 		// Light Blue
 		City cid7 = new City("Oriental Avenue".toUpperCase(), 7, CardSetType.LIGHT_BLUE, 100, false, 6, 30, 90, 270, 400, 550, 50, 50, 50);
-		SpecialCard cid8 = new SpecialCard("Chance Pink".toUpperCase(), 8, CardSetType.OTHER, "Draw chance");
+		SpecialCard cid8 = new SpecialCard("Chance Pink".toUpperCase(), 8, CardSetType.CHANCE, "Draw chance");
 		City cid9 = new City("Vermont Avenue".toUpperCase(), 9, CardSetType.LIGHT_BLUE, 100, false, 6, 30, 90, 270, 400, 550, 50, 50, 50);
 		City cid10 = new City("Connecticut Avenue".toUpperCase(), 10, CardSetType.LIGHT_BLUE, 120, false, 8, 40, 100, 300, 450, 600, 60, 50, 50);
 		SpecialCard cid11 = new SpecialCard("Jail".toUpperCase(), 11, CardSetType.OTHER, "No action");
@@ -203,14 +191,14 @@ public class Main {
 		
 		// Orange
 		City cid17 = new City("St. James Place".toUpperCase(), 17, CardSetType.ORANGE, 180, false, 14, 70, 200, 550, 750, 950, 90, 100, 100);
-		SpecialCard cid18 = new SpecialCard("Community Chest 2".toUpperCase(), 18, CardSetType.OTHER, "Draw community chest");
+		SpecialCard cid18 = new SpecialCard("Community Chest 2".toUpperCase(), 18, CardSetType.COMMUNITY_CHEST, "Draw community chest");
 		City cid19 = new City("Tennessee Avenue".toUpperCase(), 19, CardSetType.ORANGE, 180, false, 14, 70, 200, 550, 750, 950, 90, 100, 100);
 		City cid20 = new City("New York Avenue".toUpperCase(), 20, CardSetType.ORANGE, 200, false, 16, 80, 220, 600, 800, 1000, 100, 100, 100);
 		SpecialCard cid21 = new SpecialCard("Free Parking".toUpperCase(), 21, CardSetType.OTHER, "No action");
 		
 		// Red
 		City cid22 = new City("Kentucky Avenue".toUpperCase(), 22, CardSetType.RED, 220, false, 18, 90, 250, 700, 875, 1050, 110, 150, 150);
-		SpecialCard cid23 = new SpecialCard("Chance Blue".toUpperCase(), 23, CardSetType.OTHER, "Draw chance");
+		SpecialCard cid23 = new SpecialCard("Chance Blue".toUpperCase(), 23, CardSetType.CHANCE, "Draw chance");
 		City cid24 = new City("Indiana Avenue".toUpperCase(), 24, CardSetType.RED, 220, false, 18, 90, 250, 700, 875, 1050, 110, 150, 150);
 		City cid25 = new City("Illinois Avenue".toUpperCase(), 25, CardSetType.RED, 240, false, 20, 100, 300, 750, 925, 1100, 120, 150, 150);
 		Property cid26 = new Property("B. & O. Railroad".toUpperCase(), 26, CardSetType.RAILROADS, 200, false); // Station
@@ -225,10 +213,10 @@ public class Main {
 		// Green
 		City cid32 = new City("Pacific Avenue".toUpperCase(), 32, CardSetType.GREEN, 300, false, 26, 130, 390, 900, 1100, 1275, 150, 200, 200);
 		City cid33 = new City("North Carolina Avenue".toUpperCase(), 33, CardSetType.GREEN, 300, false, 26, 130, 390, 900, 1100, 1275, 150, 200, 200);
-		SpecialCard cid34 = new SpecialCard("Community Chest 3".toUpperCase(), 34, CardSetType.OTHER, "Draw Community Chest");
+		SpecialCard cid34 = new SpecialCard("Community Chest 3".toUpperCase(), 34, CardSetType.COMMUNITY_CHEST, "Draw Community Chest");
 		City cid35 = new City("Pennsylvania Avenue".toUpperCase(), 35, CardSetType.GREEN, 320, false, 28, 150, 450, 1000, 1200, 1400, 160, 200, 200);
 		Property cid36 = new Property("Short Line".toUpperCase(), 36, CardSetType.RAILROADS, 200, false); // Station
-		SpecialCard cid37 = new SpecialCard("Chance Orange".toUpperCase(), 37, CardSetType.OTHER, "Draw Chance");
+		SpecialCard cid37 = new SpecialCard("Chance Orange".toUpperCase(), 37, CardSetType.CHANCE, "Draw Chance");
 		
 		// Dark Blue
 		City cid38 = new City("Park Place".toUpperCase(), 38, CardSetType.DARK_BLUE, 350, false, 35, 175, 500, 1100, 1300, 1500, 175, 200, 200);
@@ -511,7 +499,7 @@ public class Main {
 		}
 	}
 	
-	public static void actOnProperty(Player whosTurn, int position, int rolled) {
+	private static void actOnProperty(Player whosTurn, int position, int rolled, boolean movedWithCardMovingToNearestUtilityOrRailroad) {
 		Property property = BoardSystem.getPropertyCardWithBoardPosition(position);
 		if (whosTurn.isBot()) {
 			System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") is standing at " + property.getName() + ".");
@@ -568,7 +556,7 @@ public class Main {
 							amountOwned++;
 						}
 					}
-					
+
 					if (amountOwned == 1) {
 						rent = 25;
 					} else if (amountOwned == 2) {
@@ -578,16 +566,29 @@ public class Main {
 					} else if (amountOwned == 4) {
 						rent = 200;
 					}
-				} else {
-					for (Property p: utilities.getCards()) {
-						if (p.getOwner() == owner) {
-							amountOwned++;
-						}
+					
+					if (movedWithCardMovingToNearestUtilityOrRailroad) {
+						rent *= 2;
 					}
-					if (amountOwned == 1) {
-						rent = rolled * 4;
-					} else if (amountOwned == 2) {
-						rent = rolled * 10;
+				} else {
+					if (movedWithCardMovingToNearestUtilityOrRailroad) {
+						System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() +") will now roll the dice and pay the owner the times the amount thrown.");
+						// "Rolling" the dice
+						Integer firstDie = (int)(Math.random() * (6 - 1 + 1) + 1);
+						Integer secondDie = (int)(Math.random() * (6 - 1 + 1) + 1);
+						int amountThrown = firstDie + secondDie;
+						rent = amountThrown * 10;
+					} else {
+						for (Property p: utilities.getCards()) {
+							if (p.getOwner() == owner) {
+								amountOwned++;
+							}
+						}
+						if (amountOwned == 1) {
+							rent = rolled * 4;
+						} else if (amountOwned == 2) {
+							rent = rolled * 10;
+						}
 					}
 				}
 				
@@ -616,7 +617,7 @@ public class Main {
 		}
 	}
 	
-	public static void actOnCity(Player whosTurn, int position) {
+	private static void actOnCity(Player whosTurn, int position) {
 		City city = BoardSystem.getCityCardWithBoardPosition(position);
 		if (whosTurn.isBot()) {
 			System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") is standing at " + city.getName() + ".");
@@ -709,7 +710,7 @@ public class Main {
 		}
 	}
 	
-	public static void actOnTax(Player whosTurn, int position) {
+	private static void actOnTax(Player whosTurn, int position) {
 		Tax tax = BoardSystem.getTaxCardWithBoardPosition(position);
 		if (whosTurn.isBot()) {
 			System.out.println("Player " + whosTurn.getName() + "(ID:" + whosTurn.getId() + ") is standing at " + tax.getName() + ".");
@@ -728,7 +729,7 @@ public class Main {
 		}
 	}
 	
-	public static void actOnSpecialCard(Player whosTurn, int position) {
+	private static void actOnSpecialCard(Player whosTurn, int position) {
 		SpecialCard specialCard = BoardSystem.getSpecialCardWithBoardPosition(position);
 		if (specialCard.getName().equals("JAIL")) {
 			if (whosTurn.isBot()) {
@@ -744,6 +745,63 @@ public class Main {
 			}
 		}
 		cr.executeCommand(whosTurn, specialCard.getCommand(), specialCard.getId());
+	}
+	
+	
+	// EXPERIMENTAL
+	private static void chooseAction(Class positionClass, Player whosTurn, int position, int rolled) {		
+		switch(positionClass.getSimpleName()) {
+		case "Property":
+			actOnProperty(whosTurn, position, rolled, false);
+			break;
+		case "City":
+			actOnCity(whosTurn, position);
+			break;
+		case "Tax":
+			actOnTax(whosTurn, position);
+			break;
+		case "SpecialCard":
+			int beginningPosition = whosTurn.getPosition();
+			actOnSpecialCard(whosTurn, position);
+			
+			// Check if the card at the tail of the deck has a command "Go Closest Utility/Railroad"
+			// Get the static card (either CHANCE or COMMUNITY CHEST)
+			boolean movedWithCardMovingToNearestUtilityOrRailroad = false;
+			SpecialCard specialCard = BoardSystem.getSpecialCardWithBoardPosition(position);
+			
+			if (specialCard.getCardSetType().equals(CardSetType.CHANCE)) {
+				DrawableCard lastCardInDeque = BoardSystem.getChanceCards().peekLast();
+				if (lastCardInDeque != null) {
+					if (lastCardInDeque.getCommand().startsWith("Go Closest")) {
+						movedWithCardMovingToNearestUtilityOrRailroad = true;
+					}
+				}
+			} else if (specialCard.getCardSetType().equals(CardSetType.COMMUNITY_CHEST)) {
+				DrawableCard lastCardInDeque = BoardSystem.getCommunityChestCards().peekLast();
+				if (lastCardInDeque != null) {
+					if (lastCardInDeque.getCommand().startsWith("Go Closest")) {
+						movedWithCardMovingToNearestUtilityOrRailroad = true;
+					}
+				}
+			}
+			
+			// If position changed; 
+			if (beginningPosition != whosTurn.getPosition() && !whosTurn.isImprisoned()) {
+				int newPos = whosTurn.getPosition();
+				positionClass = BoardSystem.getStaticCardClass(newPos);
+				String cardName = positionClass.getSimpleName();
+				if (cardName.equals("Property")) {
+					actOnProperty(whosTurn, newPos, rolled, movedWithCardMovingToNearestUtilityOrRailroad);
+				} else if (cardName.equals("City")) {
+					actOnCity(whosTurn, newPos);
+				} else if (cardName.equals("Tax")) {
+					actOnTax(whosTurn, newPos);
+				} else if (cardName.equals("SpecialCard")) {
+					chooseAction(positionClass, whosTurn, newPos, rolled);
+				}
+			}
+			break;
+		}
 	}
 	
 	public static void main(String[] args) throws InterruptedException {

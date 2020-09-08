@@ -1,10 +1,6 @@
-TODOs
+1. TODOs
+# !!!!!!!!!!!!!!!!! Allow players to interact with a lot after they drew a community chest card or chance card and where moved to that place. And special cases for moving to nearest Utility or Railroad
 
-# !!!!!!!!!!!!!!! Wrap switch cases in methods in Main.
-
-# Allow players to interact with a lot after they drew a community chest card or chance card and where moved to that place. And special cases for moving to nearest Utility or Railroad
-
-	
 # Remember: Always reset Die when a player goes bankwupt or leaves the game.
 
 # Auction if a player doesn't buy property/city.
@@ -18,3 +14,6 @@ TODOs
 # method that calculates how many places you need to move, if you want to move to position X
 # Remember: Houses must be built evenly across all properties.
 
+2. Messages to commit:
+# IF I forget in the commit: Fixed a bug where if a player goes to jail and had rolled double prior to that, the banned turns attribute on player would automatically be decreased by one before the turn finishes.
+# Added CHEST and COMMUNITY_CHEST to CardSetType

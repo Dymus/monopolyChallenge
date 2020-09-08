@@ -261,18 +261,6 @@ public class BoardSystem {
 		}
 	}
 	
-	public static Die rollTheDie2() {
-		Die die = new Die();
-		die.rollTheDice();
-		return die;
-	}
-	
-	// TODO differentiate dies to check for doubles
-	public static Integer rollTheDice() {
-		Integer pips = (int)(Math.random() * (12 - 2 + 1) + 2);
-		return pips;
-	}
-	
 	public static int getIDOfStartingPlayerByRandom() {
 		int playerID = (int) (Math.random() * (activePlayers.size() - 1 + 1) + 1); 
 		return playerID;

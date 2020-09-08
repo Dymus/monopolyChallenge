@@ -15,6 +15,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 
 import model.BoardSystem;
 import model.CardSetType;
+import model.Die;
 import model.DrawableCard;
 import model.Player;
 import model.SpecialCard;
@@ -49,6 +50,7 @@ public class BoardSystemTests {
 		BoardSystem.setChanceCards(new ArrayDeque<DrawableCard>());
 		BoardSystem.setStaticCards(new ArrayList<StaticCard>());
 		BoardSystem.resetCounters();
+		Die.resetTimesRolledDouble();
 	}
 	
 	@Test
@@ -78,7 +80,8 @@ public class BoardSystemTests {
 		Integer max = 12;
 		Integer min = 2;
 		for (int i = 0; i <= 9999; i++) {
-			Integer pips = BoardSystem.rollTheDice();
+			Die.rollTheDice();
+			Integer pips = Die.getResult();
 			System.out.println("Rolled " + pips + ".");
 			assertTrue(max >= pips, "Error, rolled pips are too high");
 			assertTrue(min <= pips, "Error, rolled pips are too low");

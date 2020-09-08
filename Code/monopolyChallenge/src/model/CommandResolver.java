@@ -183,7 +183,7 @@ public class CommandResolver {
 				Integer places = Integer.parseInt(tokens[1]);
 				
 				// Changing player's position
-				// TODO account for pos > 40 and pos < 1
+				// TODO account for pos > 40 and pos < 1, and passing through GO!
 				drawer.setPosition(drawer.getPosition() + places);
 
 				// Getting new position name
@@ -198,6 +198,7 @@ public class CommandResolver {
 			} else if (tokens[1].equals("JAIL")) {
 				drawer.setImprisoned(true);
 				drawer.setBannedTurns(3);
+				drawer.setPosition(11);
 				Die.setRolledDouble(false);
 				Die.resetTimesRolledDouble();
 				
